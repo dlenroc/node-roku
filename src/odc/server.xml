@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="ODC" extends="Task">
+  <interface>
+    <field id="port" type="integer" value="8061"/>
+  </interface>
+
+  <script type="text/brightscript" uri="./utils.brs"/>
+  <script type="text/brightscript" uri="./server.brs"/>
+  <script type="text/brightscript" uri="./http.brs"/>
+  <script type="text/brightscript" uri="./client_commands/getAppUI.brs"/>
+  <script type="text/brightscript" uri="./commands/clearRegistry.brs"/>
+  <script type="text/brightscript" uri="./commands/getAppUI.brs"/>
+  <script type="text/brightscript" uri="./commands/getRegistry.brs"/>
+  <script type="text/brightscript" uri="./commands/patchRegistry.brs"/>
+</component>

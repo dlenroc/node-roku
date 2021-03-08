@@ -1,0 +1,13 @@
+### System ###
+.DS_Store
+
+### Node ###
+node_modules
+package-lock.json
+
+### Editors ###
+.idea/
+.vscode/
+
+### Project ###
+dist/
