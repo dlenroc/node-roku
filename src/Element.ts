@@ -241,24 +241,48 @@ export class Element {
     }
   }
 
-  cssSelect(css: string): Element | null {
-    const node = normalizeNode(selectOne(css, this.node));
-    return node ? new Element(this.sdk, node, this.document) : null;
+  cssSelect<T extends Timeout = null>(css: string, timeoutInSeconds?: T): ReturnForTimeout<Element | null, T> {
+    return findElOrEls(
+      this,
+      () => {
+        const node = normalizeNode(selectOne(css, this.node));
+        return node ? new Element(this.sdk, node, this.document) : null;
+      },
+      timeoutInSeconds
+    );
   }
 
-  cssSelectAll(css: string): Element[] {
-    const nodes = normalizeNodes(selectAll(css, this.node));
-    return nodes.map((node) => new Element(this.sdk, node, this.document));
+  cssSelectAll<T extends Timeout = null>(css: string, timeoutInSeconds?: T): ReturnForTimeout<Element[], T> {
+    return findElOrEls(
+      this,
+      () => {
+        const nodes = normalizeNodes(selectAll(css, this.node));
+        return nodes.map((node) => new Element(this.sdk, node, this.document));
+      },
+      timeoutInSeconds
+    );
   }
 
-  xpathSelect(xpath: string): Element | null {
-    const node = normalizeNode(this.node.get(xpath));
-    return node ? new Element(this.sdk, node, this.document) : null;
+  xpathSelect<T extends Timeout = null>(xpath: string, timeoutInSeconds?: T): ReturnForTimeout<Element | null, T> {
+    return findElOrEls(
+      this,
+      () => {
+        const node = normalizeNode(this.node.get(xpath));
+        return node ? new Element(this.sdk, node, this.document) : null;
+      },
+      timeoutInSeconds
+    );
   }
 
-  xpathSelectAll(xpath: string): Element[] {
-    const nodes = normalizeNodes(this.node.find(xpath));
-    return nodes.map((node) => new Element(this.sdk, node, this.document));
+  xpathSelectAll<T extends Timeout = null>(xpath: string, timeoutInSeconds?: T): ReturnForTimeout<Element[], T> {
+    return findElOrEls(
+      this,
+      () => {
+        const nodes = normalizeNodes(this.node.find(xpath));
+        return nodes.map((node) => new Element(this.sdk, node, this.document));
+      },
+      timeoutInSeconds
+    );
   }
 
   toString(): string {
@@ -269,6 +293,27 @@ export class Element {
       selfCloseEmpty: true,
     });
   }
+}
+
+type Timeout = number | undefined | null;
+type ReturnForTimeout<R, T extends Timeout = null> = T extends undefined | null ? R : Promise<R>;
+
+function findElOrEls<R, T extends Timeout = null>(element: Element, getElOrEls: () => R, timeoutInSeconds?: T): ReturnForTimeout<R, T> {
+  if (typeof timeoutInSeconds !== 'number') {
+    return getElOrEls() as any;
+  }
+
+  return (async () => {
+    const endTime = performance.now() + timeoutInSeconds * 1000;
+
+    let elOrEls = getElOrEls();
+    while ((Array.isArray(elOrEls) ? elOrEls.length == 0 : !elOrEls) && endTime > performance.now()) {
+      await element.document.render();
+      elOrEls = getElOrEls();
+    }
+
+    return elOrEls;
+  })() as any;
 }
 
 function normalizeNode(node: XMLNode | null): XMLElement | null {

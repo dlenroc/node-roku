@@ -405,7 +405,15 @@ cssSelect(css: string): Element | null
 ```
 
 ```typescript
+cssSelect(css: string, timeoutInSeconds: number): Promise<Element | null>
+```
+
+```typescript
 cssSelectAll(css: string): Element[]
+```
+
+```typescript
+cssSelectAll(css: string, timeoutInSeconds: number): Promise<Element[]>
 ```
 
 ```typescript
@@ -413,7 +421,15 @@ xpathSelect(xpath: string): Element | null
 ```
 
 ```typescript
+xpathSelect(xpath: string, timeoutInSeconds: number): Promise<Element | null>
+```
+
+```typescript
 xpathSelectAll(xpath: string): Element[]
+```
+
+```typescript
+xpathSelectAll(xpath: string, timeoutInSeconds: number): Promise<Element[]>
 ```
 
 ```typescript
