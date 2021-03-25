@@ -141,23 +141,12 @@ export class Element {
   }
 
   get isInFocusChain(): boolean {
-    if (this.node.get('./descendant-or-self::*[@focused="true"]')) {
-      return true;
-    }
+    const elementChain = [this, ...this.parents];
+    const focusedElement = this.document.focusedElement;
+    const focusedElementChain = [focusedElement, ...focusedElement.parents];
+    const count = Math.min(elementChain.length, focusedElementChain.length);
 
-    for (const element of [this, ...this.parents]) {
-      for (const sibling of element.siblings) {
-        if (sibling.isSameNode(element) && sibling.isFocused) {
-          return true;
-        }
-
-        if (sibling.node.get('./descendant-or-self::*[@focused="true"]')) {
-          return false;
-        }
-      }
-    }
-
-    return true;
+    return elementChain[elementChain.length - count].isSameNode(focusedElementChain[focusedElementChain.length - count]);
   }
 
   get isDisplayed(): boolean {
