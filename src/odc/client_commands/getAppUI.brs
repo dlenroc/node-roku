@@ -29,6 +29,10 @@ function odc_renderAppUI(target as object, node as object)
     target.addAttribute("focused", node.hasFocus().toStr())
   end if
 
+  if getInterface(node.dialog, "ifSGNodeChildren") <> invalid then
+    odc_renderAppUI(target.AddElement(node.dialog.subtype()), node.dialog)
+  end if
+
   for each nested in node.getChildren(-1, 0)
     if not nested.isSubtype("AnimationBase") then
       odc_renderAppUI(target.AddElement(nested.subtype()), nested)
