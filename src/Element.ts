@@ -110,6 +110,7 @@ export class Element {
 
   get text(): string {
     return this.xpathSelectAll('./descendant-or-self::*[(self::Label or self::SimpleLabel) and @text]')
+      .filter((element) => element.isDisplayed)
       .map((element) => element.attributes.text.trim())
       .filter((text) => text)
       .join('\n');
