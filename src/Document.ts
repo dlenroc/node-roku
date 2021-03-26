@@ -19,6 +19,30 @@ export class Document extends Element {
     return this.cssSelect('[focused="true"]:not(:has([focused="true"]))') || this;
   }
 
+  get isKeyboardShown(): boolean {
+    return this.xpathSelect('//*[self::Keyboard or self::MiniKeyboard or self::PinPad]')?.isDisplayed || false;
+  }
+
+  async clear() {
+    const keyboard = this.xpathSelect('//*[self::Keyboard or self::MiniKeyboard or self::PinPad]');
+
+    if (keyboard) {
+      await keyboard.clear();
+    } else {
+      throw new RokuError('Keyboard must be visible to clear the field');
+    }
+  }
+
+  async type(text: string) {
+    const keyboard = this.xpathSelect('//*[self::Keyboard or self::MiniKeyboard or self::PinPad]');
+
+    if (keyboard) {
+      await keyboard.type(text);
+    } else {
+      await this.sdk.ecp.type(text);
+    }
+  }
+
   async render() {
     let xml;
 

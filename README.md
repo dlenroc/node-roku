@@ -311,6 +311,10 @@ get focusedElement(): Element
 ```
 
 ```typescript
+get isKeyboardShown(): boolean
+```
+
+```typescript
 render(): Promise<void>
 ```
 
@@ -390,6 +394,14 @@ get isDisplayed(): boolean
 
 ```typescript
 isSameNode(element: Element): boolean
+```
+
+```typescript
+clear(): Promise<void>
+```
+
+```typescript
+type(text: string): Promise<void>
 ```
 
 ```typescript
