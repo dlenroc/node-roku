@@ -1,7 +1,7 @@
 {
   "name": "@dlenroc/roku",
   "description": "Powerful toolbox for controlling Roku devices",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "Corneliu Duplachi",
   "license": "MIT",
   "repository": "dlenroc/node-roku",
