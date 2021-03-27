@@ -331,7 +331,6 @@ async function appendOrSetText(element: Element, text: string, clear: boolean) {
     }
 
     if (clear) {
-      console.log('Clear');
       const input = keyboard.xpathSelect('.//*[@text]');
       const cursor = keyboard.xpathSelect('.//*[@bounds and contains(@uri, "cursor_textInput")]');
       if (input && (cursor?.bounds?.x || keyboard.attributes.text)) {
@@ -339,8 +338,6 @@ async function appendOrSetText(element: Element, text: string, clear: boolean) {
           await element.sdk.ecp.keypress('Backspace');
         }
       }
-    } else {
-      console.log('No Clear');
     }
 
     if (text) {
