@@ -405,6 +405,10 @@ type(text: string): Promise<void>
 ```
 
 ```typescript
+append(text: string): Promise<void>
+```
+
+```typescript
 select(): Promise<void>
 ```
 
