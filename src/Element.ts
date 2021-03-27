@@ -177,22 +177,20 @@ export class Element {
 
   async focus() {
     const move = async (key: Key) => {
-      const path = this.document.focusedElement.path;
-      const attributes = this.document.focusedElement.attributes;
+      const { path, attributes } = this.document.focusedElement;
+
       await this.sdk.ecp.keypress(key);
 
       const endTime = performance.now() + 5 * 1000;
-
       while (performance.now() <= endTime) {
         await this.document.render();
 
-        const newPath = this.document.focusedElement?.path;
+        const { path: newPath, attributes: newAttributes } = this.document.focusedElement;
 
         if (path !== newPath) {
           return;
         }
 
-        const newAttributes = this.document.focusedElement.attributes;
         for (const [key, value] of Object.entries(attributes)) {
           if (newAttributes[key] !== value) {
             return;
