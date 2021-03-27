@@ -159,104 +159,15 @@ export class Element {
   }
 
   async clear() {
-    // If the element is inside the keyboard,
-    // make sure the keyboard is activated
-    // and clear the text with `Backspace`
-
-    let keyboard = this.xpathSelect('./ancestor-or-self::*[self::Keyboard or self::MiniKeyboard or self::PinPad]');
-
-    if (keyboard) {
-      await keyboard.focus();
-
-      const input = keyboard.xpathSelect('.//*[@text]');
-      const cursor = keyboard.xpathSelect('.//*[@bounds and contains(@uri, "cursor_textInput")]');
-      if (input && (cursor?.bounds?.x || keyboard.attributes.text)) {
-        for (let i = 0, n = input.text.length; i < n; i++) {
-          await this.sdk.ecp.keypress('Backspace');
-        }
-      }
-
-      return;
-    }
-
-    // Otherwise, we need to activate keyboard
-    // by selecting element and then removing text
-
-    await this.select();
-
-    keyboard = await this.document.xpathSelect('//*[self::Keyboard or self::MiniKeyboard or self::PinPad]', 5);
-
-    if (keyboard) {
-      await keyboard.clear();
-    } else {
-      throw new RokuError('Keyboard dialog did not appear after pressing `Select` on element');
-    }
-
-    // Submit changes by selecting the first button in the dialog
-    // or by sending `Enter` button
-
-    const submitButton = await keyboard.xpathSelect('./ancestor-or-self::*[self::Dialog or self::KeyboardDialog or self::PinDialog or self::ProgressDialog]//ButtonGroup');
-
-    if (submitButton) {
-      await submitButton.select();
-    } else {
-      await this.sdk.ecp.keypress('Enter');
-    }
-
-    // Wait for the keyboard to disappear
-
-    const isKeyboardClosed = !(await this.document.xpathSelect('self::*[not(./descendant-or-self::*[self::Keyboard or self::MiniKeyboard or self::PinPad])]', 5));
-    if (isKeyboardClosed) {
-      throw new RokuError('Keyboard dialog did not disappear');
-    }
+    await appendOrSetText(this, '', true);
   }
 
   async type(text: string) {
-    // If the element is inside the keyboard,
-    // make sure the keyboard is activated
-    // and send the text
+    await appendOrSetText(this, text, true);
+  }
 
-    let keyboard = this.xpathSelect('./ancestor-or-self::*[self::Keyboard or self::MiniKeyboard or self::PinPad]');
-
-    if (keyboard) {
-      if (text) {
-        await keyboard.focus();
-        await this.sdk.ecp.type(text);
-      }
-
-      return;
-    }
-
-    // Otherwise, we need to activate keyboard
-    // by selecting element and then send the text
-
-    await this.select();
-
-    keyboard = await this.document.xpathSelect('//*[self::Keyboard or self::MiniKeyboard or self::PinPad]', 5);
-
-    if (keyboard) {
-      await keyboard.type(text);
-    } else {
-      throw new RokuError('Keyboard dialog did not appear after pressing `Select` on element');
-    }
-
-    // Submit changes by selecting the first button in the dialog
-    // or by sending `Enter` button
-
-    const submitButton = await keyboard.xpathSelect('./ancestor-or-self::*[self::Dialog or self::KeyboardDialog or self::PinDialog or self::ProgressDialog]//ButtonGroup');
-
-    if (submitButton) {
-      await submitButton.select();
-    } else {
-      await this.sdk.ecp.keypress('Enter');
-    }
-
-    // Wait for the keyboard to disappear
-
-    const isKeyboardClosed = !(await this.document.xpathSelect('self::*[not(./descendant-or-self::*[self::Keyboard or self::MiniKeyboard or self::PinPad])]', 5));
-    if (isKeyboardClosed) {
-      throw new RokuError('Keyboard dialog did not disappear');
-    }
+  async append(text: string) {
+    await appendOrSetText(this, text, false);
   }
 
   async select() {
@@ -405,6 +316,70 @@ function findElOrEls<R, T extends Timeout = null>(element: Element, getElOrEls: 
 
     return elOrEls;
   })() as any;
+}
+
+async function appendOrSetText(element: Element, text: string, clear: boolean) {
+  // If the element is inside the keyboard,
+  // make sure the keyboard is activated
+  // and make changes to the text
+
+  let keyboard = element.xpathSelect('./ancestor-or-self::*[self::Keyboard or self::MiniKeyboard or self::PinPad]');
+
+  if (keyboard) {
+    if (clear || text) {
+      await keyboard.focus();
+    }
+
+    if (clear) {
+      console.log('Clear');
+      const input = keyboard.xpathSelect('.//*[@text]');
+      const cursor = keyboard.xpathSelect('.//*[@bounds and contains(@uri, "cursor_textInput")]');
+      if (input && (cursor?.bounds?.x || keyboard.attributes.text)) {
+        for (let i = 0, n = input.attributes.text.length; i < n; i++) {
+          await element.sdk.ecp.keypress('Backspace');
+        }
+      }
+    } else {
+      console.log('No Clear');
+    }
+
+    if (text) {
+      await element.sdk.ecp.type(text);
+    }
+
+    return;
+  }
+
+  // Otherwise, we need to activate keyboard
+  // by selecting element and then change the text
+
+  await element.select();
+
+  keyboard = await element.document.xpathSelect('//*[self::Keyboard or self::MiniKeyboard or self::PinPad]', 5);
+
+  if (keyboard) {
+    await appendOrSetText(keyboard, text, clear);
+  } else {
+    throw new RokuError('Keyboard dialog did not appear after pressing `Select` on element');
+  }
+
+  // Submit changes by selecting the first button in the dialog
+  // or by sending `Enter` button
+
+  const submitButton = keyboard.xpathSelect('./ancestor-or-self::*[self::Dialog or self::KeyboardDialog or self::PinDialog or self::ProgressDialog]//ButtonGroup');
+
+  if (submitButton) {
+    await submitButton.select();
+  } else {
+    await element.sdk.ecp.keypress('Enter');
+  }
+
+  // Wait for the keyboard to disappear
+
+  const isKeyboardClosed = !(await element.document.xpathSelect('self::*[not(./descendant-or-self::*[self::Keyboard or self::MiniKeyboard or self::PinPad])]', 5));
+  if (isKeyboardClosed) {
+    throw new RokuError('Keyboard dialog did not disappear');
+  }
 }
 
 function normalizeNode(node: XMLNode | null): XMLElement | null {

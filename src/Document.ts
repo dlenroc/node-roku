@@ -43,6 +43,16 @@ export class Document extends Element {
     }
   }
 
+  async append(text: string) {
+    const keyboard = this.xpathSelect('//*[self::Keyboard or self::MiniKeyboard or self::PinPad]');
+
+    if (keyboard) {
+      await keyboard.append(text);
+    } else {
+      await this.sdk.ecp.type(text);
+    }
+  }
+
   async render() {
     let xml;
 
