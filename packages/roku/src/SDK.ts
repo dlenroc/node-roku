@@ -1,8 +1,8 @@
-import { DebugServer } from './DebugServer';
-import { DeveloperServer } from './DeveloperServer';
-import { Document } from './Document';
-import { ECP } from './ECP';
-import { ODC } from './ODC';
+import { DebugServer } from '@dlenroc/roku-debug-server';
+import { DeveloperServer } from '@dlenroc/roku-developer-server';
+import { Document } from '@dlenroc/roku-dom';
+import { ECP } from '@dlenroc/roku-ecp';
+import { ODC } from '@dlenroc/roku-odc';
 
 export class SDK {
   debugServer: DebugServer;

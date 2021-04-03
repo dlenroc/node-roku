@@ -1,0 +1,28 @@
+{
+  "name": "@dlenroc/roku-dom",
+  "version": "1.0.0",
+  "description": "DOM-like representation of the channel",
+  "author": "Corneliu Duplachi",
+  "license": "MIT",
+  "repository": "dlenroc/node-roku",
+  "keywords": [
+    "roku",
+    "dom"
+  ],
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "rimraf dist && rollup -c ../../rollup.config.js && replace-in-file 'packages/dom/' '../' 'dist/**/*.d.ts.map'",
+    "prepare": "npm run build"
+  },
+  "engines": {
+    "node": ">=12"
+  },
+  "dependencies": {
+    "@dlenroc/roku": "^1.0.0",
+    "css-select": "^3.0.0",
+    "css-select-base-adapter": "^0.1.1",
+    "libxmljs2": "^0.26.7"
+  }
+}

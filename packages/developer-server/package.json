@@ -1,0 +1,27 @@
+{
+  "name": "@dlenroc/roku-developer-server",
+  "version": "1.0.0",
+  "description": "Client for host utilities provided via a web page at http://<ip>",
+  "author": "Corneliu Duplachi",
+  "license": "MIT",
+  "repository": "dlenroc/node-roku",
+  "keywords": [
+    "roku",
+    "developer-server"
+  ],
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "rimraf dist && rollup -c ../../rollup.config.js && replace-in-file 'packages/developer-server/' '../' 'dist/**/*.d.ts.map'",
+    "prepare": "npm run build"
+  },
+  "engines": {
+    "node": ">=12"
+  },
+  "dependencies": {
+    "form-data": "^4.0.0",
+    "indigestion": "^0.1.4",
+    "node-fetch": "^2.0.0"
+  }
+}

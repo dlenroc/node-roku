@@ -1,5 +1,5 @@
 import { URLSearchParams } from 'url';
-import { RokuError } from './Error';
+import { ECPError } from './ECPError';
 import fetch from './internal/keep-alive-fetch';
 import parse from './internal/xml';
 import { ActiveApp, App, AppId, DeviceInfo, Key, MediaInfo, Params } from './types';
@@ -81,7 +81,7 @@ export class ECP {
     const response = await fetch(this.baseUrl + '/' + path, { method });
 
     if (!response.ok) {
-      throw new RokuError(`${method} /${path} -> ${response.status} ${response.statusText}`);
+      throw new ECPError(`${method} /${path} -> ${response.status} ${response.statusText}`);
     }
 
     if (response.headers.get('Content-Length') === '0') {
@@ -97,7 +97,7 @@ export class ECP {
 
   private static key(key: string): string {
     if (!key) {
-      throw new RokuError('key is required');
+      throw new ECPError('key is required');
     }
 
     if (key.length === 1) {

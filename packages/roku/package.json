@@ -1,0 +1,29 @@
+{
+  "name": "@dlenroc/roku",
+  "version": "1.1.0",
+  "description": "All roku control protocols via one client",
+  "author": "Corneliu Duplachi",
+  "license": "MIT",
+  "repository": "dlenroc/node-roku",
+  "keywords": [
+    "roku",
+    "sdk"
+  ],
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "rimraf dist && rollup -c ../../rollup.config.js && replace-in-file 'packages/roku/' '../' 'dist/**/*.d.ts.map'",
+    "prepare": "npm run build"
+  },
+  "engines": {
+    "node": ">=12"
+  },
+  "dependencies": {
+    "@dlenroc/roku-debug-server": "^1.0.0",
+    "@dlenroc/roku-developer-server": "^1.0.0",
+    "@dlenroc/roku-dom": "^1.0.0",
+    "@dlenroc/roku-ecp": "^1.0.0",
+    "@dlenroc/roku-odc": "^1.0.0"
+  }
+}
