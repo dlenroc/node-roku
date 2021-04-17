@@ -1,7 +1,7 @@
 import FormData from 'form-data';
 import * as indigestion from 'indigestion';
 import fetch from 'node-fetch';
-import { RokuError } from './Error';
+import { DeveloperServerError } from './DeveloperServerError';
 
 export class DeveloperServer {
   private readonly username: string;
@@ -68,7 +68,7 @@ export class DeveloperServer {
     const pkg = response.match(/pkgs\/*\w+.pkg/)?.[0];
 
     if (!pkg) {
-      throw new RokuError('Could not found packaged app');
+      throw new DeveloperServerError('Could not found packaged app');
     }
 
     return await this._request('GET', pkg);
@@ -89,7 +89,7 @@ export class DeveloperServer {
     const imageUrl = response.match(/pkgs\/dev\.(png|jpg)/)?.[0];
 
     if (!imageUrl) {
-      throw new RokuError('make sure that device is enabled and sideloaded app is launched');
+      throw new DeveloperServerError('make sure that device is enabled and sideloaded app is launched');
     }
 
     return await this._request('GET', imageUrl);
@@ -101,7 +101,7 @@ export class DeveloperServer {
     });
 
     if (!response.includes('pkgs/channel.bsprof')) {
-      throw new RokuError('no profiling data found on device');
+      throw new DeveloperServerError('no profiling data found on device');
     }
 
     return await this._request('GET', 'pkgs/channel.bsprof');
@@ -127,7 +127,7 @@ export class DeveloperServer {
       const error = text.match(/'error'\).trigger\(\s*'.*?'\s*,\s*'(.+?)'\s*\)/)?.[1]
         || `${method} /${path} -> ${response.status} ${response.statusText}`;
 
-      throw new RokuError(error);
+      throw new DeveloperServerError(error);
     }
 
     if (response.headers.get('Content-Length') === '0') {
@@ -140,7 +140,7 @@ export class DeveloperServer {
       // roku-server can show an error without an appropriate status code
       const error = text.match(/'error'\).trigger\(\s*'.*?'\s*,\s*'(.+?)'\s*\)/)?.[1];
       if (error) {
-        throw new RokuError(error);
+        throw new DeveloperServerError(error);
       }
 
       return text as T;

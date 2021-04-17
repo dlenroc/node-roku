@@ -1,49 +1,27 @@
 {
-  "name": "@dlenroc/roku",
-  "description": "Powerful toolbox for controlling Roku devices",
-  "version": "1.1.0",
-  "author": "Corneliu Duplachi",
-  "license": "MIT",
-  "repository": "dlenroc/node-roku",
-  "keywords": [
-    "roku",
-    "sdk",
-    "ecp",
-    "debugServer",
-    "developerServer",
-    "odc",
-    "dom"
-  ],
-  "types": "dist/index.d.ts",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
+  "private": true,
   "scripts": {
-    "build": "rollup -c",
-    "watch": "rollup -c -w",
-    "prepare": "npm run build"
-  },
-  "engines": {
-    "node": ">=12"
-  },
-  "dependencies": {
-    "css-select": "^3.1.2",
-    "css-select-base-adapter": "^0.1.1",
-    "fast-xml-parser": "^3.17.6",
-    "form-data": "^4.0.0",
-    "indigestion": "^0.1.4",
-    "jszip": "^3.5.0",
-    "libxmljs2": "^0.26.6",
-    "node-fetch": "^2.6.1",
-    "telnet-client": "^1.4.7"
+    "clean": "rimraf {node_modules,package-lock.json} packages/*/{dist,node_modules,package-lock.json} && npm i",
+    "build": "npm run build -ws"
   },
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^17.0.0",
-    "@types/node": "^14.14.32",
-    "@types/node-fetch": "^2.5.8",
-    "rollup": "^2.38.0",
+    "@rollup/plugin-node-resolve": "^11.0.0",
+    "@rollup/plugin-typescript": "^8.0.0",
+    "@types/node": "^14.0.0",
+    "@types/node-fetch": "^2.0.0",
+    "replace-in-file": "^6.2.0",
+    "rimraf": "^3.0.0",
+    "rollup": "^2.0.0",
     "rollup-plugin-string": "^3.0.0",
     "rollup-plugin-terser": "^7.0.2",
-    "rollup-plugin-typescript2": "^0.30.0",
-    "typescript": "^4.2.3"
-  }
+    "tslib": "^2.0.0",
+    "typescript": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=12",
+    "npm": ">=7"
+  },
+  "workspaces": [
+    "./packages/*"
+  ]
 }

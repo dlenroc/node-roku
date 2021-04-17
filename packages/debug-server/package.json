@@ -1,0 +1,25 @@
+{
+  "name": "@dlenroc/roku-debug-server",
+  "version": "1.0.0",
+  "description": "Client for host utilities provided via telnet on port 8080",
+  "author": "Corneliu Duplachi",
+  "license": "MIT",
+  "repository": "dlenroc/node-roku",
+  "keywords": [
+    "roku",
+    "debug-server"
+  ],
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "rimraf dist && rollup -c ../../rollup.config.js && replace-in-file 'packages/debug-server/' '../' 'dist/**/*.d.ts.map'",
+    "prepare": "npm run build"
+  },
+  "engines": {
+    "node": ">=12"
+  },
+  "dependencies": {
+    "telnet-client": "^1.0.0"
+  }
+}

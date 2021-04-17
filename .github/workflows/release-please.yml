@@ -1,28 +1,57 @@
 name: release-please
+
 on:
   push:
     branches:
       - main
+
 jobs:
+  find-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      packages: ${{ steps.changes.outputs.packages }}
+    steps:
+      - uses: actions/checkout@v2
+      - id: changes
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const { execSync } = require('child_process');
+            const [owner, repo] = process.env.GITHUB_REPOSITORY.split('/');
+            const latestRelease = await github.repos.getLatestRelease({ owner, repo });
+            execSync('git pull --tags');
+            const diff = execSync(`git diff --name-only tags/${latestRelease.data.tag_name}`, { encoding: 'utf-8'});
+            const packages = [...new Set([...diff.matchAll(/^packages\/(.+?)\//mg)].map(group => group[1]))]
+            console.log(`::set-output name=packages::${JSON.stringify(Array.from(packages))}`);
+
   release-please:
     runs-on: ubuntu-latest
+    needs: find-changes
+    if: needs['find-changes'].outputs.packages != '[]'
+    strategy:
+      fail-fast: false
+      matrix:
+        package: ${{ fromJson(needs['find-changes'].outputs.packages) }}
     steps:
       - uses: GoogleCloudPlatform/release-please-action@v2
         id: release
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          package-name: "@dlenroc/roku"
           release-type: node
+          monorepo-tags: true
+          path: packages/${{ matrix.package }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          package-name: ${{ matrix.package }}
       - uses: actions/checkout@v2
         if: ${{ steps.release.outputs.release_created }}
       - uses: actions/setup-node@v1
         if: ${{ steps.release.outputs.release_created }}
         with:
-          node-version: 14
+          node-version: 15
           registry-url: https://registry.npmjs.org
       - run: npm install
         if: ${{ steps.release.outputs.release_created }}
-      - run: npm publish --access public
+      - run: npm publish packages/${{ matrix.package }}/ --access public
         if: ${{ steps.release.outputs.release_created }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -3,8 +3,7 @@ import { performance } from 'perf_hooks';
 import { Document } from './Document';
 import { RokuError } from './Error';
 import { selectAll, selectOne } from './internal/css-select';
-import { SDK } from './SDK';
-import { Key } from './types';
+import { SDK, Key } from '@dlenroc/roku';
 
 export class Element {
   sdk: SDK;

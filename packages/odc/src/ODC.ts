@@ -1,5 +1,5 @@
 import { URLSearchParams } from 'url';
-import { RokuError } from './Error';
+import { ODCError } from './ODCError';
 import fetch from './internal/keep-alive-fetch';
 import extend from './odc/index';
 
@@ -57,7 +57,7 @@ export class ODC {
         error += trace.map((trace: any) => trace.function.replace(/\(.+/, '') + ' (' + trace.filename + ':' + trace.line_number + ')').join('\n    at ');
       }
 
-      throw new RokuError(error);
+      throw new ODCError(error);
     }
 
     if (response.headers.get('Content-Length') === '0') {

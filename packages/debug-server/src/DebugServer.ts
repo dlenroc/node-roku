@@ -1,5 +1,5 @@
 import Telnet from 'telnet-client';
-import { RokuError } from './Error';
+import { DebugServerError } from './DebugServerError';
 import { DeveloperKey, Memory, Textures } from './types';
 
 export class DebugServer {
@@ -33,7 +33,7 @@ export class DebugServer {
     const swap = result.match(/Swap:\s*(.+)/)?.[1]?.split(/\s+/);
 
     if (!mem || !swap) {
-      throw new RokuError('');
+      throw new DebugServerError('');
     }
 
     return {
@@ -57,7 +57,7 @@ export class DebugServer {
     const result = await this._exec('genkey');
     const matches = result.match(/Password: (.+)\nDevID: (.+)/);
     if (!matches) {
-      throw new RokuError(result);
+      throw new DebugServerError(result);
     }
 
     return { id: matches[2], password: matches[1] };
@@ -144,7 +144,7 @@ export class DebugServer {
     const result = await this._exec('showkey');
     const matches = result.match(/Dev ID: (.+)/);
     if (!matches) {
-      throw new RokuError(result);
+      throw new DebugServerError(result);
     }
 
     return matches[1];
