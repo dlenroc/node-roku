@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.0.1](https://www.github.com/dlenroc/node-roku/compare/roku-debug-server-v1.0.0...roku-debug-server-v1.0.1) (2021-04-29)
+
+
+### Bug Fixes
+
+* connectivity ([8c85eb0](https://www.github.com/dlenroc/node-roku/commit/8c85eb0117e35016841f51eddc0f1818276dadaa))
+
 ## 1.0.0 (2021-04-17)
 
 
