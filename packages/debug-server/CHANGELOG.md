@@ -5,7 +5,7 @@
 
 ### Bug Fixes
 
-* **debug-server:** connectivity ([8c85eb0](https://www.github.com/dlenroc/node-roku/commit/8c85eb0117e35016841f51eddc0f1818276dadaa))
+* connectivity ([8c85eb0](https://www.github.com/dlenroc/node-roku/commit/8c85eb0117e35016841f51eddc0f1818276dadaa))
 
 ## 1.0.0 (2021-04-17)
 
