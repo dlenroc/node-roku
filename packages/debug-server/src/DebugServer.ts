@@ -1,9 +1,10 @@
-import Telnet from 'telnet-client';
+import { createConnection } from 'net';
 import { DebugServerError } from './DebugServerError';
 import { DeveloperKey, Memory, Textures } from './types';
 
 export class DebugServer {
   private readonly ip: string;
+  private readonly port = 8080;
 
   constructor(ip: string) {
     this.ip = ip;
@@ -55,12 +56,13 @@ export class DebugServer {
 
   async generateDeveloperKey(): Promise<DeveloperKey> {
     const result = await this._exec('genkey');
-    const matches = result.match(/Password: (.+)\nDevID: (.+)/);
-    if (!matches) {
+    const devIdMatches = result.match(/DevID: (.+)/);
+    const passwordMatches = result.match(/Password: (.+)/);
+    if (!devIdMatches || !passwordMatches) {
       throw new DebugServerError(result);
     }
 
-    return { id: matches[2], password: matches[1] };
+    return { id: devIdMatches[1], password: passwordMatches[1] };
   }
 
   async getLoadedTextures(): Promise<Textures> {
@@ -155,22 +157,37 @@ export class DebugServer {
   }
 
   private async _exec(cmd: string): Promise<string> {
-    const client = new Telnet();
+    return new Promise((resolve, reject) => {
+      const client = createConnection(this.port, this.ip, () => {
+        client.write(`${cmd}\nq\n`);
+      });
 
-    await client.connect({
-      host: this.ip,
-      port: 8080,
-      shellPrompt: '>',
-      timeout: 5000,
-      execTimeout: 5000,
-      echoLines: 0,
-      debug: false,
+      client.setTimeout(5e3, () => {
+        client.destroy(new DebugServerError(
+          `Inactivity timeout exceeded during execution of '${cmd}' command, ` +
+          `make sure the device is available on the network and ` +
+          `there is no other active telnet connection with '${this.ip}:${this.port}'`
+        ));
+      });
+
+      let chunks: Buffer[] = [];
+      client.on('data', (chunk) => {
+        chunks.push(chunk);
+      });
+
+      client.on('end', () => {
+        const response = Buffer.concat(chunks).toString().replace(/\r/g, '');
+        resolve(response.slice(response.indexOf('\n>') + 2, response.lastIndexOf('\n>')));
+      });
+
+      client.on('error', (error) => {
+        reject(error);
+      });
+
+      client.on('close', () => {
+        client.destroy();
+        client.removeAllListeners();
+      });
     });
-
-    try {
-      return await client.exec(cmd);
-    } finally {
-      await client.end();
-    }
   }
 }
