@@ -8,7 +8,7 @@ const pkg = require(cwd + '/package.json');
 
 export default {
   input: cwd + '/src/index.ts',
-  external: Object.keys(pkg.dependencies),
+  external: Object.keys(pkg.dependencies || {}),
   output: [
     {
       file: cwd + '/' + pkg.main,
