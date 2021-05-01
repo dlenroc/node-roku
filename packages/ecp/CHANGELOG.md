@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.0.1](https://www.github.com/dlenroc/node-roku/compare/roku-ecp-v1.0.0...roku-ecp-v1.0.1) (2021-05-01)
+
+
+### Bug Fixes
+
+* handle empty `params` object ([769570d](https://www.github.com/dlenroc/node-roku/commit/769570d4a23a42f068baf23a8ea4dcb7cd250564))
+
 ## 1.0.0 (2021-04-17)
 
 
