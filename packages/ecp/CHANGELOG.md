@@ -5,7 +5,7 @@
 
 ### Bug Fixes
 
-* **ecp:** handle empty `params` object ([769570d](https://www.github.com/dlenroc/node-roku/commit/769570d4a23a42f068baf23a8ea4dcb7cd250564))
+* handle empty `params` object ([769570d](https://www.github.com/dlenroc/node-roku/commit/769570d4a23a42f068baf23a8ea4dcb7cd250564))
 
 ## 1.0.0 (2021-04-17)
 
