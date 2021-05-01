@@ -53,3 +53,15 @@ patchRegistry(changes: Record<string, null | Record<string, string | null>>): Pr
 ```typescript
 clearRegistry(): Promise<void>
 ```
+
+## Launch parameters
+
+All of the above commands require the application to be up and running, but some of them can also be run using [ECP](/packages/ecp#readme) during startup
+
+```typescript
+await ecp.launch('dev', { odc_clear_registry: true })
+```
+
+```typescript
+await ecp.launch('dev', { odc_registry: /* state */ )
+```

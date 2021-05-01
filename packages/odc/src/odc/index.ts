@@ -16,6 +16,8 @@ import server from './server.brs';
 // @ts-ignore
 import manifest from './server.xml';
 // @ts-ignore
+import main from './source/odc_main.brs';
+// @ts-ignore
 import utils from './utils.brs';
 
 export default async function extend(app: Buffer): Promise<Buffer> {
@@ -31,20 +33,32 @@ export default async function extend(app: Buffer): Promise<Buffer> {
   zip.file('components/odc/commands/getAppUI.brs', getAppUI);
   zip.file('components/odc/commands/getRegistry.brs', getRegistry);
   zip.file('components/odc/commands/patchRegistry.brs', patchRegistry);
+  zip.file('source/odc_main.brs', main);
 
   // patch entry points
   const pattern = /(\.show\(\))/i;
+  const entryPointMatcher = /(^\s*(sub|function)\s+(main|runuserinterface)\s*\()\s*([\w$%!#&]+)?\s*[^)]*(\)[^:\n]*)/gim;
   for (const file of zip.file(/^source\/.*\.brs$/i)) {
-    let content = await file.async('string');
+    let source = await file.async('string');
+    let content = source;
 
-    if (pattern.test(content)) {
-      content = content.replace(pattern, '$1 : createObject("roSGNode", "ODC")');
+    // SceneGraph
+    content = content.replace(pattern, '$1 : createObject("roSGNode", "ODC")');
+
+    // Source
+    content = content.replace(entryPointMatcher, (...groups: string[]) => {
+      const methodParameter = groups[4] || 'options';
+      const methodDeclaration = groups[4] ? groups[0] : groups[1] + methodParameter + groups[5];
+      return methodDeclaration + `: odc_main(${methodParameter})`;
+    });
+
+    if (source != content) {
       zip.file(file.name, content);
     }
   }
 
   // patch scenes
-  const isScenePattern = /<component .+extends="(Base)?Scene"/i;
+  const isScenePattern = /<component .*extends="(Base)?Scene"/i;
   const endSceneComponentPattern = /(<\/component>)/i;
   const endInterfaceComponentPattern = /(<\/interface>)/i;
   for (const file of zip.file(/^components\/.*\.xml$/i)) {
