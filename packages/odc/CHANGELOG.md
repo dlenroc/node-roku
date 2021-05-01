@@ -5,8 +5,8 @@
 
 ### Features
 
-* **odc:** different name for extended app `<name> | <md5>` ([796e2c3](https://www.github.com/dlenroc/node-roku/commit/796e2c314124ecaeae1ef98c8e4f07aaabdf7643))
-* **odc:** launch parameters ([669fe7a](https://www.github.com/dlenroc/node-roku/commit/669fe7a215ce7411efce921d2d6c5ecb0112cbbe))
+* different name for extended app `<name> | <md5>` ([796e2c3](https://www.github.com/dlenroc/node-roku/commit/796e2c314124ecaeae1ef98c8e4f07aaabdf7643))
+* launch parameters ([669fe7a](https://www.github.com/dlenroc/node-roku/commit/669fe7a215ce7411efce921d2d6c5ecb0112cbbe))
 
 ## 1.0.0 (2021-04-17)
 
