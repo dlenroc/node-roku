@@ -74,7 +74,7 @@ export class ECP {
   }
 
   private async ecp<T extends string | Buffer | void>(method: string, path: string, params?: Record<string, any>): Promise<T> {
-    if (params) {
+    if (params && Object.keys(params).length) {
       path += '?' + new URLSearchParams(params);
     }
 
