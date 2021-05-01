@@ -1,3 +1,4 @@
+import { createHash } from 'crypto';
 import JSZip from 'jszip';
 // @ts-ignore
 import clientGetAppUI from './client_commands/getAppUI.brs';
@@ -22,6 +23,13 @@ import utils from './utils.brs';
 
 export default async function extend(app: Buffer): Promise<Buffer> {
   const zip = await JSZip.loadAsync(app);
+
+  // patch manifest
+  const md5 = createHash('md5').update(app).digest('hex');
+  let manifestSource = await zip.file('manifest')?.async('string');
+  if (manifestSource) {
+    zip.file('manifest', manifestSource.replace(/(^\s*title\s*=.+)/im, `$1 | ${md5}`));
+  }
 
   // install component
   zip.file('components/odc/http.brs', http);
