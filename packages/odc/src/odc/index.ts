@@ -45,7 +45,7 @@ export default async function extend(app: Buffer): Promise<Buffer> {
 
   // patch entry points
   const pattern = /(\.show\(\))/i;
-  const entryPointMatcher = /(^\s*(sub|function)\s+(main|runuserinterface)\s*\()\s*([\w$%!#&]+)?\s*[^)]*(\)[^:\n]*)/gim;
+  const entryPointMatcher = /(^\s*(sub|function)\s+(main|runuserinterface)\s*\()\s*([\w$%!#&]+)?\s*[^)]*(\)[^:\r\n]*)/gim;
   for (const file of zip.file(/^source\/.*\.brs$/i)) {
     let source = await file.async('string');
     let content = source;
