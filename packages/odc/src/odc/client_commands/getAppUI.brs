@@ -1,18 +1,38 @@
-function odc_get_source() as object
+function odc_get_source(fields as object) as object
   scene = m.top.GetScene()
   target = CreateObject("roXMLElement")
   target.setName("screen")
-  odc_renderAppUI(target.addElement(scene.subtype()), scene)
+  odc_renderAppUI(target.addElement(scene.subtype()), scene, fields)
   return target.genXML(false)
 end function
 
-function odc_renderAppUI(target as object, node as object)
-  for each field in node.items()
-    fieldKey = field.key
-    if fieldKey <> "change" and fieldKey <> "clippingRect" then
-      odc_addFieldToNode(target, node, fieldKey, field.value)
+function odc_renderAppUI(target as object, node as object, fieldsFilter as object)
+  if fieldsFilter = invalid then
+    for each field in node.items()
+      fieldKey = field.key
+      if fieldKey <> "change" and fieldKey <> "clippingRect" then
+        odc_addFieldToNode(target, node, fieldKey, field.value)
+      end if
+    end for
+  else
+    fields = fieldsFilter["*"]
+    if fields <> invalid then
+      for each field in fields
+        if node.doesExist(field) then
+          odc_addFieldToNode(target, node, field, node.getField(field))
+        end if
+      end for
     end if
-  end for
+
+    fields = fieldsFilter[node.subtype()]
+    if fields <> invalid then
+      for each field in fields
+        if node.doesExist(field) then
+          odc_addFieldToNode(target, node, field, node.getField(field))
+        end if
+      end for
+    end if
+  end if
 
   rect = node.sceneBoundingRect()
   if rect.width <> 0 and rect.height <> 0 then
@@ -25,11 +45,11 @@ function odc_renderAppUI(target as object, node as object)
   end if
 
   if getInterface(node.dialog, "ifSGNodeChildren") <> invalid then
-    odc_renderAppUI(target.addElement(node.dialog.subtype()), node.dialog)
+    odc_renderAppUI(target.addElement(node.dialog.subtype()), node.dialog, fieldsFilter)
   end if
 
   for each nested in node.getChildren(-1, 0)
-    odc_renderAppUI(target.addElement(nested.subtype()), nested)
+    odc_renderAppUI(target.addElement(nested.subtype()), nested, fieldsFilter)
   end for
 end function
 

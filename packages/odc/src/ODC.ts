@@ -14,8 +14,8 @@ export class ODC {
     return await extend(app);
   }
 
-  async getAppUI(): Promise<string> {
-    return await this.request('GET', `app-ui`);
+  async getAppUI(fields?: Record<string, string[]>): Promise<string> {
+    return await this.request('GET', `app-ui`, { ...(fields && { fields }) });
   }
 
   async getRegistry(): Promise<Record<string, Record<string, string>>> {
@@ -36,13 +36,25 @@ export class ODC {
 
     if (params) {
       if (method === 'GET') {
-        path += '?' + new URLSearchParams(params);
+        const qs: Record<string, any> = {};
+        const entries = Object.entries(params);
+        for (const [key, value] of entries) {
+          if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
+            qs[key] = value;
+          } else {
+            qs[key] = JSON.stringify(value);
+          }
+        }
+
+        if (entries.length) {
+          path += '?' + new URLSearchParams(qs);
+        }
       } else {
         body = JSON.stringify(params);
         headers = { 'Content-Type': 'application/json' };
       }
     }
-
+    console.log(this.baseUrl + '/' + path);
     const response = await fetch(this.baseUrl + '/' + path, { method, headers, body });
 
     if (!response.ok) {
