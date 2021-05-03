@@ -22,7 +22,7 @@ export class ODC {
     return await this.request('GET', `registry`);
   }
 
-  async patchRegistry(changes: Record<string, null | Record<string, string | null>>): Promise<void> {
+  async patchRegistry(changes: Record<string, null | Record<string, any>>): Promise<void> {
     await this.request('PATCH', `registry`, changes);
   }
 
