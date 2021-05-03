@@ -54,7 +54,7 @@ export class ODC {
         headers = { 'Content-Type': 'application/json' };
       }
     }
-    console.log(this.baseUrl + '/' + path);
+
     const response = await fetch(this.baseUrl + '/' + path, { method, headers, body });
 
     if (!response.ok) {
