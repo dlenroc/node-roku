@@ -9,10 +9,7 @@ end function
 function odc_renderAppUI(target as object, node as object, fieldsFilter as object)
   if fieldsFilter = invalid then
     for each field in node.items()
-      fieldKey = field.key
-      if fieldKey <> "change" and fieldKey <> "clippingRect" then
-        odc_addFieldToNode(target, node, fieldKey, field.value)
-      end if
+      odc_addFieldToNode(target, node, field.key, field.value)
     end for
   else
     fields = fieldsFilter["*"]
