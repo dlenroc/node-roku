@@ -13,7 +13,7 @@ function patchRegistry(request, response)
         if item.value = invalid then
           section.delete(item.key)
         else
-          section.write(item.key, item.value)
+          section.write(item.key, toString(item.value))
         end if
       end for
 

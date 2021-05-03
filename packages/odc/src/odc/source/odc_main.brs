@@ -20,7 +20,14 @@ sub odc_main(options as Object)
           if item.value = invalid then
             section.delete(item.key)
           else
-            section.write(item.key, item.value)
+            value = item.value
+            if getInterface(value, "ifToStr") = invalid then
+              value = formatJSON(value, 1)
+            else
+              value = box(value).toStr()
+            end if
+
+            section.write(item.key, value)
           end if
         end for
 

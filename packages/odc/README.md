@@ -47,7 +47,7 @@ getRegistry(): Promise<Record<string, Record<string, string>>>
 ```
 
 ```typescript
-patchRegistry(changes: Record<string, null | Record<string, string | null>>): Promise<void>
+patchRegistry(changes: Record<string, null | Record<string, any>>): Promise<void>
 ```
 
 ```typescript
