@@ -39,7 +39,7 @@ extend(app: Buffer): Promise<Buffer>
 ```
 
 ```typescript
-getAppUI(): Promise<string>
+getAppUI(fields?: Record<string, string[]): Promise<string>
 ```
 
 ```typescript
