@@ -7,15 +7,10 @@ function odc_get_source() as object
 end function
 
 function odc_renderAppUI(target as object, node as object)
-  for each attribute in node.Items()
-    if getInterface(attribute.value, "ifToStr") <> invalid then
-      value = attribute.value
-      if value <> invalid then
-        value = box(value).toStr()
-        if value <> "" then
-          target.addAttribute(attribute.key, value)
-        end if
-      end if
+  for each field in node.items()
+    fieldKey = field.key
+    if fieldKey <> "change" and fieldKey <> "clippingRect" then
+      odc_addFieldToNode(target, node, fieldKey, field.value)
     end if
   end for
 
@@ -30,14 +25,28 @@ function odc_renderAppUI(target as object, node as object)
   end if
 
   if getInterface(node.dialog, "ifSGNodeChildren") <> invalid then
-    odc_renderAppUI(target.AddElement(node.dialog.subtype()), node.dialog)
+    odc_renderAppUI(target.addElement(node.dialog.subtype()), node.dialog)
   end if
 
   for each nested in node.getChildren(-1, 0)
-    if not nested.isSubtype("AnimationBase") then
-      odc_renderAppUI(target.AddElement(nested.subtype()), nested)
-    end if
+    odc_renderAppUI(target.addElement(nested.subtype()), nested)
   end for
+end function
+
+function odc_addFieldToNode(target as object, node as object, fieldKey as string, fieldValue as object)
+  if getInterface(fieldValue, "ifSGNodeField") <> invalid then
+    fieldValue = fieldValue.getField("id")
+  end if
+
+  fieldValue = odc_to_serializable(fieldValue)
+  if fieldValue <> invalid then
+    fieldType = node.getFieldType(fieldKey)
+    if fieldType = "color" then
+      fieldValue = "#" + StrI(fieldValue, 16)
+    end if
+
+    target.addAttribute(fieldKey, odc_to_string(fieldValue))
+  end if
 end function
 
 function odc_get_node(path as string) as object
@@ -77,7 +86,7 @@ function odc_get_node(path as string) as object
   }
 end function
 
-function odc_to_string(source)
+function odc_to_string(source as object)
   if getInterface(source, "ifToStr") <> invalid then
     return source.toStr()
   end if
@@ -85,7 +94,7 @@ function odc_to_string(source)
   return formatJSON(source, 1)
 end function
 
-function odc_to_serializable(source)
+function odc_to_serializable(source as object)
   if getInterface(source, "ifToStr") <> invalid then
     return source
   end if
@@ -94,7 +103,7 @@ function odc_to_serializable(source)
     results = []
 
     for index = 0 to source.count() - 1
-      results.push(odc_to_string(source[index]))
+      results.push(odc_to_serializable(source[index]))
     end for
 
     return results
@@ -104,9 +113,12 @@ function odc_to_serializable(source)
     result = {}
 
     for each item in source.items()
-      if getInterface(item.value, "ifSGNodeChildren") = invalid then
-        result[item.key] = odc_to_string(item.value)
+      value = item.value
+      if getInterface(value, "ifSGNodeField") <> invalid then
+        value = value.getField("id")
       end if
+
+      result[item.key] = odc_to_serializable(value)
     end for
 
     return result
