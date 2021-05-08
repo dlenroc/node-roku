@@ -39,7 +39,7 @@ extend(app: Buffer): Promise<Buffer>
 ```
 
 ```typescript
-getAppUI(fields?: Record<string, string[]): Promise<string>
+getAppUI(fields?: Record<string, string[]>): Promise<string>
 ```
 
 ```typescript
@@ -63,5 +63,5 @@ await ecp.launch('dev', { odc_clear_registry: true })
 ```
 
 ```typescript
-await ecp.launch('dev', { odc_registry: /* state */ )
+await ecp.launch('dev', { odc_registry: /* state */ })
 ```
