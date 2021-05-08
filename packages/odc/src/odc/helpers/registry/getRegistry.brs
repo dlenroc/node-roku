@@ -1,15 +1,11 @@
 
-' @Route('GET', '/registry')
-function getRegistry(request, response)
+function getRegistry() as object
   sections = {}
 
   registry = createObject("roRegistry")
   for each name in registry.getSectionList()
-    sections[name] = {}
     section = createObject("roRegistrySection", name)
-    for each key in section.getKeyList()
-      sections[name][key] = section.read(key)
-    end for
+    sections[name] = section.readMulti(section.getKeyList())
   end for
 
   return sections

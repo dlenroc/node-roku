@@ -1,17 +1,3 @@
-function toString(source as object) as string
-  if getInterface(source, "ifToStr") <> invalid
-    return source.toStr()
-  end if
-
-  return formatJSON(source, 1)
-end function
-
-function toByteArray(source as object) as object
-  byteArray = createObject("roByteArray")
-  byteArray.fromAsciiString(toString(source))
-
-  return byteArray
-end function
 
 function toSerializable(source as object) as object
   if getInterface(source, "ifToStr") <> invalid
@@ -32,9 +18,13 @@ function toSerializable(source as object) as object
     result = {}
 
     for each item in source.items()
-      if getInterface(item.value, "ifSGNodeChildren") = invalid
-        result[item.key] = toSerializable(item.value)
+      value = item.value
+
+      if getInterface(value, "ifSGNodeField") <> invalid
+        value = value.getField("id")
       end if
+
+      result[item.key] = toSerializable(value)
     end for
 
     return result

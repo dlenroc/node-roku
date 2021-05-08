@@ -1,4 +1,6 @@
-function HttpServer()
+' import '../serialization/toByteArray.brs'
+
+function HttpServer() as object
   return {
     routes: {},
     addRoute: HttpServer_addRoute,
@@ -6,11 +8,11 @@ function HttpServer()
   }
 end function
 
-function HttpServer_addRoute(method, path, handler)
+sub HttpServer_addRoute(method as string, path as string, handler as object)
   m.routes[method + "|" + path] = handler
-end function
+end sub
 
-function HttpServer_listen(portNumber)
+sub HttpServer_listen(portNumber)
   port = createObject("roMessagePort")
 
   addr = createObject("roSocketAddress")
@@ -24,7 +26,7 @@ function HttpServer_listen(portNumber)
 
   tcpId = Stri(tcp.getID())
 
-  if not tcp.eOK() then
+  if not tcp.eOK()
     print "Could not create TCP socket"
     stop
   end if
@@ -46,7 +48,7 @@ function HttpServer_listen(portNumber)
   WAIT_FOR_CONNECTION:
   event = wait(0, port)
 
-  if type(event) <> "roSocketEvent" then
+  if type(event) <> "roSocketEvent"
     goto WAIT_FOR_CONNECTION
   end if
 
@@ -61,10 +63,10 @@ function HttpServer_listen(portNumber)
 
   connectionId = Stri(event.getSocketID())
 
-  if connectionId = tcpId and tcp.isReadable() then
+  if connectionId = tcpId and tcp.isReadable()
     connection = tcp.accept()
 
-    if connection <> invalid then
+    if connection <> invalid
       connection.notifyReadable(true)
       connection.setMessagePort(port)
 
@@ -93,7 +95,7 @@ function HttpServer_listen(portNumber)
 
   bufferSize = connection.getCountRcvBuf()
 
-  if bufferSize = 0 then
+  if bufferSize = 0
     connection.close()
     sessions.delete(connectionId)
     connections.delete(connectionId)
@@ -103,7 +105,7 @@ function HttpServer_listen(portNumber)
 
   session = sessions[connectionId]
 
-  if session = invalid then
+  if session = invalid
     session = {
       request: {
         search: {},
@@ -143,12 +145,12 @@ function HttpServer_listen(portNumber)
   '   * request.method
   '
 
-  if context.state = 0 then
+  if context.state = 0
     while bufferIndex < bufferSize
       code = buffer[bufferIndex]
       bufferIndex = bufferIndex + 1
 
-      if code = 32 then
+      if code = 32
         context.state = 1
         request.method = context.buffer.toAsciiString()
         context.buffer.clear()
@@ -169,19 +171,19 @@ function HttpServer_listen(portNumber)
   '   * request.path
   '
 
-  if context.state = 1 then
+  if context.state = 1
     HTTP_PATH:
 
     while bufferIndex < bufferSize
       code = buffer[bufferIndex]
       bufferIndex = bufferIndex + 1
 
-      if code = 63 then
+      if code = 63
         context.state = 2
         request.path = context.buffer.toAsciiString()
         context.buffer.clear()
         goto HTTP_QUERY_STRING_NAME
-      else if code = 32 then
+      else if code = 32
         context.state = 4
         request.path = context.buffer.toAsciiString()
         context.buffer.clear()
@@ -202,23 +204,23 @@ function HttpServer_listen(portNumber)
   '   * request.search[<key>] = <value>
   '
 
-  if context.state = 2 then
+  if context.state = 2
     HTTP_QUERY_STRING_NAME:
 
     while bufferIndex < bufferSize
       code = buffer[bufferIndex]
       bufferIndex = bufferIndex + 1
 
-      if code = 32 then
+      if code = 32
         context.state = 4
         request.search[context.buffer.toAsciiString().decodeUriComponent()] = ""
         context.buffer.clear()
         goto HTTP_VERSION
-      else if code = 38 then
+      else if code = 38
         request.search[context.buffer.toAsciiString().decodeUriComponent()] = ""
         context.buffer.clear()
         goto HTTP_QUERY_STRING_NAME
-      else if code = 61 then
+      else if code = 61
         context.state = 3
         context.name = context.buffer.toAsciiString().decodeUriComponent()
         context.buffer.clear()
@@ -231,19 +233,19 @@ function HttpServer_listen(portNumber)
     goto WAIT_FOR_CONNECTION
   end if
 
-  if context.state = 3 then
+  if context.state = 3
     HTTP_QUERY_STRING_VALUE:
 
     while bufferIndex < bufferSize
       code = buffer[bufferIndex]
       bufferIndex = bufferIndex + 1
 
-      if code = 32 then
+      if code = 32
         context.state = 4
         request.search[context.name] = context.buffer.toAsciiString().decodeUriComponent()
         context.buffer.clear()
         goto HTTP_VERSION
-      else if code = 38 then
+      else if code = 38
         context.state = 2
         request.search[context.name] = context.buffer.toAsciiString().decodeUriComponent()
         context.buffer.clear()
@@ -261,14 +263,14 @@ function HttpServer_listen(portNumber)
   ' Skip version
   '
 
-  if context.state = 4 then
+  if context.state = 4
     HTTP_VERSION:
 
     while bufferIndex < bufferSize
       code = buffer[bufferIndex]
       bufferIndex = bufferIndex + 1
 
-      if code = 10 then
+      if code = 10
         context.state = 5
         goto HTTP_HEADER_NAME
       end if
@@ -285,20 +287,20 @@ function HttpServer_listen(portNumber)
   '   * request.headers[<key>] = <value>
   '
 
-  if context.state = 5 then
+  if context.state = 5
     HTTP_HEADER_NAME:
 
     while bufferIndex < bufferSize
       code = buffer[bufferIndex]
       bufferIndex = bufferIndex + 1
 
-      if code = 13 then
+      if code = 13
         goto HTTP_HEADER_NAME
-      else if code = 10 then
+      else if code = 10
         request.headers["Content-Length"] = val(request.headers["Content-Length"])
         context.state = 7
         goto HTTP_BODY
-      else if code = 58 then
+      else if code = 58
         context.state = 6
         context.name = context.buffer.toAsciiString()
         context.buffer.clear()
@@ -311,23 +313,23 @@ function HttpServer_listen(portNumber)
     goto WAIT_FOR_CONNECTION
   end if
 
-  if context.state = 6 then
+  if context.state = 6
     HTTP_HEADER_VALUE:
 
     while bufferIndex < bufferSize
       code = buffer[bufferIndex]
       bufferIndex = bufferIndex + 1
 
-      if code = 13 then
+      if code = 13
         goto HTTP_HEADER_VALUE
-      else if code = 10 then
+      else if code = 10
         context.state = 5
         request.headers[context.name] = context.buffer.toAsciiString()
         context.buffer.clear()
         goto HTTP_HEADER_NAME
       end if
 
-      if code = 32 and context.buffer.count() = 0 then
+      if code = 32 and context.buffer.count() = 0
         goto HTTP_HEADER_VALUE
       end if
 
@@ -345,7 +347,7 @@ function HttpServer_listen(portNumber)
   '   * request.body
   '
 
-  if context.state = 7 then
+  if context.state = 7
     HTTP_BODY:
 
     while bufferIndex < bufferSize
@@ -353,13 +355,13 @@ function HttpServer_listen(portNumber)
       bufferIndex = bufferIndex + 1
     end while
 
-    if request.body.count() < request.headers["Content-Length"] then
+    if request.body.count() < request.headers["Content-Length"]
       goto WAIT_FOR_CONNECTION
     end if
 
     sessions.delete(connectionId)
 
-    if request.headers["Content-Type"] <> invalid and request.headers["Content-Type"].instr("json") then
+    if request.headers["Content-Type"] <> invalid and request.headers["Content-Type"].instr("json")
       request.body = parseJSON(request.body.toAsciiString())
     else
       request.body = request.body.toAsciiString()
@@ -378,17 +380,17 @@ function HttpServer_listen(portNumber)
 
   try
     handler = m.routes[request.method + "|" + request.path]
-    if handler = invalid then
+    if handler = invalid
       response.code = 501
     else
       body = handler(request, response)
 
-      if response.body = invalid then
+      if response.body = invalid
         response.body = body
       end if
 
-      if response.code = invalid then
-        if response.body = invalid then
+      if response.code = invalid
+        if response.body = invalid
           response.code = 204
         else
           response.code = 200
@@ -405,7 +407,7 @@ function HttpServer_listen(portNumber)
   ' Reply to request
   '
 
-  if response.body = invalid then
+  if response.body = invalid
     response.body = ""
   end if
 
@@ -437,10 +439,10 @@ function HttpServer_listen(portNumber)
   ' Close connection
   '
 
-  if request.headers["Connection"] = invalid or request.headers["Connection"] = "close" then
+  if request.headers["Connection"] = invalid or request.headers["Connection"] = "close"
     connection.close()
     connections.delete(connectionId)
   end if
 
   goto WAIT_FOR_CONNECTION
-end function
+end sub

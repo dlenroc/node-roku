@@ -1,6 +1,4 @@
 import nodeResolve from '@rollup/plugin-node-resolve';
-import { string } from 'rollup-plugin-string';
-import { terser } from 'rollup-plugin-terser';
 import typescript from '@rollup/plugin-typescript';
 
 const cwd = process.cwd();
@@ -25,8 +23,6 @@ export default {
   ],
   plugins: [
     nodeResolve(),
-    string({ include: '**/*.{xml,brs}' }),
-    typescript({ tsconfig: __dirname + '/tsconfig.json' }),
-    terser(),
+    typescript({ tsconfig: __dirname + '/tsconfig.json' })
   ],
 };
