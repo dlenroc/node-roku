@@ -75,6 +75,11 @@ export class ECP {
 
   private async ecp<T extends string | Buffer | void>(method: string, path: string, params?: Record<string, any>): Promise<T> {
     if (params && Object.keys(params).length) {
+      params = Object.entries(params).reduce((result: Record<string, any>, entry: string[]) => {
+        result[entry[0]] = ['string', 'number', 'boolean'].includes(typeof entry[1]) ? entry[1] : JSON.stringify(entry[1]);
+        return result;
+      }, {});
+
       path += '?' + new URLSearchParams(params);
     }
 
