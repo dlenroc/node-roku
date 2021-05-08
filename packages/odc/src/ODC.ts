@@ -1,7 +1,7 @@
 import { URLSearchParams } from 'url';
-import { ODCError } from './ODCError';
+import extend from './internal/injector';
 import fetch from './internal/keep-alive-fetch';
-import extend from './odc/index';
+import { ODCError } from './ODCError';
 
 export class ODC {
   private readonly baseUrl: string;
