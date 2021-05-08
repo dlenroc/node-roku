@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.2.0](https://www.github.com/dlenroc/node-roku/compare/roku-odc-v1.1.0...roku-odc-v1.2.0) (2021-05-08)
+
+
+### Features
+
+* **odc:** ability to filter app-ui attributes ([ec0cc0d](https://www.github.com/dlenroc/node-roku/commit/ec0cc0d3a4cb17f4aed29e751b11b5176c54eaaf))
+* **odc:** allow serializable types in `patchRegistry` ([92074a1](https://www.github.com/dlenroc/node-roku/commit/92074a1bf8367423668dcdf45f05bc046215a9ea))
+* **odc:** fields with complex types in app-ui ([545a4ed](https://www.github.com/dlenroc/node-roku/commit/545a4ed34aec085ec87d2a01d0430bcc69967e49))
+
+
+### Bug Fixes
+
+* **odc:** main method patching in files with `\r` ([e3321ed](https://www.github.com/dlenroc/node-roku/commit/e3321ed83d70c7827a97bd6b9ab13dd61fa8b8d7))
+
 ## [1.1.0](https://www.github.com/dlenroc/node-roku/compare/roku-odc-v1.0.0...roku-odc-v1.1.0) (2021-05-01)
 
 
