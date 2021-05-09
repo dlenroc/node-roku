@@ -55,6 +55,10 @@ clearRegistry(): Promise<void>
 ```
 
 ```typescript
+pullFile(path: string): Promise<Buffer>
+```
+
+```typescript
 pushFile(path: string, content: string | Buffer): Promise<void>
 ```
 
