@@ -1,3 +1,4 @@
+import { BodyInit } from 'node-fetch';
 import { URLSearchParams } from 'url';
 import extend from './internal/injector';
 import fetch from './internal/keep-alive-fetch';
@@ -30,12 +31,15 @@ export class ODC {
     await this.request('DELETE', `registry`);
   }
 
-  private async request<T extends string | Buffer | any>(method: string, path: string, params?: Record<string, any>): Promise<T> {
-    let body;
+  async pushFile(path: string, content: string | Buffer): Promise<void> {
+    return await this.request('PUT', `file`, { path }, content);
+  }
+
+  private async request<T extends string | Buffer | any>(method: string, path: string, params?: Record<string, any>, body?: BodyInit): Promise<T> {
     let headers;
 
     if (params) {
-      if (method === 'GET') {
+      if (method === 'GET' || body != undefined) {
         const qs: Record<string, any> = {};
         const entries = Object.entries(params);
         for (const [key, value] of entries) {
