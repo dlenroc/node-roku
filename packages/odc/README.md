@@ -54,6 +54,10 @@ patchRegistry(changes: Record<string, null | Record<string, any>>): Promise<void
 clearRegistry(): Promise<void>
 ```
 
+```typescript
+pushFile(path: string, content: string | Buffer): Promise<void>
+```
+
 ## Launch parameters
 
 All of the above commands require the application to be up and running, but some of them can also be run using [ECP](/packages/ecp#readme) during startup

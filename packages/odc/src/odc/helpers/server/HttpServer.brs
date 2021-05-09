@@ -361,10 +361,8 @@ sub HttpServer_listen(portNumber)
 
     sessions.delete(connectionId)
 
-    if request.headers["Content-Type"] <> invalid and request.headers["Content-Type"].instr("json")
+    if request.headers["Content-Type"] <> invalid and request.headers["Content-Type"].instr("json") > -1
       request.body = parseJSON(request.body.toAsciiString())
-    else
-      request.body = request.body.toAsciiString()
     end if
   end if
 

@@ -3,6 +3,7 @@
 ' import './routes/onGetAppUI.brs'
 ' import './routes/onGetRegistry.brs'
 ' import './routes/onPatchRegistry.brs'
+' import './routes/onPutFile.brs'
 
 sub init()
   m.top.functionName = "start_server"
@@ -12,6 +13,7 @@ end sub
 sub start_server()
   server = HttpServer()
   server.addRoute("GET", "/app-ui", onGetAppUI)
+  server.addRoute("PUT", "/file", onPutFile)
   server.addRoute("GET", "/registry", onGetRegistry)
   server.addRoute("PATCH", "/registry", onPatchRegistry)
   server.addRoute("DELETE", "/registry", onDeleteRegistry)
