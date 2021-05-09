@@ -31,8 +31,12 @@ export class ODC {
     await this.request('DELETE', `registry`);
   }
 
+  async pullFile(path: string): Promise<Buffer> {
+    return await this.request('GET', `file`, { path });
+  }
+
   async pushFile(path: string, content: string | Buffer): Promise<void> {
-    return await this.request('PUT', `file`, { path }, content);
+    await this.request('PUT', `file`, { path }, content);
   }
 
   private async request<T extends string | Buffer | any>(method: string, path: string, params?: Record<string, any>, body?: BodyInit): Promise<T> {
