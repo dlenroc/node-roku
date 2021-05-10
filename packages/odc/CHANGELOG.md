@@ -5,9 +5,9 @@
 
 ### Features
 
-* **odc:** ability to download files using `pullFile` ([04f4acd](https://www.github.com/dlenroc/node-roku/commit/04f4acd9bf28832cbf17754c2609190cd73365ff))
-* **odc:** ability to list files using `getFiles` ([d376a0a](https://www.github.com/dlenroc/node-roku/commit/d376a0a435526f875ec210937cf4c63f942d44f0))
-* **odc:** ability to upload files using `pushFile` ([e7987ec](https://www.github.com/dlenroc/node-roku/commit/e7987ec4c13742334b0e0a419ddbee5c230dad2b))
+* ability to download files using `pullFile` ([04f4acd](https://www.github.com/dlenroc/node-roku/commit/04f4acd9bf28832cbf17754c2609190cd73365ff))
+* ability to list files using `getFiles` ([d376a0a](https://www.github.com/dlenroc/node-roku/commit/d376a0a435526f875ec210937cf4c63f942d44f0))
+* ability to upload files using `pushFile` ([e7987ec](https://www.github.com/dlenroc/node-roku/commit/e7987ec4c13742334b0e0a419ddbee5c230dad2b))
 
 ## [1.2.0](https://www.github.com/dlenroc/node-roku/compare/roku-odc-v1.1.0...roku-odc-v1.2.0) (2021-05-08)
 
