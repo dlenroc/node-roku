@@ -55,6 +55,10 @@ clearRegistry(): Promise<void>
 ```
 
 ```typescript
+getFiles(path: string): Promise<(File | Directory)[]>
+```
+
+```typescript
 pullFile(path: string): Promise<Buffer>
 ```
 

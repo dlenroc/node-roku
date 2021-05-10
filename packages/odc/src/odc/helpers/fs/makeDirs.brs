@@ -1,5 +1,5 @@
 
-function createDirectoryNested(path as string) as boolean
+function makeDirs(path as string) as boolean
   fs = CreateObject("roFileSystem")
   paths = []
 
