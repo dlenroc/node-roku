@@ -1,4 +1,4 @@
-' import '../helpers/fs/createDirectoryNested.brs'
+' import '../helpers/fs/makeDirs.brs'
 ' import '../helpers/serialization/toByteArray.brs'
 
 ' @Route('PUT', '/file')
@@ -6,7 +6,7 @@ sub onPutFile(request as object, response as object)
   file = request.search.path
   folder = CreateObject("roPath", file).split().parent
 
-  folderExists = createDirectoryNested(folder)
+  folderExists = makeDirs(folder)
   if not folderExists
     response.code = 400
     response.body = { message: "path is invalid or not writable" }

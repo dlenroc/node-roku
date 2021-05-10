@@ -3,6 +3,7 @@ import { URLSearchParams } from 'url';
 import extend from './internal/injector';
 import fetch from './internal/keep-alive-fetch';
 import { ODCError } from './ODCError';
+import { Directory, File } from './types';
 
 export class ODC {
   private readonly baseUrl: string;
@@ -29,6 +30,10 @@ export class ODC {
 
   async clearRegistry(): Promise<void> {
     await this.request('DELETE', `registry`);
+  }
+
+  async getFiles(path: string): Promise<(File | Directory)[]> {
+    return await this.request('GET', `files`, { path });
   }
 
   async pullFile(path: string): Promise<Buffer> {
