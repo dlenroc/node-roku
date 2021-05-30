@@ -38,6 +38,14 @@ set context(context: 'ECP' | 'ODC')
 ```
 
 ```typescript
+get fields(): Record<string, string[]>
+```
+
+```typescript
+set fields(fields: Record<string, string[]>)
+```
+
+```typescript
 get focusedElement(): Element
 ```
 
