@@ -9,6 +9,7 @@ const rootNode = parseXml(rootXML, { noblanks: true }).root() as XMLElement;
 export class Document extends Element {
   private xml: string | null;
   public context: 'ECP' | 'ODC' = 'ECP';
+  public fields: Record<string, string[]> | undefined;
 
   constructor(sdk: SDK) {
     super(sdk, rootNode);
@@ -59,7 +60,7 @@ export class Document extends Element {
     if (this.context === 'ECP') {
       xml = await this.sdk.ecp.queryAppUI();
     } else if (this.context === 'ODC') {
-      xml = await this.sdk.odc.getAppUI();
+      xml = await this.sdk.odc.getAppUI(this.fields);
     } else {
       throw new RokuError(`Unknown context ${this.context}`);
     }
