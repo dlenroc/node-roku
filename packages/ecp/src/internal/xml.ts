@@ -16,8 +16,10 @@ export default function parse(xml: string, options?: X2jOptionsOptional & { arra
   if (options?.array) {
     parsedXML = Object.values(parsedXML)[0];
 
-    if (parsedXML.length === 1) {
+    if (parsedXML) {
       parsedXML = Array.isArray(parsedXML) ? parsedXML : [parsedXML];
+    } else {
+      parsedXML = [];
     }
   }
 
