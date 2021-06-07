@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.1.1](https://www.github.com/dlenroc/node-roku/compare/roku-ecp-v1.1.0...roku-ecp-v1.1.1) (2021-06-07)
+
+
+### Bug Fixes
+
+* `queryApps` when there are no apps ([6078ead](https://www.github.com/dlenroc/node-roku/commit/6078ead1056b2f9d000e877cc6312d68b32e0017))
+
 ## [1.1.0](https://www.github.com/dlenroc/node-roku/compare/roku-ecp-v1.0.1...roku-ecp-v1.1.0) (2021-05-08)
 
 
