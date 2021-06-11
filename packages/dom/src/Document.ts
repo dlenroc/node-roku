@@ -21,11 +21,11 @@ export class Document extends Element {
   }
 
   get isKeyboardShown(): boolean {
-    return this.xpathSelect('//*[self::Keyboard or self::MiniKeyboard or self::PinPad]')?.isDisplayed || false;
+    return this.xpathSelect('//*[substring(name(), string-length(name()) - string-length("Keyboard") + 1) = "Keyboard" or substring(name(), string-length(name()) - string-length("PinPad") + 1) = "PinPad"]')?.isDisplayed || false;
   }
 
   async clear() {
-    const keyboard = this.xpathSelect('//*[self::Keyboard or self::MiniKeyboard or self::PinPad]');
+    const keyboard = this.xpathSelect('//*[substring(name(), string-length(name()) - string-length("Keyboard") + 1) = "Keyboard" or substring(name(), string-length(name()) - string-length("PinPad") + 1) = "PinPad"]');
 
     if (keyboard) {
       await keyboard.clear();
@@ -35,7 +35,7 @@ export class Document extends Element {
   }
 
   async type(text: string) {
-    const keyboard = this.xpathSelect('//*[self::Keyboard or self::MiniKeyboard or self::PinPad]');
+    const keyboard = this.xpathSelect('//*[substring(name(), string-length(name()) - string-length("Keyboard") + 1) = "Keyboard" or substring(name(), string-length(name()) - string-length("PinPad") + 1) = "PinPad"]');
 
     if (keyboard) {
       await keyboard.type(text);
@@ -45,7 +45,7 @@ export class Document extends Element {
   }
 
   async append(text: string) {
-    const keyboard = this.xpathSelect('//*[self::Keyboard or self::MiniKeyboard or self::PinPad]');
+    const keyboard = this.xpathSelect('//*[substring(name(), string-length(name()) - string-length("Keyboard") + 1) = "Keyboard" or substring(name(), string-length(name()) - string-length("PinPad") + 1) = "PinPad"]');
 
     if (keyboard) {
       await keyboard.append(text);
