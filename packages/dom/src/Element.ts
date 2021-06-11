@@ -328,7 +328,7 @@ async function appendOrSetText(element: Element, text: string, clear: boolean) {
   // make sure the keyboard is activated
   // and make changes to the text
 
-  let keyboard = element.xpathSelect('./ancestor-or-self::*[self::Keyboard or self::MiniKeyboard or self::PinPad]');
+  let keyboard = element.xpathSelect('./ancestor-or-self::*[substring(name(), string-length(name()) - string-length("Keyboard") + 1) = "Keyboard" or substring(name(), string-length(name()) - string-length("PinPad") + 1) = "PinPad"]');
 
   if (keyboard) {
     if (clear || text) {
@@ -357,7 +357,7 @@ async function appendOrSetText(element: Element, text: string, clear: boolean) {
 
   await element.select();
 
-  keyboard = await element.document.xpathSelect('//*[self::Keyboard or self::MiniKeyboard or self::PinPad]', 5);
+  keyboard = await element.document.xpathSelect('//*[substring(name(), string-length(name()) - string-length("Keyboard") + 1) = "Keyboard" or substring(name(), string-length(name()) - string-length("PinPad") + 1) = "PinPad"]', 5);
 
   if (keyboard) {
     await appendOrSetText(keyboard, text, clear);
@@ -368,7 +368,7 @@ async function appendOrSetText(element: Element, text: string, clear: boolean) {
   // Submit changes by selecting the first button in the dialog
   // or by sending `Enter` button
 
-  const submitButton = keyboard.xpathSelect('./ancestor-or-self::*[self::Dialog or self::KeyboardDialog or self::PinDialog or self::ProgressDialog]//ButtonGroup');
+  const submitButton = keyboard.xpathSelect('./ancestor-or-self::*[substring(name(), string-length(name()) - string-length("Dialog") + 1) = "Dialog"]//ButtonGroup');
 
   if (submitButton) {
     await submitButton.select();
@@ -378,7 +378,7 @@ async function appendOrSetText(element: Element, text: string, clear: boolean) {
 
   // Wait for the keyboard to disappear
 
-  const isKeyboardClosed = !(await element.document.xpathSelect('self::*[not(./descendant-or-self::*[self::Keyboard or self::MiniKeyboard or self::PinPad])]', 5));
+  const isKeyboardClosed = !(await element.document.xpathSelect('self::*[not(./descendant-or-self::*[substring(name(), string-length(name()) - string-length("Keyboard") + 1) = "Keyboard" or substring(name(), string-length(name()) - string-length("PinPad") + 1) = "PinPad"])]', 5));
   if (isKeyboardClosed) {
     throw new RokuError('Keyboard dialog did not disappear');
   }
