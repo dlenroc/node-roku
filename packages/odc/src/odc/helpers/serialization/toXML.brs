@@ -11,6 +11,12 @@ function toXML(source as object, fields = invalid as object) as string
       target = target.addElement(node.subtype())
       m.addFields(target, node)
 
+      if getInterface(node.content, "ifSGNodeChildren") <> invalid
+        if node.content.isSubtype("ContentNode")
+          m.render(target, node.content)
+        end if
+      end if
+
       for each nested in node.getChildren(-1, 0)
         m.render(target, nested)
       end for
