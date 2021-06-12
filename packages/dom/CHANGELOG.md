@@ -5,8 +5,8 @@
 
 ### Bug Fixes
 
-* **dom:** generic `keyboard` and `dialog` selectors ([39b6403](https://www.github.com/dlenroc/node-roku/commit/39b6403387d9f9b675847e3dda0eff3a351718c7))
-* **dom:** interaction with dialog buttons ([f94046a](https://www.github.com/dlenroc/node-roku/commit/f94046a1b7692940e1c7968a0c8c11710ad4582b))
+* generic `keyboard` and `dialog` selectors ([39b6403](https://www.github.com/dlenroc/node-roku/commit/39b6403387d9f9b675847e3dda0eff3a351718c7))
+* interaction with dialog buttons ([f94046a](https://www.github.com/dlenroc/node-roku/commit/f94046a1b7692940e1c7968a0c8c11710ad4582b))
 
 ## [1.1.0](https://www.github.com/dlenroc/node-roku/compare/roku-dom-v1.0.0...roku-dom-v1.1.0) (2021-05-30)
 
