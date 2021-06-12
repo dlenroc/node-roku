@@ -1,6 +1,6 @@
 {
   "name": "@dlenroc/roku-odc",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "Client for runtime utilities",
   "author": "Corneliu Duplachi",
   "license": "MIT",
