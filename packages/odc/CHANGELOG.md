@@ -1,5 +1,13 @@
 # Changelog
 
+### [1.3.1](https://www.github.com/dlenroc/node-roku/compare/roku-odc-v1.3.0...roku-odc-v1.3.1) (2021-06-12)
+
+
+### Bug Fixes
+
+* **odc:** exclusion of `bounds` and `focused` attributes ([a066e8b](https://www.github.com/dlenroc/node-roku/commit/a066e8bc0ba2397e31f29dc50b50330aa2088a5b))
+* **odc:** render `ContentNode` from lists and grids ([a90c991](https://www.github.com/dlenroc/node-roku/commit/a90c9919d9d8603e81f92f56366df48a8ec96420))
+
 ## [1.3.0](https://www.github.com/dlenroc/node-roku/compare/roku-odc-v1.2.0...roku-odc-v1.3.0) (2021-05-10)
 
 
