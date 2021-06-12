@@ -368,7 +368,7 @@ async function appendOrSetText(element: Element, text: string, clear: boolean) {
   // Submit changes by selecting the first button in the dialog
   // or by sending `Enter` button
 
-  const submitButton = keyboard.xpathSelect('./ancestor-or-self::*[substring(name(), string-length(name()) - string-length("Dialog") + 1) = "Dialog"]//ButtonGroup');
+  const submitButton = keyboard.xpathSelect('./ancestor-or-self::*[substring(name(), string-length(name()) - string-length("Dialog") + 1) = "Dialog"]//*[substring(name(), string-length(name()) - string-length("Button") + 1) = "Button"]');
 
   if (submitButton) {
     await submitButton.select();
