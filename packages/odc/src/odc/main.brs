@@ -9,4 +9,16 @@ sub main(options as object)
   if options.odc_registry <> invalid
     patchRegistry(parseJson(options.odc_registry))
   end if
+
+  if options.odc_entry_point <> invalid
+    if options.odc_entry_point = "screensaver"
+      RunScreenSaver()
+    else if options.odc_entry_point = "screensaver-settings"
+      RunScreenSaverSettings()
+    end if
+
+    if options.odc_entry_point <> "channel"
+      END
+    end if
+  end if
 end sub
