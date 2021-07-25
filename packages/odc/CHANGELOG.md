@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://www.github.com/dlenroc/node-roku/compare/roku-odc-v1.3.1...roku-odc-v1.4.0) (2021-07-25)
+
+
+### Features
+
+* screensaver support ([bdc8d26](https://www.github.com/dlenroc/node-roku/commit/bdc8d269f8b8fba7aa8646b9318830923b60f11c))
+
 ### [1.3.1](https://www.github.com/dlenroc/node-roku/compare/roku-odc-v1.3.0...roku-odc-v1.3.1) (2021-06-12)
 
 
