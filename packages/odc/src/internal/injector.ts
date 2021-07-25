@@ -19,7 +19,7 @@ export default async function extend(app: Buffer): Promise<Buffer> {
     });
 
     if (!hasTitle) {
-      const title = manifest.match(/^\s*((screensaver_)?title)\s*=(.+) \|/im)?.[3] || '(dev)';
+      const title = manifest.match(/^\s*(screensaver_)?title\s*=(.+) \|/im)?.[2] || '(dev)';
       manifest += `\ntitle=${title} | ${md5}`;
     }
 
