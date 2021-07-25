@@ -78,7 +78,7 @@ export default async function extend(app: Buffer): Promise<Buffer> {
   }
 
   if (!hasMain) {
-    zip.file('source/odc/odc_main.brs', 'sub Main(options) : options.odc_entry_point = "screensaver" : odc_main(options) : end sub');
+    zip.file('source/odc/odc_main.brs', 'sub Main(options) : odc_main(options) : end sub');
   }
 
   // patch scenes
