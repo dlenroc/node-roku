@@ -9,9 +9,21 @@ export default async function extend(app: Buffer): Promise<Buffer> {
 
   // patch manifest
   const md5 = createHash('md5').update(app).digest('hex');
-  const manifest = await zip.file('manifest')?.async('string');
+  let manifest = await zip.file('manifest')?.async('string');
   if (manifest) {
-    zip.file('manifest', manifest.replace(/(^\s*title\s*=.+)/im, `$1 | ${md5}`));
+    let hasTitle = false;
+
+    manifest = manifest.replace(/^\s*((screensaver_)?title)\s*=(.+)/gim, (...groups: string[]) => {
+      if (!groups[2]) hasTitle = true;
+      return `${groups[1]}=${groups[3]} | ${md5}`;
+    });
+
+    if (!hasTitle) {
+      const title = manifest.match(/^\s*(screensaver_)?title\s*=(.+) \|/im)?.[2] || '(dev)';
+      manifest += `\ntitle=${title} | ${md5}`;
+    }
+
+    zip.file('manifest', manifest);
   }
 
   // inject source
@@ -45,6 +57,7 @@ export default async function extend(app: Buffer): Promise<Buffer> {
     .join('');
 
   // patch entry points
+  let hasMain = false;
   const pattern = /(\.show\(\))/gim;
   const entryPointMatcher = /(^\s*(sub|function)\s+(main|runuserinterface)\s*\()\s*([\w$%!#&]+)?\s*[^)]*(\)[^:\r\n]*)/gim;
   for (const file of zip.file(/^source\/.*\.brs$/i)) {
@@ -52,6 +65,8 @@ export default async function extend(app: Buffer): Promise<Buffer> {
     let content = source
       .replace(pattern, '$1 : createObject("roSGNode", "ODC")')
       .replace(entryPointMatcher, (...groups: string[]) => {
+        hasMain = true;
+
         const parameter = groups[4] || 'options';
         const methodDeclaration = groups[4] ? groups[0] : groups[1] + parameter + groups[5];
         return methodDeclaration + `: odc_main(${parameter})`;
@@ -60,6 +75,10 @@ export default async function extend(app: Buffer): Promise<Buffer> {
     if (source != content) {
       zip.file(file.name, content);
     }
+  }
+
+  if (!hasMain) {
+    zip.file('source/odc/odc_main.brs', 'sub Main(options) : odc_main(options) : end sub');
   }
 
   // patch scenes
