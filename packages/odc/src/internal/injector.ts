@@ -62,13 +62,15 @@ export default async function extend(app: Buffer): Promise<Buffer> {
   const entryPointMatcher = /(^\s*(sub|function)\s+(main|runuserinterface)\s*\()\s*([\w$%!#&]+)?\s*[^)]*(\)[^:\r\n]*)/gim;
   for (const file of zip.file(/^source\/.*\.brs$/i)) {
     let source = await file.async('string');
-    let content = source.replace(pattern, '$1 : createObject("roSGNode", "ODC")').replace(entryPointMatcher, (...groups: string[]) => {
-      hasMain = true;
+    let content = source
+      .replace(pattern, '$1 : createObject("roSGNode", "ODC")')
+      .replace(entryPointMatcher, (...groups: string[]) => {
+        hasMain = true;
 
-      const parameter = groups[4] || 'options';
-      const methodDeclaration = groups[4] ? groups[0] : groups[1] + parameter + groups[5];
-      return methodDeclaration + `: odc_main(${parameter})`;
-    });
+        const parameter = groups[4] || 'options';
+        const methodDeclaration = groups[4] ? groups[0] : groups[1] + parameter + groups[5];
+        return methodDeclaration + `: odc_main(${parameter})`;
+      });
 
     if (source != content) {
       zip.file(file.name, content);
