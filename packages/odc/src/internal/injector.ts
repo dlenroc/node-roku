@@ -82,7 +82,7 @@ export default async function extend(app: Buffer): Promise<Buffer> {
   }
 
   // patch scenes
-  const isScenePattern = /<component .*extends="(Base)?Scene"/i;
+  const isScenePattern = /<component(\s+|\s+.*?\s+)extends\s*=\s*"(Base)?Scene"/i;
   const endSceneComponentPattern = /(<\/component>)/i;
   const endInterfaceComponentPattern = /(<\/interface>)/i;
   for (const file of zip.file(/^components\/.*\.xml$/i)) {
