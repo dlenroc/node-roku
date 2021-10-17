@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.4.1](https://www.github.com/dlenroc/node-roku/compare/roku-odc-v1.4.0...roku-odc-v1.4.1) (2021-10-17)
+
+
+### Bug Fixes
+
+* handling whitespace in scene ([acdcf6c](https://www.github.com/dlenroc/node-roku/commit/acdcf6cd66662edbc4a1ebe932dc12650ac0902c))
+
 ## [1.4.0](https://www.github.com/dlenroc/node-roku/compare/roku-odc-v1.3.1...roku-odc-v1.4.0) (2021-07-25)
 
 
