@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.1.2](https://www.github.com/dlenroc/node-roku/compare/roku-dom-v1.1.1...roku-dom-v1.1.2) (2021-10-21)
+
+
+### Bug Fixes
+
+* **dom:** rendering frequency ([2b6cc60](https://www.github.com/dlenroc/node-roku/commit/2b6cc6017a9e9a225f156af1ce48e3286f5af33f))
+
 ### [1.1.1](https://www.github.com/dlenroc/node-roku/compare/roku-dom-v1.1.0...roku-dom-v1.1.1) (2021-06-12)
 
 
