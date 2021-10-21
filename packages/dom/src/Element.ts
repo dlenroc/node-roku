@@ -12,7 +12,7 @@ export class Element {
   protected _root: XMLElement;
 
   constructor(sdk: SDK, node: XMLElement, document: Document | null = null) {
-    document = document || ((this as unknown) as Document);
+    document = document || (this as unknown as Document);
 
     this.sdk = sdk;
     this.document = document;
@@ -141,8 +141,12 @@ export class Element {
   }
 
   get isInFocusChain(): boolean {
-    const elementChain = [this, ...this.parents];
     const focusedElement = this.document.focusedElement;
+    if (focusedElement === this.document) {
+      return false;
+    }
+
+    const elementChain = [this, ...this.parents];
     const focusedElementChain = [focusedElement, ...focusedElement.parents];
     const count = Math.min(elementChain.length, focusedElementChain.length);
 
@@ -180,24 +184,31 @@ export class Element {
 
       await this.sdk.ecp.keypress(key);
 
-      const endTime = performance.now() + 5 * 1000;
-      while (performance.now() <= endTime) {
-        await this.document.render();
+      const moved = await retrying({
+        timeout: 5000,
+        validate: (result, error) => result || error,
+        command: async () => {
+          await this.document.render();
 
-        const { path: newPath, attributes: newAttributes } = this.document.focusedElement;
+          const { path: newPath, attributes: newAttributes } = this.document.focusedElement;
 
-        if (path !== newPath) {
-          return;
-        }
-
-        for (const [key, value] of Object.entries(attributes)) {
-          if (newAttributes[key] !== value) {
-            return;
+          if (path !== newPath) {
+            return true;
           }
-        }
-      }
 
-      throw new RokuError('Could not focus');
+          for (const [key, value] of Object.entries(attributes)) {
+            if (newAttributes[key] !== value) {
+              return true;
+            }
+          }
+
+          return false;
+        },
+      });
+
+      if (!moved) {
+        throw new RokuError('Could not focus');
+      }
     };
 
     let variants = this.document.cssSelectAll('*:not(:has(*))').length;
@@ -239,12 +250,8 @@ export class Element {
       }
     }
 
-    if (!this.isDisplayed) {
-      throw new RokuError('Not visible');
-    }
-
     if (!this.isInFocusChain) {
-      throw new RokuError('Not focused');
+      throw new RokuError('Could not focus');
     }
   }
 
@@ -311,12 +318,17 @@ function findElOrEls<R, T extends Timeout = null>(element: Element, getElOrEls: 
   }
 
   return (async () => {
-    const endTime = performance.now() + timeoutInSeconds * 1000;
-
     let elOrEls = getElOrEls();
-    while ((Array.isArray(elOrEls) ? elOrEls.length == 0 : !elOrEls) && endTime > performance.now()) {
-      await element.document.render();
-      elOrEls = getElOrEls();
+
+    if (Array.isArray(elOrEls) ? elOrEls.length == 0 : !elOrEls) {
+      elOrEls = await retrying({
+        timeout: timeoutInSeconds * 1000,
+        validate: (elOrEls, error) => error || (Array.isArray(elOrEls) ? elOrEls.length > 0 : elOrEls),
+        command: async () => {
+          await element.document.render();
+          return getElOrEls();
+        },
+      });
     }
 
     return elOrEls;
@@ -405,4 +417,44 @@ function normalizeNodes(nodes: XMLNode[]): XMLElement[] {
   }
 
   return elements;
+}
+
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function retrying<Type>(options: { timeout: number; command: () => Promise<Type>; validate: (result?: Type, error?: any) => boolean }): Promise<Type> {
+  const duration = 500;
+  const endTimestamp = performance.now() + options.timeout;
+
+  while (true) {
+    let result;
+    let exception;
+    let hasException;
+
+    try {
+      result = await options.command();
+    } catch (e) {
+      exception = e;
+      hasException = true;
+    }
+
+    const isValid = options.validate(result, exception);
+    const elapsed = endTimestamp - performance.now();
+
+    if (isValid || elapsed <= 0) {
+      if (hasException) {
+        throw exception;
+      } else {
+        return result as Type;
+      }
+    }
+
+    if (elapsed > duration) {
+      await sleep(duration);
+    } else {
+      await sleep(elapsed);
+      continue; // last chance
+    }
+  }
 }
