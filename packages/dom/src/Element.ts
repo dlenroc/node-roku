@@ -207,7 +207,7 @@ export class Element {
       });
 
       if (!moved) {
-        throw new RokuError('Could not focus');
+        throw new RokuError('Focused element did not change after navigation');
       }
     };
 
