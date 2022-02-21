@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.0.0 (2022-02-21)
+
+
+### Features
+
+* **ecp:** ability to send json ([172dec6](https://github.com/dlenroc/node-roku/commit/172dec6f2cbaca961b544fc1e87be5cec6afb1f9))
+* monorepo ([a0ce484](https://github.com/dlenroc/node-roku/commit/a0ce484ee2acdd9e6e183e515940ae8bf218d325))
+
+
+### Bug Fixes
+
+* **ecp:** `queryApps` when there are no apps ([6078ead](https://github.com/dlenroc/node-roku/commit/6078ead1056b2f9d000e877cc6312d68b32e0017))
+* **ecp:** handle empty `params` object ([769570d](https://github.com/dlenroc/node-roku/commit/769570d4a23a42f068baf23a8ea4dcb7cd250564))
+
 ### [1.1.1](https://www.github.com/dlenroc/node-roku/compare/roku-ecp-v1.1.0...roku-ecp-v1.1.1) (2021-06-07)
 
 
