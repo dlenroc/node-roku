@@ -1,13 +1,14 @@
-import parser, { X2jOptionsOptional } from 'fast-xml-parser';
+import { XMLParser, X2jOptionsOptional } from 'fast-xml-parser';
 
 const globalOptions = {
-  ignoreAttributes: false,
-  parseAttributeValue: true,
   attributeNamePrefix: '',
+  ignoreAttributes: false,
+  ignoreDeclaration: true,
+  parseAttributeValue: true,
 };
 
 export default function parse(xml: string, options?: X2jOptionsOptional & { array?: boolean }): any {
-  let parsedXML = parser.parse(xml, { ...globalOptions, ...options });
+  let parsedXML = new XMLParser({ ...globalOptions, ...options }).parse(xml);
 
   // Hide top level node
   parsedXML = Object.values(parsedXML)[0];
