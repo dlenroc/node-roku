@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.2.0](https://github.com/dlenroc/node-roku/compare/dom-v1.1.2...dom-v1.2.0) (2022-02-21)
+
+
+### Features
+
+* **dom:** ability to filter attributes ([7f3726e](https://github.com/dlenroc/node-roku/commit/7f3726ed12c3019800d60083c054402fc68e8bfd))
+
+
+### Bug Fixes
+
+* **dom:** generic `keyboard` and `dialog` selectors ([39b6403](https://github.com/dlenroc/node-roku/commit/39b6403387d9f9b675847e3dda0eff3a351718c7))
+* **dom:** interaction with dialog buttons ([f94046a](https://github.com/dlenroc/node-roku/commit/f94046a1b7692940e1c7968a0c8c11710ad4582b))
+* **dom:** rendering frequency ([2b6cc60](https://github.com/dlenroc/node-roku/commit/2b6cc6017a9e9a225f156af1ce48e3286f5af33f))
+
 ### [1.1.2](https://www.github.com/dlenroc/node-roku/compare/roku-dom-v1.1.1...roku-dom-v1.1.2) (2021-10-21)
 
 
