@@ -1,6 +1,6 @@
 {
   "name": "@dlenroc/roku-debug-server",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "Client for host utilities provided via telnet on port 8080",
   "author": "Corneliu Duplachi",
   "license": "MIT",
