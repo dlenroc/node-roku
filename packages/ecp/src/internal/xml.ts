@@ -1,9 +1,10 @@
 import { XMLParser, X2jOptionsOptional } from 'fast-xml-parser';
 
 const globalOptions = {
-  ignoreAttributes: false,
-  parseAttributeValue: true,
   attributeNamePrefix: '',
+  ignoreAttributes: false,
+  ignoreDeclaration: true,
+  parseAttributeValue: true,
 };
 
 export default function parse(xml: string, options?: X2jOptionsOptional & { array?: boolean }): any {
