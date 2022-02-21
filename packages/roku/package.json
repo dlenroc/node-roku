@@ -11,7 +11,7 @@
   ],
   "main": "dist/index.js",
   "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
+  "types": "src/index.ts",
   "scripts": {
     "build": "rimraf dist && rollup -c ../../rollup.config.js && replace-in-file 'packages/roku/' '../' 'dist/**/*.d.ts.map'",
     "prepare": "npm run build"
@@ -20,10 +20,10 @@
     "node": ">=12"
   },
   "dependencies": {
-    "@dlenroc/roku-debug-server": "^1.0.0",
+    "@dlenroc/roku-debug-server": "^1.0.1",
     "@dlenroc/roku-developer-server": "^1.0.0",
-    "@dlenroc/roku-dom": "^1.0.0",
-    "@dlenroc/roku-ecp": "^1.0.0",
-    "@dlenroc/roku-odc": "^1.0.0"
+    "@dlenroc/roku-dom": "^1.1.2",
+    "@dlenroc/roku-ecp": "^1.1.1",
+    "@dlenroc/roku-odc": "^1.4.1"
   }
 }

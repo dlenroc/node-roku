@@ -11,7 +11,7 @@
   ],
   "main": "dist/index.js",
   "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
+  "types": "src/index.ts",
   "scripts": {
     "build": "rimraf dist && rollup -c ../../rollup.config.js && replace-in-file 'packages/debug-server/' '../' 'dist/**/*.d.ts.map'",
     "prepare": "npm run build"
