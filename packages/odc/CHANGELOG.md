@@ -1,5 +1,29 @@
 # Changelog
 
+## 1.0.0 (2022-02-21)
+
+
+### Features
+
+* monorepo ([a0ce484](https://github.com/dlenroc/node-roku/commit/a0ce484ee2acdd9e6e183e515940ae8bf218d325))
+* **odc:** ability to download files using `pullFile` ([04f4acd](https://github.com/dlenroc/node-roku/commit/04f4acd9bf28832cbf17754c2609190cd73365ff))
+* **odc:** ability to filter app-ui attributes ([ec0cc0d](https://github.com/dlenroc/node-roku/commit/ec0cc0d3a4cb17f4aed29e751b11b5176c54eaaf))
+* **odc:** ability to list files using `getFiles` ([d376a0a](https://github.com/dlenroc/node-roku/commit/d376a0a435526f875ec210937cf4c63f942d44f0))
+* **odc:** ability to upload files using `pushFile` ([e7987ec](https://github.com/dlenroc/node-roku/commit/e7987ec4c13742334b0e0a419ddbee5c230dad2b))
+* **odc:** allow serializable types in `patchRegistry` ([92074a1](https://github.com/dlenroc/node-roku/commit/92074a1bf8367423668dcdf45f05bc046215a9ea))
+* **odc:** different name for extended app `<name> | <md5>` ([796e2c3](https://github.com/dlenroc/node-roku/commit/796e2c314124ecaeae1ef98c8e4f07aaabdf7643))
+* **odc:** fields with complex types in app-ui ([545a4ed](https://github.com/dlenroc/node-roku/commit/545a4ed34aec085ec87d2a01d0430bcc69967e49))
+* **odc:** launch parameters ([669fe7a](https://github.com/dlenroc/node-roku/commit/669fe7a215ce7411efce921d2d6c5ecb0112cbbe))
+* **odc:** screensaver support ([bdc8d26](https://github.com/dlenroc/node-roku/commit/bdc8d269f8b8fba7aa8646b9318830923b60f11c))
+
+
+### Bug Fixes
+
+* **odc:** exclusion of `bounds` and `focused` attributes ([a066e8b](https://github.com/dlenroc/node-roku/commit/a066e8bc0ba2397e31f29dc50b50330aa2088a5b))
+* **odc:** handling whitespace in scene ([acdcf6c](https://github.com/dlenroc/node-roku/commit/acdcf6cd66662edbc4a1ebe932dc12650ac0902c))
+* **odc:** main method patching in files with `\r` ([e3321ed](https://github.com/dlenroc/node-roku/commit/e3321ed83d70c7827a97bd6b9ab13dd61fa8b8d7))
+* **odc:** render `ContentNode` from lists and grids ([a90c991](https://github.com/dlenroc/node-roku/commit/a90c9919d9d8603e81f92f56366df48a8ec96420))
+
 ### [1.4.1](https://www.github.com/dlenroc/node-roku/compare/roku-odc-v1.4.0...roku-odc-v1.4.1) (2021-10-17)
 
 
