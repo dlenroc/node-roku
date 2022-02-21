@@ -351,7 +351,7 @@ async function appendOrSetText(element: Element, text: string, clear: boolean) {
       const input = keyboard.xpathSelect('.//*[@text]');
       const cursor = keyboard.xpathSelect('.//*[@bounds and contains(@uri, "cursor_textInput")]');
       if (input && (cursor?.bounds?.x || keyboard.attributes.text)) {
-        for (let i = 0, n = input.attributes.text.length; i < n; i++) {
+        for (let i = 0, n = input.attributes.text.length; i <= n; i++) {
           await element.sdk.ecp.keypress('Backspace');
         }
       }
