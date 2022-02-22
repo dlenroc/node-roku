@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.1.3](https://github.com/dlenroc/node-roku/compare/dom-v1.1.2...dom-v1.1.3) (2022-02-22)
+
+
+### Bug Fixes
+
+* `clean` method for dynamic keyboard ([3531f6d](https://github.com/dlenroc/node-roku/commit/3531f6d4bf458d57efef2c4c2229cc1996058718))
+
 ### [1.1.2](https://www.github.com/dlenroc/node-roku/compare/roku-dom-v1.1.1...roku-dom-v1.1.2) (2021-10-21)
 
 
