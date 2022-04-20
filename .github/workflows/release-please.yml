@@ -11,7 +11,7 @@ jobs:
     outputs:
       packages: ${{ steps.changes.outputs.packages }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - id: changes
         uses: actions/github-script@v3
         with:
@@ -42,9 +42,9 @@ jobs:
           path: packages/${{ matrix.package }}
           token: ${{ secrets.GITHUB_TOKEN }}
           package-name: ${{ matrix.package }}
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         if: ${{ steps.release.outputs.releases_created }}
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v3
         if: ${{ steps.release.outputs.releases_created }}
         with:
           node-version: 16
