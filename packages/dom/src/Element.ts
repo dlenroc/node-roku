@@ -1,9 +1,10 @@
+import { Key, SDK } from '@dlenroc/roku';
 import { Element as XMLElement, Node as XMLNode } from 'libxmljs2';
 import { performance } from 'perf_hooks';
 import { Document } from './Document';
 import { RokuError } from './Error';
 import { selectAll, selectOne } from './internal/css-select';
-import { SDK, Key } from '@dlenroc/roku';
+import { BUTTON, DIALOG, KEYBOARD, LABEL } from './internal/selectors';
 
 export class Element {
   sdk: SDK;
@@ -108,7 +109,7 @@ export class Element {
   }
 
   get text(): string {
-    return this.xpathSelectAll('./descendant-or-self::*[(self::Label or self::SimpleLabel) and @text]')
+    return this.xpathSelectAll(`./descendant-or-self::*[@text and (${LABEL} or ${BUTTON})]`)
       .filter((element) => element.isDisplayed)
       .map((element) => element.attributes.text.trim())
       .filter((text) => text)
@@ -340,7 +341,7 @@ async function appendOrSetText(element: Element, text: string, clear: boolean) {
   // make sure the keyboard is activated
   // and make changes to the text
 
-  let keyboard = element.xpathSelect('./ancestor-or-self::*[substring(name(), string-length(name()) - string-length("Keyboard") + 1) = "Keyboard" or substring(name(), string-length(name()) - string-length("PinPad") + 1) = "PinPad"]');
+  let keyboard = element.xpathSelect(`./ancestor-or-self::*[${KEYBOARD}]`);
 
   if (keyboard) {
     if (clear || text) {
@@ -369,7 +370,7 @@ async function appendOrSetText(element: Element, text: string, clear: boolean) {
 
   await element.select();
 
-  keyboard = await element.document.xpathSelect('//*[substring(name(), string-length(name()) - string-length("Keyboard") + 1) = "Keyboard" or substring(name(), string-length(name()) - string-length("PinPad") + 1) = "PinPad"]', 5);
+  keyboard = await element.document.xpathSelect(`//*[${KEYBOARD}]`, 5);
 
   if (keyboard) {
     await appendOrSetText(keyboard, text, clear);
@@ -380,7 +381,7 @@ async function appendOrSetText(element: Element, text: string, clear: boolean) {
   // Submit changes by selecting the first button in the dialog
   // or by sending `Enter` button
 
-  const submitButton = keyboard.xpathSelect('./ancestor-or-self::*[substring(name(), string-length(name()) - string-length("Dialog") + 1) = "Dialog"]//*[substring(name(), string-length(name()) - string-length("Button") + 1) = "Button"]');
+  const submitButton = keyboard.xpathSelect(`./ancestor-or-self::*[${DIALOG}]//*[${BUTTON}]`);
 
   if (submitButton) {
     await submitButton.select();
@@ -390,7 +391,7 @@ async function appendOrSetText(element: Element, text: string, clear: boolean) {
 
   // Wait for the keyboard to disappear
 
-  const isKeyboardClosed = !(await element.document.xpathSelect('self::*[not(./descendant-or-self::*[substring(name(), string-length(name()) - string-length("Keyboard") + 1) = "Keyboard" or substring(name(), string-length(name()) - string-length("PinPad") + 1) = "PinPad"])]', 5));
+  const isKeyboardClosed = !(await element.document.xpathSelect(`self::*[not(./descendant-or-self::*[${KEYBOARD}])]`, 5));
   if (isKeyboardClosed) {
     throw new RokuError('Keyboard dialog did not disappear');
   }
