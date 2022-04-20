@@ -5,7 +5,7 @@
 
 ### Bug Fixes
 
-* **dom:** handle `extends` attribute ([806d5a3](https://github.com/dlenroc/node-roku/commit/806d5a3dda43de9170bfc5a6f21a339aa2e56fab))
+* handle `extends` attribute ([806d5a3](https://github.com/dlenroc/node-roku/commit/806d5a3dda43de9170bfc5a6f21a339aa2e56fab))
 
 ### [1.1.3](https://github.com/dlenroc/node-roku/compare/dom-v1.1.2...dom-v1.1.3) (2022-02-22)
 
