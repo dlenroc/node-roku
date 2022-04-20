@@ -1,7 +1,8 @@
+import { SDK } from '@dlenroc/roku';
 import { Element as XMLElement, parseXml } from 'libxmljs2';
 import { Element } from './Element';
 import { RokuError } from './Error';
-import { SDK } from '@dlenroc/roku';
+import { KEYBOARD } from './internal/selectors';
 
 const rootXML = '<app-ui></app-ui>';
 const rootNode = parseXml(rootXML, { noblanks: true }).root() as XMLElement;
@@ -21,11 +22,11 @@ export class Document extends Element {
   }
 
   get isKeyboardShown(): boolean {
-    return this.xpathSelect('//*[substring(name(), string-length(name()) - string-length("Keyboard") + 1) = "Keyboard" or substring(name(), string-length(name()) - string-length("PinPad") + 1) = "PinPad"]')?.isDisplayed || false;
+    return this.xpathSelect(`//*[${KEYBOARD}]`)?.isDisplayed || false;
   }
 
   async clear() {
-    const keyboard = this.xpathSelect('//*[substring(name(), string-length(name()) - string-length("Keyboard") + 1) = "Keyboard" or substring(name(), string-length(name()) - string-length("PinPad") + 1) = "PinPad"]');
+    const keyboard = this.xpathSelect(`//*[${KEYBOARD}]`);
 
     if (keyboard) {
       await keyboard.clear();
@@ -35,7 +36,7 @@ export class Document extends Element {
   }
 
   async type(text: string) {
-    const keyboard = this.xpathSelect('//*[substring(name(), string-length(name()) - string-length("Keyboard") + 1) = "Keyboard" or substring(name(), string-length(name()) - string-length("PinPad") + 1) = "PinPad"]');
+    const keyboard = this.xpathSelect(`//*[${KEYBOARD}]`);
 
     if (keyboard) {
       await keyboard.type(text);
@@ -45,7 +46,7 @@ export class Document extends Element {
   }
 
   async append(text: string) {
-    const keyboard = this.xpathSelect('//*[substring(name(), string-length(name()) - string-length("Keyboard") + 1) = "Keyboard" or substring(name(), string-length(name()) - string-length("PinPad") + 1) = "PinPad"]');
+    const keyboard = this.xpathSelect(`//*[${KEYBOARD}]`);
 
     if (keyboard) {
       await keyboard.append(text);
