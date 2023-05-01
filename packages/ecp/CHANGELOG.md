@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/dlenroc/node-roku/compare/ecp-v1.1.1...ecp-v1.2.0) (2023-05-01)
+
+
+### Features
+
+* **ecp:** OS 11/12 commands ([7983da2](https://github.com/dlenroc/node-roku/commit/7983da2e950a80d42f5850fd9b6df7a9007cf195))
+
 ### [1.1.1](https://www.github.com/dlenroc/node-roku/compare/roku-ecp-v1.1.0...roku-ecp-v1.1.1) (2021-06-07)
 
 
