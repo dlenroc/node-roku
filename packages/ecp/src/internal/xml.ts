@@ -1,4 +1,4 @@
-import { XMLParser, X2jOptionsOptional } from 'fast-xml-parser';
+import { X2jOptionsOptional, XMLParser } from 'fast-xml-parser';
 
 const globalOptions = {
   attributeNamePrefix: '',

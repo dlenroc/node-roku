@@ -59,4 +59,10 @@ export interface DeviceInfo {
   'voice-search-enabled': boolean;
   'wifi-driver': string;
   'wifi-mac': string;
+  'mobile-has-live-tv': boolean;
+  'ui-resolution': string;
+  'has-hands-free-voice-remote': boolean;
+  'supports-audio-settings': boolean;
+  'supports-airplay': boolean;
+  'av-sync-calibration-enabled': number;
 }

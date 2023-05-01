@@ -2,7 +2,7 @@ import { URLSearchParams } from 'url';
 import { ECPError } from './ECPError';
 import fetch from './internal/keep-alive-fetch';
 import parse from './internal/xml';
-import { ActiveApp, App, AppId, DeviceInfo, Key, MediaInfo, Params } from './types';
+import { ActiveApp, App, AppId, ChannelPerformance, DeviceInfo, FWBeacons, FWBeaconsStatus, Failure, GraphicsFrameRate, Key, MediaInfo, Params, R2D2Bitmaps, Registry, SGRendezvousStatus } from './types';
 
 export class ECP {
   private readonly baseUrl: string;
@@ -36,6 +36,68 @@ export class ECP {
 
   async queryDeviceInfo(): Promise<DeviceInfo> {
     const response = await this.ecp<string>('GET', `query/device-info`);
+    return parse(response);
+  }
+
+  async queryRegistry(appId: AppId, options?: Params): Promise<Failure | Registry> {
+    const response = await this.ecp<string>('GET', `query/registry/${appId}`, options);
+    return parse(response);
+  }
+
+  async queryGraphicsFrameRate(): Promise<GraphicsFrameRate> {
+    const response = await this.ecp<string>('GET', `query/graphics-frame-rate`);
+    return parse(response);
+  }
+
+  async queryChannelPerformance(appId: AppId, options?: Params): Promise<Failure | ChannelPerformance> {
+    const response = await this.ecp<string>('GET', `query/chanperf/${appId}`, options);
+    return parse(response);
+  }
+
+  async queryR2D2Bitmaps(appId: AppId): Promise<Failure | R2D2Bitmaps> {
+    const response = await this.ecp<string>('GET', `query/r2d2-bitmaps/${appId}`);
+    return parse(response);
+  }
+
+  async querySGNodesAll(appId: AppId): Promise<string> {
+    return this.ecp('GET', `query/sgnodes/all/${appId}`);
+  }
+
+  async querySGNodesRoots(appId: AppId): Promise<string> {
+    return this.ecp('GET', `query/sgnodes/roots/${appId}`);
+  }
+
+  async querySGNodesNodes(appId: AppId, nodeId: number): Promise<string> {
+    return this.ecp('GET', `query/sgnodes/nodes/${appId}?node-id=${nodeId}`);
+  }
+
+  async querySGRendezvous(): Promise<string> {
+    const response = await this.ecp<string>('GET', `query/sgrendezvous`);
+    return parse(response);
+  }
+
+  async trackSGRendezvous(appId: AppId): Promise<Failure | SGRendezvousStatus> {
+    const response = await this.ecp<string>('POST', `sgrendezvous/track${appId ? `/${appId}` : ''}`);
+    return parse(response);
+  }
+
+  async untrackSGRendezvous(appId: AppId): Promise<Failure | SGRendezvousStatus> {
+    const response = await this.ecp<string>('POST', `sgrendezvous/untrack${appId ? `/${appId}` : ''}`);
+    return parse(response);
+  }
+
+  async queryFWBeacons(): Promise<FWBeacons> {
+    const response = await this.ecp<string>('GET', `query/fwbeacons`);
+    return parse(response);
+  }
+
+  async trackFWBeacons(appId: AppId): Promise<Failure | FWBeaconsStatus> {
+    const response = await this.ecp<string>('POST', `fwbeacons/track${appId ? `/${appId}` : ''}`);
+    return parse(response);
+  }
+
+  async untrackFWBeacons(appId: AppId): Promise<Failure | FWBeaconsStatus> {
+    const response = await this.ecp<string>('POST', `fwbeacons/untrack`);
     return parse(response);
   }
 

@@ -3,6 +3,7 @@ import { AppId } from './AppId';
 export interface MediaInfo {
   error: boolean;
   state: 'none' | 'buffer' | 'play' | 'pause';
+  decoder_state?: string;
   is_live?: boolean;
   position?: string;
   duration?: string;
@@ -17,6 +18,7 @@ export interface MediaInfo {
     container: string;
     drm: string;
     video: string;
+    video_res: string;
   };
   buffering?: {
     max: string;
