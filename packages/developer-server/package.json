@@ -1,6 +1,6 @@
 {
   "name": "@dlenroc/roku-developer-server",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Client for host utilities provided via a web page at http://<ip>",
   "author": "Corneliu Duplachi",
   "license": "MIT",
