@@ -6,7 +6,6 @@
 ### Bug Fixes
 
 * command aborting ([ab7b6b4](https://github.com/dlenroc/node-roku/commit/ab7b6b4bda32521adce99793bf1f53a220991779))
-* Node.js 20 ([ab7b6b4](https://github.com/dlenroc/node-roku/commit/ab7b6b4bda32521adce99793bf1f53a220991779))
 * port configuration ([ab7b6b4](https://github.com/dlenroc/node-roku/commit/ab7b6b4bda32521adce99793bf1f53a220991779))
 
 ## [1.2.0](https://github.com/dlenroc/node-roku/compare/ecp-v1.1.1...ecp-v1.2.0) (2023-05-01)
