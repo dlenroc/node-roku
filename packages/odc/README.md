@@ -16,17 +16,13 @@ npm install @dlenroc/roku-odc
 import fs from 'fs';
 import SDK, { DeveloperServer, ODC } from '@dlenroc/roku';
 
+// const odc = new ODC('<ip>');
+const odc = new ODC({ address: 'http://<ip>:8061' });
+
+// const developerServer = new DeveloperServer('<ip>', '<username>', '<password>');
+const developerServer = new DeveloperServer({ address: 'http://<ip>', username: '<username>', password: '<password>' });
+
 const app = fs.readFileSync('<path_to_channel>');
-
-// SDK
-const sdk = new SDK('<ip>', '<username>', '<password>');
-const patchedApp = await sdk.odc.extend(app);
-await sdk.developerServer.install(patchedApp);
-await sdk.odc.getRegistry();
-
-// ODC
-const odc = new ODC('<ip>');
-const developerServer = new DeveloperServer('<ip>', '<username>', '<password>');
 const patchedApp = await odc.extend(app);
 await developerServer.install(patchedApp);
 await odc.getRegistry();

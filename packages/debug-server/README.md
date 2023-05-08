@@ -13,7 +13,9 @@ npm install @dlenroc/roku-debug-server
 ```typescript
 import DebugServer from '@dlenroc/roku-debug-server';
 
-const debugServer = new DebugServer('<ip>');
+// const debugServer = new DebugServer('<ip>');
+const debugServer = new DebugServer({ address: 'tcp://<ip>:8080' });
+
 await debugServer.enableProfiling();
 ```
 

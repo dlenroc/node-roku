@@ -1,13 +1,23 @@
 import { createConnection } from 'net';
 import { DebugServerError } from './DebugServerError';
+import type { DebugServerOptions } from './DebugServerOptions';
 import { DeveloperKey, Memory, Textures } from './types';
 
 export class DebugServer {
-  private readonly ip: string;
-  private readonly port = 8080;
+  private readonly config: DebugServerOptions;
+  private readonly hostname: string;
+  private readonly port: number;
 
-  constructor(ip: string) {
-    this.ip = ip;
+  constructor(ip: string)
+  constructor(options: DebugServerOptions)
+  constructor(ipOrOptions: string | DebugServerOptions) {
+    this.config = typeof ipOrOptions === 'string'
+      ? { address: `tcp://${ipOrOptions}:8080` }
+      : ipOrOptions;
+
+    const url = new URL(this.config.address);
+    this.hostname = url.hostname;
+    this.port = +url.port;
   }
 
   // TODO: bsprof-status
@@ -158,7 +168,7 @@ export class DebugServer {
 
   private async _exec(cmd: string): Promise<string> {
     return new Promise((resolve, reject) => {
-      const client = createConnection(this.port, this.ip, () => {
+      const client = createConnection({ host: this.hostname, port: this.port, signal: this.config.signal }, () => {
         client.write(`${cmd}\nq\n`);
       });
 
@@ -166,7 +176,7 @@ export class DebugServer {
         client.destroy(new DebugServerError(
           `Inactivity timeout exceeded during execution of '${cmd}' command, ` +
           `make sure the device is available on the network and ` +
-          `there is no other active telnet connection with '${this.ip}:${this.port}'`
+          `there is no other active telnet connection with '${this.hostname}:${this.port}'`
         ));
       });
 

@@ -1,15 +1,20 @@
 import { BodyInit } from 'node-fetch';
 import { URLSearchParams } from 'url';
+import { ODCError } from './ODCError';
+import type { ODCOptions } from './ODCOptions';
 import extend from './internal/injector';
 import fetch from './internal/keep-alive-fetch';
-import { ODCError } from './ODCError';
 import { Directory, File } from './types';
 
 export class ODC {
-  private readonly baseUrl: string;
+  private readonly config: ODCOptions;
 
-  constructor(ip: string) {
-    this.baseUrl = `http://${ip}:8061`;
+  constructor(ip: string)
+  constructor(options: ODCOptions)
+  constructor(ipOrOptions: string | ODCOptions) {
+    this.config = typeof ipOrOptions === 'string'
+      ? { address: `http://${ipOrOptions}:8061` }
+      : ipOrOptions;
   }
 
   async extend(app: Buffer): Promise<Buffer> {
@@ -68,7 +73,7 @@ export class ODC {
       }
     }
 
-    const response = await fetch(this.baseUrl + '/' + path, { method, headers, body });
+    const response = await fetch(this.config.address + '/' + path, { method, headers, body, signal: this.config.signal });
 
     if (!response.ok) {
       const json = await response.json();

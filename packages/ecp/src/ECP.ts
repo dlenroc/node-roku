@@ -1,14 +1,19 @@
 import { URLSearchParams } from 'url';
 import { ECPError } from './ECPError';
+import type { ECPOptions } from './ECPOptions';
 import fetch from './internal/keep-alive-fetch';
 import parse from './internal/xml';
 import { ActiveApp, App, AppId, ChannelPerformance, DeviceInfo, FWBeacons, FWBeaconsStatus, Failure, GraphicsFrameRate, Key, MediaInfo, Params, R2D2Bitmaps, Registry, SGRendezvousStatus } from './types';
 
 export class ECP {
-  private readonly baseUrl: string;
+  private readonly config: ECPOptions;
 
-  constructor(ip: string) {
-    this.baseUrl = `http://${ip}:8060`;
+  constructor(ip: string)
+  constructor(options: ECPOptions)
+  constructor(ipOrOptions: string | ECPOptions) {
+    this.config = typeof ipOrOptions === 'string'
+      ? { address: `http://${ipOrOptions}:8060` }
+      : ipOrOptions;
   }
 
   async queryAppUI(): Promise<string> {
@@ -145,7 +150,7 @@ export class ECP {
       path += '?' + new URLSearchParams(params);
     }
 
-    const response = await fetch(this.baseUrl + '/' + path, { method });
+    const response = await fetch(this.config.address + '/' + path, { method, signal: this.config.signal });
 
     if (!response.ok) {
       throw new ECPError(`${method} /${path} -> ${response.status} ${response.statusText}`);

@@ -16,7 +16,9 @@ import DeveloperServer from '@dlenroc/roku';
 
 const app = fs.readFileSync('<path_to_channel>');
 
-const developerServer = new DeveloperServer('<ip>', '<username>', '<password>');
+// const developerServer = new DeveloperServer('<ip>', '<username>', '<password>');
+const developerServer = new DeveloperServer({ address: 'http://<ip>', username: '<username>', password: '<password>' });
+
 await developerServer.install(app);
 ```
 
