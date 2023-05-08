@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.2](https://github.com/dlenroc/node-roku/compare/debug-server-v1.0.1...debug-server-v1.0.2) (2023-05-08)
+
+
+### Bug Fixes
+
+* command aborting ([ab7b6b4](https://github.com/dlenroc/node-roku/commit/ab7b6b4bda32521adce99793bf1f53a220991779))
+* port configuration ([ab7b6b4](https://github.com/dlenroc/node-roku/commit/ab7b6b4bda32521adce99793bf1f53a220991779))
+
 ### [1.0.1](https://www.github.com/dlenroc/node-roku/compare/roku-debug-server-v1.0.0...roku-debug-server-v1.0.1) (2021-04-29)
 
 
