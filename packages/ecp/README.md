@@ -13,7 +13,9 @@ npm install @dlenroc/roku-ecp
 ```typescript
 import ECP from '@dlenroc/roku';
 
-const ecp = new ECP('<ip>');
+// const ecp = new ECP('<ip>');
+const ecp = new ECP({ address: 'http://<ip>:8060' });
+
 const xml = await ecp.queryAppUI();
 
 console.log(xml);

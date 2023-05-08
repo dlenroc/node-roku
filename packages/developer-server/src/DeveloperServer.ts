@@ -1,18 +1,21 @@
 import FormData from 'form-data';
-import * as indigestion from 'indigestion';
+// @ts-ignore
+import digest from 'digest-header';
 import fetch from 'node-fetch';
+import { agent } from './Agent';
 import { DeveloperServerError } from './DeveloperServerError';
+import type { DeveloperServerOptions } from './DeveloperServerOptions';
 
 export class DeveloperServer {
-  private readonly username: string;
-  private readonly password: string;
-  private readonly baseUrl: string;
   private _authentication: any;
+  private readonly config: DeveloperServerOptions;
 
-  constructor(ip: string, username: string, password: string) {
-    this.username = username;
-    this.password = password;
-    this.baseUrl = `http://${ip}`;
+  constructor(ip: string, username: string, password: string);
+  constructor(options: DeveloperServerOptions);
+  constructor(ipOrOptions: string | DeveloperServerOptions, username?: string, password?: string) {
+    this.config = typeof ipOrOptions === 'string'
+      ? { address: `http://${ipOrOptions}`, username: username!, password: password! }
+      : ipOrOptions;
   }
 
   async install(app: Buffer): Promise<void> {
@@ -120,7 +123,7 @@ export class DeveloperServer {
       }
     }
 
-    const response = await fetch(this.baseUrl + '/' + path, { method, headers, body });
+    const response = await fetch(this.config.address + '/' + path, { method, headers, body, agent, signal: this.config.signal });
 
     if (!response.ok) {
       const text = await response.text();
@@ -151,17 +154,9 @@ export class DeveloperServer {
 
   private async _getAuthorizationFor(method: string, path: string): Promise<string> {
     if (!this._authentication) {
-      this._authentication = fetch(this.baseUrl).then((response) => response.headers.get('WWW-Authenticate'));
+      this._authentication = fetch(this.config.address, { agent, signal: this.config.signal }).then((response) => response.headers.get('WWW-Authenticate'));
     }
 
-    const authenticateHeader = await this._authentication;
-
-    return indigestion.generateDigestAuth({
-      method,
-      authenticateHeader,
-      uri: path,
-      username: this.username,
-      password: this.password,
-    });
+    return digest(method, path, await this._authentication, `${this.config.username}:${this.config.password}`);
   }
 }
