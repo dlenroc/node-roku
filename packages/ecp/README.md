@@ -48,6 +48,58 @@ queryDeviceInfo(): Promise<DeviceInfo>
 ```
 
 ```typescript
+queryRegistry(appId: AppId, options?: Params): Promise<Failure | Registry>
+```
+
+```typescript
+queryGraphicsFrameRate(): Promise<GraphicsFrameRate>
+```
+
+```typescript
+queryChannelPerformance(appId: AppId, options?: Params): Promise<Failure | ChannelPerformance>
+```
+
+```typescript
+queryR2D2Bitmaps(appId: AppId): Promise<Failure | R2D2Bitmaps>
+```
+
+```typescript
+querySGNodesAll(appId: AppId): Promise<string>
+```
+
+```typescript
+querySGNodesRoots(appId: AppId): Promise<string>
+```
+
+```typescript
+querySGNodesNodes(appId: AppId, nodeId: number): Promise<string>
+```
+
+```typescript
+querySGRendezvous(): Promise<string>
+```
+
+```typescript
+trackSGRendezvous(appId: AppId): Promise<Failure | SGRendezvousStatus>
+```
+
+```typescript
+untrackSGRendezvous(appId: AppId): Promise<Failure | SGRendezvousStatus>
+```
+
+```typescript
+queryFWBeacons(): Promise<Failure | FWBeacons>
+```
+
+```typescript
+trackFWBeacons(appId: AppId): Promise<Failure | FWBeaconsStatus>
+```
+
+```typescript
+untrackFWBeacons(appId: AppId): Promise<Failure | FWBeaconsStatus>
+```
+
+```typescript
 input(options: Params): Promise<void>
 ```
 
@@ -68,7 +120,7 @@ keypress(key: Key): Promise<void>
 ```
 
 ```typescript
-type(keys: string): Promise<void>
+type(text: string): Promise<void>
 ```
 
 ```typescript
