@@ -5,7 +5,7 @@
 
 ### Bug Fixes
 
-* **ecp:** types ([f387cfb](https://github.com/dlenroc/node-roku/commit/f387cfb87bf2325d734e8f75d1d44d80781424ba))
+* types ([f387cfb](https://github.com/dlenroc/node-roku/commit/f387cfb87bf2325d734e8f75d1d44d80781424ba))
 
 ## [1.2.1](https://github.com/dlenroc/node-roku/compare/ecp-v1.2.0...ecp-v1.2.1) (2023-05-08)
 
@@ -20,7 +20,7 @@
 
 ### Features
 
-* **ecp:** OS 11/12 commands ([7983da2](https://github.com/dlenroc/node-roku/commit/7983da2e950a80d42f5850fd9b6df7a9007cf195))
+* OS 11/12 commands ([7983da2](https://github.com/dlenroc/node-roku/commit/7983da2e950a80d42f5850fd9b6df7a9007cf195))
 
 ### [1.1.1](https://www.github.com/dlenroc/node-roku/compare/roku-ecp-v1.1.0...roku-ecp-v1.1.1) (2021-06-07)
 
