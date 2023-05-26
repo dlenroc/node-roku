@@ -65,4 +65,6 @@ export interface DeviceInfo {
   'supports-audio-settings': boolean;
   'supports-airplay': boolean;
   'av-sync-calibration-enabled': number;
+  'brightscript-debugger-version'?: string;
+  'supports-trc'?: boolean;
 }

@@ -91,7 +91,7 @@ export class ECP {
     return parse(response);
   }
 
-  async queryFWBeacons(): Promise<FWBeacons> {
+  async queryFWBeacons(): Promise<Failure | FWBeacons> {
     const response = await this.ecp<string>('GET', `query/fwbeacons`);
     return parse(response);
   }
