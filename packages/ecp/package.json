@@ -1,6 +1,6 @@
 {
   "name": "@dlenroc/roku-ecp",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Client for external control protocol provided on port 8060",
   "author": "Corneliu Duplachi",
   "license": "MIT",
