@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2](https://github.com/dlenroc/node-roku/compare/ecp-v1.2.1...ecp-v1.2.2) (2023-05-26)
+
+
+### Bug Fixes
+
+* **ecp:** types ([f387cfb](https://github.com/dlenroc/node-roku/commit/f387cfb87bf2325d734e8f75d1d44d80781424ba))
+
 ## [1.2.1](https://github.com/dlenroc/node-roku/compare/ecp-v1.2.0...ecp-v1.2.1) (2023-05-08)
 
 
