@@ -11,64 +11,136 @@ npm install @dlenroc/roku-debug-server
 ## Usage
 
 ```typescript
-import DebugServer from '@dlenroc/roku-debug-server';
+import { TelnetExecutor, getPlugins } from '@dlenroc/roku-debug-server';
 
-// const debugServer = new DebugServer('<ip>');
-const debugServer = new DebugServer({ address: 'tcp://<ip>:8080' });
+const ctx = new TelnetExecutor({
+  hostname: '<ip>',
+  port: '8080'
+});
 
-await debugServer.enableProfiling();
+// raw
+const rawPlugins = await ctx.execute('plugins');
+console.log(rawPlugins);
+
+// typed
+const plugins = await getPlugins(ctx);
+console.log(plugins);
 ```
 
 ---
 
-<!-- TODO: bsprof-status -->
-
 ```typescript
-enableProfiling(enable: boolean): Promise<boolean>
+clearLaunchCaches(ctx: Executor): Promise<void>
 ```
 
 ```typescript
-clearLaunchCache(): Promise<boolean>
+clearSceneGraphPerformanceData(executor: Executor): Promise<void>
 ```
 
 ```typescript
-enableFPS(enable: boolean): Promise<void>
+clearSceneGraphPerformanceData(executor: Executor): Promise<void>
 ```
 
 ```typescript
-getMemory(): Promise<Memory>
+createDeveloperKey(executor: Executor): Promise<DeveloperKey>
 ```
 
 ```typescript
-generateDeveloperKey(): Promise<DeveloperKey>
+disableRendezvousLogging(executor: Executor): Promise<void>
 ```
 
 ```typescript
-getLoadedTextures(): Promise<Textures>
+enableRendezvousLogging(executor: Executor): Promise<void>
 ```
 
 ```typescript
-enableRendezvousLogging(enable: boolean): Promise<boolean>
-```
-
-<!-- TODO: plugins -->
-
-```typescript
-press(keys: string): Promise<void>
-```
-
-<!-- TODO: r2d2_bitmaps -->
-
-```typescript
-getSGNodes(node: string): Promise<string>
-```
-
-<!-- TODO: sgperf -->
-
-```typescript
-getDeveloperId(): Promise<String>
+getChannelPerformanceData(executor: Executor): Promise<ChannelStats>
 ```
 
 ```typescript
-type(string: string): Promise<void>
+getDeveloperKey(executor: Executor): Promise<string>
+```
+
+```typescript
+getLoadedTextures(executor: Executor, overlay?: string): Promise<LoadedTextures>
+```
+
+```typescript
+getMaxWarningCount(executor: Executor): Promise<number>
+```
+
+```typescript
+getMemoryStats(executor: Executor): Promise<MemoryStats>
+```
+
+```typescript
+getPlugins(executor: Executor, idOrName?: number | string): Promise<{ plugins: Plugin[] }>
+```
+
+```typescript
+getProfilingStatus(executor: Executor): Promise<ProfilingStatus>
+```
+
+```typescript
+getR2D2Bitmaps(executor: Executor): Promise<R2D2Bitmap[]>
+```
+
+```typescript
+getRendezvousLoggingStatus(executor: Executor): Promise<RendezvousLoggingStatus>
+```
+
+```typescript
+getSceneGraphNodes(executor: Executor, node: string): Promise<string>
+```
+
+```typescript
+getSceneGraphPerformanceData(executor: Executor): Promise<SceneGraphPerformance[]>
+```
+
+```typescript
+hideFPS(executor: Executor): Promise<void>
+```
+
+```typescript
+pauseProfiling(executor: Executor): Promise<void>
+```
+
+```typescript
+press(executor: Executor, keys: string): Promise<void>
+```
+
+```typescript
+removePlugin(executor: Executor, id: number | 'dev'): Promise<void>
+```
+
+```typescript
+resumeProfiling(executor: Executor): Promise<void>
+```
+
+```typescript
+scheduleChannelStats(executor: Executor, intervalInSeconds: number): Promise<number>
+```
+
+```typescript
+setMaxWarningCount(executor: Executor, count: number): Promise<number>
+```
+
+```typescript
+showFPS(executor: Executor): Promise<void>
+```
+
+```typescript
+startSceneGraphPerformanceTracking(executor: Executor): Promise<void>
+```
+
+```typescript
+stopSceneGraphPerformanceTracking(executor: Executor): Promise<void>
+```
+
+```typescript
+toggleFPS(executor: Executor): Promise<void>
+```
+
+```typescript
+type(executor: Executor, text: string): Promise<void>
 ```

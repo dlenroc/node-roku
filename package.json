@@ -5,14 +5,17 @@
     "build": "npm run build -ws"
   },
   "devDependencies": {
-    "@rollup/plugin-node-resolve": "^15.0.2",
-    "@rollup/plugin-typescript": "^11.1.1",
-    "@types/node": "^18.16.3",
+    "@rollup/plugin-node-resolve": "^15.1.0",
+    "@rollup/plugin-typescript": "^11.1.2",
+    "@types/node": "^20.4.5",
     "@types/node-fetch": "^2.6.4",
+    "@types/sinon": "^10.0.15",
     "rimraf": "^5.0.1",
-    "rollup": "^3.23.0",
-    "tslib": "^2.5.2",
-    "typescript": "^5.0.4"
+    "rollup": "^3.27.0",
+    "sinon": "^15.2.0",
+    "ts-node": "^10.9.1",
+    "tslib": "^2.6.1",
+    "typescript": "^5.1.6"
   },
   "engines": {
     "node": ">=12",
