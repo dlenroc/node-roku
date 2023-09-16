@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.3](https://github.com/dlenroc/node-roku/compare/odc-v1.4.2...odc-v1.4.3) (2023-09-16)
+
+
+### Bug Fixes
+
+* task injection ([5f6cb4e](https://github.com/dlenroc/node-roku/commit/5f6cb4ec3e6ceb725fbdfeef1ea18be7e26805ff))
+
 ## [1.4.2](https://github.com/dlenroc/node-roku/compare/odc-v1.4.1...odc-v1.4.2) (2023-05-08)
 
 
