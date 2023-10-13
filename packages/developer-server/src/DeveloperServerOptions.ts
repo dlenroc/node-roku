@@ -3,4 +3,4 @@ export type DeveloperServerOptions = {
   username: string;
   password: string;
   signal?: AbortSignal;
-}
+};

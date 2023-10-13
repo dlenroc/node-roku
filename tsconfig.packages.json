@@ -1,0 +1,22 @@
+{
+  "references": [
+    { "path": "./packages/debug-server" },
+    { "path": "./packages/developer-server" },
+    { "path": "./packages/dom" },
+    { "path": "./packages/ecp" },
+    { "path": "./packages/odc" },
+    { "path": "./packages/roku" }
+  ],
+  "compilerOptions": {
+    "paths": {
+      "@dlenroc/roku-debug-server": ["./packages/debug-server/src/index.ts"],
+      "@dlenroc/roku-developer-server": [
+        "./packages/developer-server/src/index.ts"
+      ],
+      "@dlenroc/roku-dom": ["./packages/dom/src/index.ts"],
+      "@dlenroc/roku-ecp": ["./packages/ecp/src/index.ts"],
+      "@dlenroc/roku-odc": ["./packages/odc/src/index.ts"],
+      "@dlenroc/roku": ["./packages/roku/src/index.ts"]
+    }
+  }
+}

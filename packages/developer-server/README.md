@@ -11,55 +11,61 @@ npm install @dlenroc/roku-developer-server
 ## Usage
 
 ```typescript
+import { DeveloperServerExecutor, installChannel } from '@dlenroc/roku-developer-server';
 import fs from 'fs';
-import DeveloperServer from '@dlenroc/roku';
 
 const app = fs.readFileSync('<path_to_channel>');
 
-// const developerServer = new DeveloperServer('<ip>', '<username>', '<password>');
-const developerServer = new DeveloperServer({ address: 'http://<ip>', username: '<username>', password: '<password>' });
-
-await developerServer.install(app);
+const executor = new DeveloperServerExecutor({ address: 'http://<ip>', username: '<username>', password: '<password>' });
+await installChannel(executor, app);
 ```
 
 ---
 
 ```typescript
-install(app: Buffer): Promise<void>
+convertToCramfs(ctx: Executor): Promise<void>
 ```
 
 ```typescript
-delete(): Promise<void>
+convertToSquashfs(ctx: Executor): Promise<void>
 ```
 
 ```typescript
-convertToCramFs(): Promise<void>
+convertToZip(ctx: Executor): Promise<void>
 ```
 
 ```typescript
-convertToSquashFs(): Promise<void>
+deleteChannel(ctx: Executor): Promise<void>
 ```
 
 ```typescript
-package(name: string, password: string): Promise<void>
+deletePackage(ctx: Executor): Promise<void>
 ```
 
 ```typescript
-deletePackage(): Promise<void>
+getPackage(ctx: Executor): Promise<Blob>
 ```
 
 ```typescript
-getPackage(): Promise<Buffer>
+getProfilingData(ctx: Executor): Promise<Blob>
 ```
 
 ```typescript
-rekey(pkg: Buffer, password: string): Promise<void>
+getScreenshot(ctx: Executor): Promise<Blob>
 ```
 
 ```typescript
-getScreenshot(): Promise<Buffer>
+inspectPackage(ctx: Executor, option: { content: Blob | NodeJS.ArrayBufferView; password: string; }): Promise<Record<string, string>>
 ```
 
 ```typescript
-getProfilingData(): Promise<Buffer>
+installChannel(ctx: Executor, option: { content: Blob | NodeJS.ArrayBufferView; useSquashfs?: Boolean; remoteDebug?: boolean; remoteDebugConnectEarly?: boolean; }): Promise<void>
+```
+
+```typescript
+packageChannel(ctx: Executor, option: { name: string; password: string; timestamp?: number; }): Promise<void>
+```
+
+```typescript
+rekey(ctx: Executor, option: { content: Blob | NodeJS.ArrayBufferView; password: string; }): Promise<void>
 ```
