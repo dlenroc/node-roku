@@ -13,15 +13,11 @@
   "module": "dist/index.mjs",
   "types": "src/index.ts",
   "scripts": {
+    "prepare": "npm run build",
     "build": "rimraf dist && rollup --bundleConfigAsCjs -c ../../rollup.config.js",
-    "prepare": "npm run build"
-  },
-  "engines": {
-    "node": ">=12"
+    "test": "node --require ts-node/register --test-reporter spec --test ./test/**/*.test.ts"
   },
   "dependencies": {
-    "digest-header": "^1.1.0",
-    "form-data": "^4.0.0",
-    "node-fetch": "^2.6.7"
+    "digest-header": "^1.1.0"
   }
 }
