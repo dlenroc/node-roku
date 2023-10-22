@@ -1,2 +1,2 @@
-export { Document as default, Document } from './Document';
-export { Element } from './Element';
+export { Document, Document as default } from './Document.js';
+export { Element } from './Element.js';

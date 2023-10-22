@@ -1,5 +1,5 @@
 import type { Executor } from '../executors/Executor.ts';
-import { execute } from '../internal/execute.ts';
+import { execute } from '../internal/execute.js';
 
 const pattern = /^channel: .+?(\nrepeat (\d+)s \(on dev console\).*)?$/;
 

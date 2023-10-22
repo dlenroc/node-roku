@@ -1,8 +1,7 @@
+import { DebugServerParsingError, getLoadedTextures } from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
 import { afterEach, describe, test } from 'node:test';
 import sinon from 'sinon';
-import { DebugServerParsingError } from '../../src/DebugServerParsingError.ts';
-import { getLoadedTextures } from '../../src/commands/getLoadedTextures.ts';
 
 describe('getLoadedTextures', () => {
   afterEach(() => sinon.verifyAndRestore());

@@ -1,4 +1,4 @@
-import type { FWBeaconsStatus } from './FWBeaconsStatus';
+import type { FWBeaconsStatus } from './FWBeaconsStatus.ts';
 
 export interface FWBeacons extends FWBeaconsStatus {
   'plugin-id': string;

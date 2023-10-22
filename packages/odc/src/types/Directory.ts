@@ -1,4 +1,4 @@
-import { File } from './File';
+import type { File } from './File.ts';
 
 export interface Directory {
   children: (File | Directory)[];

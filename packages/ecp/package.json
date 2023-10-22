@@ -1,26 +1,25 @@
 {
   "name": "@dlenroc/roku-ecp",
-  "version": "1.2.2",
+  "version": "2.0.0",
   "description": "Client for external control protocol provided on port 8060",
-  "author": "Corneliu Duplachi",
-  "license": "MIT",
-  "repository": "dlenroc/node-roku",
   "keywords": [
     "roku",
     "ecp"
   ],
+  "repository": "dlenroc/node-roku",
+  "license": "MIT",
+  "author": "Corneliu Duplachi",
+  "type": "module",
   "main": "dist/index.js",
-  "module": "dist/index.mjs",
-  "types": "src/index.ts",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "rimraf dist && rollup --bundleConfigAsCjs -c ../../rollup.config.js",
-    "prepare": "npm run build"
-  },
-  "engines": {
-    "node": ">=12"
+    "build": "tsc --build --force tsconfig.build.json"
   },
   "dependencies": {
-    "fast-xml-parser": "^4.0.3",
-    "node-fetch": "^2.6.7"
+    "fast-xml-parser": "^4.3.2",
+    "node-fetch": "^3.3.2"
   }
 }

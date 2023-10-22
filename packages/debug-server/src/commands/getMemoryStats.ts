@@ -1,6 +1,6 @@
 import type { Executor } from '../executors/Executor.ts';
-import { execute } from '../internal/execute.ts';
-import { MemoryStats } from '../types/MemoryStats.ts';
+import { execute } from '../internal/execute.js';
+import type { MemoryStats } from '../types/MemoryStats.ts';
 
 const memoryPattern = /Mem:\s*(?<total>\d+)\s*(?<used>\d+)\s*(?<free>\d+)\s*(?<shared>\d+)\s*(?<cache>\d+)\s*(?<available>\d+)/;
 const swapPattern = /Swap:\s*(?<total>\d+)\s*(?<used>\d+)\s*(?<free>\d+)/;

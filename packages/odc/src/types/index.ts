@@ -1,2 +1,2 @@
-export { Directory } from './Directory';
-export { File } from './File';
+export type { Directory } from './Directory.ts';
+export type { File } from './File.ts';

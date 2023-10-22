@@ -1,9 +1,9 @@
 import { URLSearchParams } from 'url';
-import { ECPError } from './ECPError';
-import type { ECPOptions } from './ECPOptions';
-import fetch from './internal/keep-alive-fetch';
-import parse from './internal/xml';
-import { ActiveApp, App, AppId, ChannelPerformance, DeviceInfo, FWBeacons, FWBeaconsStatus, Failure, GraphicsFrameRate, Key, MediaInfo, Params, R2D2Bitmaps, Registry, SGRendezvousStatus } from './types';
+import { ECPError } from './ECPError.js';
+import type { ECPOptions } from './ECPOptions.ts';
+import fetch from './internal/keep-alive-fetch.js';
+import parse from './internal/xml.js';
+import type { ActiveApp, App, AppId, ChannelPerformance, DeviceInfo, FWBeacons, FWBeaconsStatus, Failure, GraphicsFrameRate, Key, MediaInfo, Params, R2D2Bitmaps, Registry, SGRendezvousStatus } from './types/index.ts';
 
 export class ECP {
   private readonly config: ECPOptions;

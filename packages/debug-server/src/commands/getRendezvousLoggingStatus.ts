@@ -1,6 +1,6 @@
 import type { Executor } from '../executors/Executor.ts';
-import { execute } from '../internal/execute.ts';
-import { RendezvousLoggingStatus } from '../types/RendezvousLoggingStatus.ts';
+import { execute } from '../internal/execute.js';
+import type { RendezvousLoggingStatus } from '../types/RendezvousLoggingStatus.ts';
 
 const pattern = /rendezvous logging is (on|off)/;
 

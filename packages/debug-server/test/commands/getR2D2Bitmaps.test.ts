@@ -1,8 +1,7 @@
+import { DebugServerParsingError, getR2D2Bitmaps } from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
 import { afterEach, describe, test } from 'node:test';
 import sinon from 'sinon';
-import { DebugServerParsingError } from '../../src/DebugServerParsingError.ts';
-import { getR2D2Bitmaps } from '../../src/commands/getR2D2Bitmaps.ts';
 
 describe('getR2D2Bitmaps', () => {
   afterEach(() => sinon.verifyAndRestore());

@@ -1,6 +1,6 @@
-import { Executor } from '../executors/Executor.ts';
-import { execute } from '../internal/execute.ts';
-import { SceneGraphPerformance } from '../types/SceneGraphPerformance.ts';
+import type { Executor } from '../executors/Executor.ts';
+import { execute } from '../internal/execute.js';
+import type { SceneGraphPerformance } from '../types/SceneGraphPerformance.ts';
 
 const pattern = /thread node calls: .+(?<calls>\d+)\s+\+\s+op\s+(?<op>\d+)\s+@\s+(?<rendezvous>\d+\.\d+)%/g;
 

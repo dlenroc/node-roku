@@ -1,8 +1,8 @@
 import { createConnection } from 'node:net';
-import { DebugServerError } from '../DebugServerError.ts';
-import { Executor } from './Executor.ts';
+import { DebugServerError } from '../DebugServerError.js';
+import type { Executor } from './Executor.ts';
 
-class TelnetExecutor implements Executor {
+export class TelnetExecutor implements Executor {
   #hostname: string;
   #port: number;
   #signal?: AbortSignal;

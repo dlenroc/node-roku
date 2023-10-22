@@ -1,7 +1,7 @@
 // @ts-ignore missing types
 import digest from 'digest-header';
-import { DeveloperServerOptions } from '../DeveloperServerOptions.ts';
-import { Executor } from './Executor.ts';
+import type { DeveloperServerOptions } from '../DeveloperServerOptions.ts';
+import type { Executor } from './Executor.ts';
 
 export class DeveloperServerExecutor implements Executor {
   private _authentication: any;

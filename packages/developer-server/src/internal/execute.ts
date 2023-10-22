@@ -1,6 +1,6 @@
-import { DeveloperServerError } from '../DeveloperServerError.ts';
-import { Executor } from '../executor/Executor.ts';
-import { parseRokuMessages } from './parseRokuMessages.ts';
+import { DeveloperServerError } from '../DeveloperServerError.js';
+import type { Executor } from '../executor/Executor.ts';
+import { parseRokuMessages } from './parseRokuMessages.js';
 
 export async function execute<T>(
   executor: Executor,

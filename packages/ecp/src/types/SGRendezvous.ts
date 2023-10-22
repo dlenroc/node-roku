@@ -1,5 +1,5 @@
-import { AppId } from './AppId';
-import { Success } from './Success';
+import type { AppId } from './AppId.ts';
+import type { Success } from './Success.ts';
 
 export interface SGRendezvousStatus extends Success {
   data: {

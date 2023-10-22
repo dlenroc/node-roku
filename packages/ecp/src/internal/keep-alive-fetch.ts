@@ -1,6 +1,6 @@
 import http from 'http';
 import https from 'https';
-import nodeFetch, { RequestInfo, RequestInit, Response } from 'node-fetch';
+import nodeFetch, { Response, type RequestInfo, type RequestInit } from 'node-fetch';
 import type { URL } from 'url';
 
 const options = { keepAlive: true };

@@ -1,26 +1,25 @@
 {
   "name": "@dlenroc/roku-odc",
-  "version": "1.4.3",
+  "version": "2.0.0",
   "description": "Client for runtime utilities",
-  "author": "Corneliu Duplachi",
-  "license": "MIT",
-  "repository": "dlenroc/node-roku",
   "keywords": [
     "roku",
     "odc"
   ],
+  "repository": "dlenroc/node-roku",
+  "license": "MIT",
+  "author": "Corneliu Duplachi",
+  "type": "module",
   "main": "dist/index.js",
-  "module": "dist/index.mjs",
-  "types": "src/index.ts",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "rimraf dist && rollup --bundleConfigAsCjs -c ../../rollup.config.js",
-    "prepare": "npm run build"
-  },
-  "engines": {
-    "node": ">=12"
+    "build": "tsc --build --force tsconfig.build.json"
   },
   "dependencies": {
-    "jszip": "^3.7.1",
-    "node-fetch": "^2.6.7"
+    "jszip": "^3.10.1",
+    "node-fetch": "^3.3.2"
   }
 }

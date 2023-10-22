@@ -1,6 +1,6 @@
 import type { Executor } from '../executor/Executor.ts';
-import { execute } from '../internal/execute.ts';
-import { getPluginPackageCommand } from '../internal/getPluginPackageCommand.ts';
+import { execute } from '../internal/execute.js';
+import { getPluginPackageCommand } from '../internal/getPluginPackageCommand.js';
 
 /**
  * Delete sideloaded channel package.

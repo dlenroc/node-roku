@@ -1,8 +1,7 @@
+import { DebugServerParsingError, clearLaunchCaches } from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
 import { afterEach, describe, test } from 'node:test';
 import sinon from 'sinon';
-import { DebugServerParsingError } from '../../src/DebugServerParsingError.ts';
-import { clearLaunchCaches } from '../../src/commands/clearLaunchCaches.ts';
 
 describe('clearLaunchCaches', () => {
   afterEach(() => sinon.verifyAndRestore());

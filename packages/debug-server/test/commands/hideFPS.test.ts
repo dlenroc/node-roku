@@ -1,8 +1,7 @@
+import { DebugServerParsingError, hideFPS } from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
 import { afterEach, describe, test } from 'node:test';
 import sinon from 'sinon';
-import { DebugServerParsingError } from '../../src/DebugServerParsingError.ts';
-import { hideFPS } from '../../src/commands/hideFPS.ts';
 
 describe('hideFPS', () => {
   afterEach(() => sinon.verifyAndRestore());
