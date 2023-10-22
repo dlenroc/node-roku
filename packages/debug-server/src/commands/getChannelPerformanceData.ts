@@ -1,6 +1,6 @@
 import type { Executor } from '../executors/Executor.ts';
-import { execute } from '../internal/execute.ts';
-import { ChannelStats } from '../types/ChannelStats.ts';
+import { execute } from '../internal/execute.js';
+import type { ChannelStats } from '../types/ChannelStats.ts';
 
 const pattern = /mem=(?<mem>\d+)KiB{anon=(?<anon>\d+),file=(?<file>\d+),shared=(?<shared>\d+),swap=(?<swap>\d+)},%cpu=(?<cpu>\d+){user=(?<user>\d+),sys=(?<sys>\d+)}/;
 

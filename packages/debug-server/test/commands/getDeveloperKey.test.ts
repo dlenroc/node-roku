@@ -1,8 +1,7 @@
+import { DebugServerParsingError, getDeveloperKey } from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
 import { afterEach, describe, test } from 'node:test';
 import sinon from 'sinon';
-import { DebugServerParsingError } from '../../src/DebugServerParsingError.ts';
-import { getDeveloperKey } from '../../src/commands/getDeveloperKey.ts';
 
 describe('getDeveloperKey', () => {
   afterEach(() => sinon.verifyAndRestore());

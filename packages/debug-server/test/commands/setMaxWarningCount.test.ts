@@ -1,8 +1,7 @@
+import { DebugServerParsingError, setMaxWarningCount } from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
 import { afterEach, describe, test } from 'node:test';
 import sinon from 'sinon';
-import { DebugServerParsingError } from '../../src/DebugServerParsingError.ts';
-import { setMaxWarningCount } from '../../src/commands/setMaxWarningCount.ts';
 
 describe('setMaxWarningCount', () => {
   afterEach(() => sinon.verifyAndRestore());

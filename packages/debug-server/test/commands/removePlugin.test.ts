@@ -1,8 +1,7 @@
+import { DebugServerParsingError, removePlugin } from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
 import { afterEach, describe, test } from 'node:test';
 import sinon from 'sinon';
-import { DebugServerParsingError } from '../../src/DebugServerParsingError.ts';
-import { removePlugin } from '../../src/commands/removePlugin.ts';
 
 describe('removePlugin', () => {
   afterEach(() => sinon.verifyAndRestore());

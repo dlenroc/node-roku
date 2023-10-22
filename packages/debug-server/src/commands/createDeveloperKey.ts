@@ -1,6 +1,6 @@
 import type { Executor } from '../executors/Executor.ts';
-import { execute } from '../internal/execute.ts';
-import { DeveloperKey } from '../types/DeveloperKey.ts';
+import { execute } from '../internal/execute.js';
+import type { DeveloperKey } from '../types/DeveloperKey.ts';
 
 const idPattern = /DevID: (.*)/;
 const passwordPattern = /Password: (.*)/;

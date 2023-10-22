@@ -1,4 +1,4 @@
-import { Texture } from './Texture.ts';
+import type { Texture } from './Texture.ts';
 
 export type LoadedTextures = {
   used: number;

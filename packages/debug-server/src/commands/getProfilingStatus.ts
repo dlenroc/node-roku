@@ -1,6 +1,6 @@
-import { Executor } from '../executors/Executor.ts';
-import { execute } from '../internal/execute.ts';
-import { ProfilingStatus } from '../types/ProfilingStatus.ts';
+import type { Executor } from '../executors/Executor.ts';
+import { execute } from '../internal/execute.js';
+import type { ProfilingStatus } from '../types/ProfilingStatus.ts';
 
 const pattern = /status: (\w+),?(.*),data_dest=(\w+)/;
 

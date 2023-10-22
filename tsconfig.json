@@ -1,23 +1,25 @@
 {
+  "extends": "@tsconfig/node20",
   "compilerOptions": {
-    "lib": ["ES2023"],
-    "module": "Node16",
-    "moduleResolution": "Node16",
-    "target": "ES2022",
-
-    "strict": true,
-    "esModuleInterop": true,
-    "isolatedModules": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-
+    "noEmit": true,
+    "declaration": true,
     "sourceMap": true,
-    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
     "paths": {
-      "@dlenroc/*": [
-        "./node_modules/@dlenroc/*"
-      ]
+      "@dlenroc/roku-debug-server": ["./packages/debug-server"],
+      "@dlenroc/roku-developer-server": ["./packages/developer-server"],
+      "@dlenroc/roku-dom": ["./packages/dom"],
+      "@dlenroc/roku-ecp": ["./packages/ecp"],
+      "@dlenroc/roku-odc": ["./packages/odc"],
+      "@dlenroc/roku": ["./packages/roku"]
     }
   },
-  "exclude": ["./dist", "./node_modules"]
+  "references": [
+    { "path": "./packages/debug-server/tsconfig.build.json" },
+    { "path": "./packages/developer-server/tsconfig.build.json" },
+    { "path": "./packages/dom/tsconfig.build.json" },
+    { "path": "./packages/ecp/tsconfig.build.json" },
+    { "path": "./packages/odc/tsconfig.build.json" },
+    { "path": "./packages/roku/tsconfig.build.json" }
+  ]
 }

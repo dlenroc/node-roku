@@ -1,6 +1,6 @@
 import type { Executor } from '../executors/Executor.ts';
-import { execute } from '../internal/execute.ts';
-import { Plugin } from '../types/Plugin.ts';
+import { execute } from '../internal/execute.js';
+import type { Plugin } from '../types/Plugin.ts';
 
 const pattern = /(?<id>\S+)\s+\[usg\s+(?<usg>\d+)\]\s+\[ref\s+(?<ref>\d+)\]\s+(?<cmpl>cmpl)?(?<run>\*)?\s+(?<name>.+),\s+(?<version>\d+\.\d+\.\d+)/gm;
 

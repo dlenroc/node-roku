@@ -1,10 +1,11 @@
-import { Key, SDK } from '@dlenroc/roku';
+import type { Key } from '@dlenroc/roku';
+import { SDK } from '@dlenroc/roku';
 import { Element as XMLElement, Node as XMLNode } from 'libxmljs2';
 import { performance } from 'perf_hooks';
-import { Document } from './Document';
-import { RokuError } from './Error';
-import { selectAll, selectOne } from './internal/css-select';
-import { BUTTON, DIALOG, KEYBOARD, LABEL } from './internal/selectors';
+import { Document } from './Document.js';
+import { RokuError } from './Error.js';
+import { selectAll, selectOne } from './internal/css-select.js';
+import { BUTTON, DIALOG, KEYBOARD, LABEL } from './internal/selectors.js';
 
 export class Element {
   sdk: SDK;

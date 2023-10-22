@@ -1,6 +1,6 @@
-import { DeveloperServerError } from '../DeveloperServerError.ts';
+import { DeveloperServerError } from '../DeveloperServerError.js';
 import type { Executor } from '../executor/Executor.ts';
-import { execute } from '../internal/execute.ts';
+import { execute } from '../internal/execute.js';
 
 /**
  * Get sideloaded channel package.

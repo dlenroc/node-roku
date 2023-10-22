@@ -1,8 +1,7 @@
+import { DebugServerParsingError, getProfilingStatus } from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
 import { afterEach, describe, test } from 'node:test';
 import sinon from 'sinon';
-import { DebugServerParsingError } from '../../src/DebugServerParsingError.ts';
-import { getProfilingStatus } from '../../src/commands/getProfilingStatus.ts';
 
 describe('getProfilingStatus', () => {
   afterEach(() => sinon.verifyAndRestore());

@@ -1,23 +1,17 @@
 {
   "private": true,
+  "workspaces": [
+    "./packages/*"
+  ],
   "scripts": {
-    "clean": "rimraf {node_modules,package-lock.json} packages/*/{dist,node_modules,package-lock.json} && npm i",
     "build": "npm run build -ws"
   },
   "devDependencies": {
-    "@rollup/plugin-node-resolve": "^15.2.3",
-    "@rollup/plugin-typescript": "^11.1.5",
-    "@types/node": "^20.8.5",
-    "@types/node-fetch": "^2.6.6",
-    "@types/sinon": "^10.0.19",
-    "rimraf": "^5.0.5",
-    "rollup": "^4.0.2",
-    "sinon": "^16.1.0",
+    "@tsconfig/node20": "^20.1.2",
+    "@types/node": "^20.8.7",
+    "@types/sinon": "^10.0.20",
+    "sinon": "^17.0.0",
     "ts-node": "^10.9.1",
-    "tslib": "^2.6.2",
     "typescript": "^5.2.2"
-  },
-  "workspaces": [
-    "./packages/*"
-  ]
+  }
 }

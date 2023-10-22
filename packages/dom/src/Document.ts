@@ -1,8 +1,8 @@
 import { SDK } from '@dlenroc/roku';
 import { Element as XMLElement, parseXml } from 'libxmljs2';
-import { Element } from './Element';
-import { RokuError } from './Error';
-import { KEYBOARD } from './internal/selectors';
+import { Element } from './Element.js';
+import { RokuError } from './Error.js';
+import { KEYBOARD } from './internal/selectors.js';
 
 const rootXML = '<app-ui></app-ui>';
 const rootNode = parseXml(rootXML, { noblanks: true }).root() as XMLElement;

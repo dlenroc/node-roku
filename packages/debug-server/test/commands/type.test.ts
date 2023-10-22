@@ -1,8 +1,7 @@
+import { DebugServerParsingError, type } from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
 import { afterEach, describe, test } from 'node:test';
 import sinon from 'sinon';
-import { DebugServerParsingError } from '../../src/DebugServerParsingError.ts';
-import { type } from '../../src/commands/type.ts';
 
 describe('type', () => {
   afterEach(() => sinon.verifyAndRestore());

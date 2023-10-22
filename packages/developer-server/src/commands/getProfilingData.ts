@@ -1,6 +1,6 @@
 import type { Executor } from '../executor/Executor.ts';
-import { execute } from '../internal/execute.ts';
-import { getPluginInspectCommand } from '../internal/getPluginInspectCommand.ts';
+import { execute } from '../internal/execute.js';
+import { getPluginInspectCommand } from '../internal/getPluginInspectCommand.js';
 
 /**
  * Get profiling data.

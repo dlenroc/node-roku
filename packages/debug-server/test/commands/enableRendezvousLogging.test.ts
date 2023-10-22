@@ -1,8 +1,7 @@
+import { DebugServerParsingError, enableRendezvousLogging } from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
 import { afterEach, describe, test } from 'node:test';
 import sinon from 'sinon';
-import { DebugServerParsingError } from '../../src/DebugServerParsingError.ts';
-import { enableRendezvousLogging } from '../../src/commands/enableRendezvousLogging.ts';
 
 describe('enableRendezvousLogging', () => {
   afterEach(() => sinon.verifyAndRestore());

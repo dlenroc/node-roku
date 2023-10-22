@@ -1,3 +1,3 @@
-export { ECP, ECP as default } from './ECP';
-export * from './ECPError';
-export * from './types';
+export { ECP, ECP as default } from './ECP.js';
+export * from './ECPError.js';
+export type * from './types/index.ts';

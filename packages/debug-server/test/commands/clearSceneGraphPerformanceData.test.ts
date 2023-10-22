@@ -1,8 +1,7 @@
+import { DebugServerParsingError, clearSceneGraphPerformanceData } from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
 import { afterEach, describe, test } from 'node:test';
 import sinon from 'sinon';
-import { DebugServerParsingError } from '../../src/DebugServerParsingError.ts';
-import { clearSceneGraphPerformanceData } from '../../src/commands/clearSceneGraphPerformanceData.ts';
 
 describe('clearSceneGraphPerformanceData', () => {
   afterEach(() => sinon.verifyAndRestore());

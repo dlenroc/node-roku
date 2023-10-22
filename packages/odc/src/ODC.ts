@@ -1,10 +1,10 @@
-import { BodyInit } from 'node-fetch';
+import type { BodyInit } from 'node-fetch';
 import { URLSearchParams } from 'url';
-import { ODCError } from './ODCError';
-import type { ODCOptions } from './ODCOptions';
-import extend from './internal/injector';
-import fetch from './internal/keep-alive-fetch';
-import { Directory, File } from './types';
+import { ODCError } from "./ODCError.js";
+import type { ODCOptions } from './ODCOptions.ts';
+import extend from './internal/injector.js';
+import fetch from './internal/keep-alive-fetch.js';
+import type { Directory, File } from './types/index.ts';
 
 export class ODC {
   private readonly config: ODCOptions;
@@ -76,7 +76,7 @@ export class ODC {
     const response = await fetch(this.config.address + '/' + path, { method, headers, body, signal: this.config.signal });
 
     if (!response.ok) {
-      const json = await response.json();
+      const json: any = await response.json();
 
       let trace = json.backtrace?.reverse() || [];
       let message = json.message || `${method} /${path} -> ${response.status}`;

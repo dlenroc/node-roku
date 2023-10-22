@@ -1,6 +1,6 @@
 import type { Executor } from '../executors/Executor.ts';
-import { execute } from '../internal/execute.ts';
-import { LoadedTextures } from '../types/LoadedTextures.ts';
+import { execute } from '../internal/execute.js';
+import type { LoadedTextures } from '../types/LoadedTextures.ts';
 
 const pattern = /\* .+ Textures +\*/;
 

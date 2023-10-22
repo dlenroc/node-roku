@@ -1,8 +1,7 @@
+import { DebugServerParsingError, scheduleChannelStats } from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
 import { afterEach, describe, test } from 'node:test';
 import sinon from 'sinon';
-import { DebugServerParsingError } from '../../src/DebugServerParsingError.ts';
-import { scheduleChannelStats } from '../../src/commands/scheduleChannelStats.ts';
 
 describe('scheduleChannelStats', () => {
   afterEach(() => sinon.verifyAndRestore());

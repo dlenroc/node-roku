@@ -1,4 +1,4 @@
-import { AppId } from './AppId';
+import type { AppId } from './AppId.ts';
 
 export interface App {
   id: AppId;

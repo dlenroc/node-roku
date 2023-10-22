@@ -1,4 +1,4 @@
-import { DebugServerError } from './DebugServerError.ts';
+import { DebugServerError } from './DebugServerError.js';
 
 export class DebugServerParsingError extends DebugServerError {
   public readonly cmd: string;

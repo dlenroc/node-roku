@@ -1,6 +1,6 @@
 import type { Executor } from '../executor/Executor.ts';
-import { execute } from '../internal/execute.ts';
-import { getPluginInstallCommand } from '../internal/getPluginInstallCommand.ts';
+import { execute } from '../internal/execute.js';
+import { getPluginInstallCommand } from '../internal/getPluginInstallCommand.js';
 
 /**
  * Sideload a channel from a zip file.

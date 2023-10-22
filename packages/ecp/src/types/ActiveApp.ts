@@ -1,5 +1,5 @@
-import { App } from './App';
-import { Screensaver } from './Screensaver';
+import type { App } from './App.ts';
+import type { Screensaver } from './Screensaver.ts';
 
 export interface ActiveApp {
   app: 'Roku' | App;
