@@ -1,12 +1,12 @@
-import { DebugServerParsingError, getSceneGraphPerformanceData } from '@dlenroc/roku-debug-server';
+import { DebugServerError, getSceneGraphPerformanceMetrics } from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
 import { afterEach, describe, test } from 'node:test';
 import sinon from 'sinon';
 
-describe('startSceneGraphPerformanceTracking', () => {
+describe('getSceneGraphPerformanceMetrics', () => {
   afterEach(() => sinon.verifyAndRestore());
 
-  test('get performance data', async () => {
+  test('get performance metrics', async () => {
     const executor = {
       execute: sinon
         .mock()
@@ -19,7 +19,7 @@ describe('startSceneGraphPerformanceTracking', () => {
         ),
     };
 
-    const result = await getSceneGraphPerformanceData(executor);
+    const result = await getSceneGraphPerformanceMetrics(executor);
 
     assert.deepStrictEqual(result, [
       {
@@ -43,7 +43,7 @@ describe('startSceneGraphPerformanceTracking', () => {
         .resolves('Command not recognized'),
     };
 
-    const result = getSceneGraphPerformanceData(executor);
-    await assert.rejects(result, DebugServerParsingError);
+    const result = getSceneGraphPerformanceMetrics(executor);
+    await assert.rejects(result, DebugServerError);
   });
 });

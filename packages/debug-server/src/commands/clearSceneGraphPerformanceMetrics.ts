@@ -4,10 +4,10 @@ import { execute, type Config } from '../internal/execute.js';
 const pattern = /^\s*$/;
 
 /**
- * Start SceneGraph performance tracking.
+ * Clear SceneGraph node operation performance metrics.
  */
-export async function startSceneGraphPerformanceTracking<
+export async function clearSceneGraphPerformanceMetrics<
   Context extends Executor<{}>
 >(ctx: Context, config?: Config<Context>): Promise<void> {
-  await execute(ctx, 'sgperf', ['start'], [pattern], config);
+  await execute(ctx, 'sgperf', ['clear'], [pattern], config);
 }

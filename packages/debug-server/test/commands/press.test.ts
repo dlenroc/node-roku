@@ -1,4 +1,4 @@
-import { DebugServerParsingError, press } from '@dlenroc/roku-debug-server';
+import { DebugServerError, press } from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
 import { afterEach, describe, test } from 'node:test';
 import sinon from 'sinon';
@@ -15,7 +15,7 @@ describe('press', () => {
         .resolves(''),
     };
 
-    const result = await press(executor, keys);
+    const result = await press(executor, { keys });
     assert.strictEqual(result, undefined);
   });
 
@@ -27,7 +27,7 @@ describe('press', () => {
         .resolves('.h<dur>  Specify a custom press-and-hold duration'),
     };
 
-    const result = press(executor, '');
-    await assert.rejects(result, DebugServerParsingError);
+    const result = press(executor, { keys: '' });
+    await assert.rejects(result, DebugServerError);
   });
 });

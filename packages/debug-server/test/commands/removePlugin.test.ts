@@ -1,4 +1,4 @@
-import { DebugServerParsingError, removePlugin } from '@dlenroc/roku-debug-server';
+import { DebugServerError, removePlugin } from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
 import { afterEach, describe, test } from 'node:test';
 import sinon from 'sinon';
@@ -15,7 +15,7 @@ describe('removePlugin', () => {
         .resolves(`Removed sideloaded plugin id: ${id}`),
     };
 
-    const result = await removePlugin(executor, id);
+    const result = await removePlugin(executor, { id });
     assert.strictEqual(result, undefined);
   });
 
@@ -28,7 +28,7 @@ describe('removePlugin', () => {
         .resolves(`Failed to remove plugin id: ${id}, name: unknown. Plugin is NOT installed on the device`),
     };
 
-    const result = removePlugin(executor, id);
-    await assert.rejects(result, DebugServerParsingError);
+    const result = removePlugin(executor, { id });
+    await assert.rejects(result, DebugServerError);
   });
 });

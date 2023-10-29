@@ -1,4 +1,4 @@
-import { DebugServerParsingError, getPlugins } from '@dlenroc/roku-debug-server';
+import { DebugServerError, getPlugins } from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
 import { afterEach, describe, test } from 'node:test';
 import sinon from 'sinon';
@@ -56,11 +56,11 @@ describe('getPlugins', () => {
   });
 
   test('return filtered plugins', async () => {
-    const id = 'dev';
+    const query = 'dev';
     const executor = {
       execute: sinon
         .mock()
-        .withExactArgs('plugins', [id])
+        .withExactArgs('plugins', [query])
         .resolves(
           [
             ' F-- P S - Z                 dev [usg     0] [ref  0] cmpl* Hello World, 1.0.1',
@@ -70,7 +70,7 @@ describe('getPlugins', () => {
         ),
     };
 
-    const result = await getPlugins(executor, id);
+    const result = await getPlugins(executor, { query });
 
     assert.deepStrictEqual(result, {
       plugins: [
@@ -93,6 +93,6 @@ describe('getPlugins', () => {
     };
 
     const result = getPlugins(executor);
-    await assert.rejects(result, DebugServerParsingError);
+    await assert.rejects(result, DebugServerError);
   });
 });

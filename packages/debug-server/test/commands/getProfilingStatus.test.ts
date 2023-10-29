@@ -1,4 +1,4 @@
-import { DebugServerParsingError, getProfilingStatus } from '@dlenroc/roku-debug-server';
+import { DebugServerError, getProfilingStatus } from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
 import { afterEach, describe, test } from 'node:test';
 import sinon from 'sinon';
@@ -83,6 +83,6 @@ describe('getProfilingStatus', () => {
     };
 
     const result = getProfilingStatus(executor);
-    await assert.rejects(result, DebugServerParsingError);
+    await assert.rejects(result, DebugServerError);
   });
 });

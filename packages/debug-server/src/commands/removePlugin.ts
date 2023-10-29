@@ -1,11 +1,20 @@
-import type { Executor } from '../executors/Executor.ts';
-import { execute } from '../internal/execute.js';
+import type { Executor } from '../Executor.js';
+import { execute, type Config } from '../internal/execute.js';
 
 const pattern = /Removed sideloaded plugin id/;
 
 /**
  * Remove a plugin from the account and device.
  */
-export async function removePlugin(executor: Executor, id: number | 'dev'): Promise<void> {
-  await execute(executor, 'remove_plugin', [`${id}`], [pattern]);
+export async function removePlugin<Context extends Executor<{}>>(
+  ctx: Context,
+  payload: {
+    /**
+     * Plugin id to remove.
+     */
+    id: 'dev' | number;
+  },
+  config?: Config<Context>
+): Promise<void> {
+  await execute(ctx, 'remove_plugin', [`${payload.id}`], [pattern], config);
 }

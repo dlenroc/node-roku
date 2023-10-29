@@ -1,4 +1,4 @@
-import { DebugServerParsingError, clearLaunchCaches } from '@dlenroc/roku-debug-server';
+import { DebugServerError, clearLaunchCaches } from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
 import { afterEach, describe, test } from 'node:test';
 import sinon from 'sinon';
@@ -27,6 +27,6 @@ describe('clearLaunchCaches', () => {
     };
 
     const result = clearLaunchCaches(executor);
-    await assert.rejects(result, DebugServerParsingError);
+    await assert.rejects(result, DebugServerError);
   });
 });

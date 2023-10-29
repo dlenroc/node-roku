@@ -1,4 +1,4 @@
-import { DebugServerParsingError, setMaxWarningCount } from '@dlenroc/roku-debug-server';
+import { DebugServerError, setMaxWarningCount } from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
 import { afterEach, describe, test } from 'node:test';
 import sinon from 'sinon';
@@ -7,28 +7,28 @@ describe('setMaxWarningCount', () => {
   afterEach(() => sinon.verifyAndRestore());
 
   test('update max warning count', async () => {
-    const limit = 10;
+    const count = 10;
     const executor = {
       execute: sinon
         .mock()
-        .withExactArgs('brightscript_warnings', [`${limit}`])
-        .resolves(`updated brightscript warning limit to ${limit} (was ${limit * 2}})`),
+        .withExactArgs('brightscript_warnings', [`${count}`])
+        .resolves(`updated brightscript warning limit to ${count} (was ${count * 2}})`),
     };
 
-    const result = await setMaxWarningCount(executor, limit);
-    assert.strictEqual(result, limit);
+    const result = await setMaxWarningCount(executor, { count });
+    assert.strictEqual(result, count);
   });
 
   test('throws if failed to parse', async () => {
-    const newLimit = 10;
+    const count = 10;
     const executor = {
       execute: sinon
         .mock()
-        .withExactArgs('brightscript_warnings', [`${newLimit}`])
+        .withExactArgs('brightscript_warnings', [`${count}`])
         .resolves(''),
     };
 
-    const result = setMaxWarningCount(executor, newLimit);
-    await assert.rejects(result, DebugServerParsingError);
+    const result = setMaxWarningCount(executor, { count });
+    await assert.rejects(result, DebugServerError);
   });
 });

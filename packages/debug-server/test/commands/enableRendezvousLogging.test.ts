@@ -1,4 +1,4 @@
-import { DebugServerParsingError, enableRendezvousLogging } from '@dlenroc/roku-debug-server';
+import { DebugServerError, enableRendezvousLogging } from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
 import { afterEach, describe, test } from 'node:test';
 import sinon from 'sinon';
@@ -27,6 +27,6 @@ describe('enableRendezvousLogging', () => {
     };
 
     const result = enableRendezvousLogging(executor);
-    await assert.rejects(result, DebugServerParsingError);
+    await assert.rejects(result, DebugServerError);
   });
 });

@@ -1,12 +1,12 @@
-import { DebugServerParsingError, clearSceneGraphPerformanceData } from '@dlenroc/roku-debug-server';
+import { DebugServerError, clearSceneGraphPerformanceMetrics } from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
 import { afterEach, describe, test } from 'node:test';
 import sinon from 'sinon';
 
-describe('clearSceneGraphPerformanceData', () => {
+describe('clearSceneGraphPerformanceMetrics', () => {
   afterEach(() => sinon.verifyAndRestore());
 
-  test('clears performance data', async () => {
+  test('clears performance metrics', async () => {
     const executor = {
       execute: sinon
         .mock()
@@ -14,7 +14,7 @@ describe('clearSceneGraphPerformanceData', () => {
         .resolves(''),
     };
 
-    const result = await clearSceneGraphPerformanceData(executor);
+    const result = await clearSceneGraphPerformanceMetrics(executor);
     assert.strictEqual(result, undefined);
   });
 
@@ -26,7 +26,7 @@ describe('clearSceneGraphPerformanceData', () => {
         .resolves('Command not recognized'),
     };
 
-    const result = clearSceneGraphPerformanceData(executor);
-    await assert.rejects(result, DebugServerParsingError);
+    const result = clearSceneGraphPerformanceMetrics(executor);
+    await assert.rejects(result, DebugServerError);
   });
 });

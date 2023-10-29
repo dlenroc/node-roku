@@ -1,4 +1,4 @@
-import { DebugServerParsingError, getR2D2Bitmaps } from '@dlenroc/roku-debug-server';
+import { DebugServerError, getR2D2Bitmaps } from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
 import { afterEach, describe, test } from 'node:test';
 import sinon from 'sinon';
@@ -58,6 +58,6 @@ describe('getR2D2Bitmaps', () => {
     };
 
     const result = getR2D2Bitmaps(executor);
-    await assert.rejects(result, DebugServerParsingError);
+    await assert.rejects(result, DebugServerError);
   });
 });

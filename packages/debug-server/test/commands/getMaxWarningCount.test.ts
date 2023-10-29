@@ -1,4 +1,4 @@
-import { DebugServerParsingError, getMaxWarningCount } from '@dlenroc/roku-debug-server';
+import { DebugServerError, getMaxWarningCount } from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
 import { afterEach, describe, test } from 'node:test';
 import sinon from 'sinon';
@@ -28,6 +28,6 @@ describe('getMaxWarningCount', () => {
     };
 
     const result = getMaxWarningCount(executor);
-    await assert.rejects(result, DebugServerParsingError);
+    await assert.rejects(result, DebugServerError);
   });
 });

@@ -1,13 +1,16 @@
-import { DebugServerParsingError } from '../DebugServerParsingError.js';
-import type { Executor } from '../executors/Executor.ts';
+import { DebugServerError } from '../DebugServerError.js';
+import type { Executor } from '../Executor.js';
 
-export async function execute<T>(
-  executor: Executor,
+export type Config<T> = T extends Executor<infer O> ? O : never;
+
+export async function execute<Context extends Executor<{}>>(
+  ctx: Context,
   cmd: string,
   args: string[],
-  patterns: RegExp[]
-): Promise<RegExpMatchArray[][]> {
-  const result = await executor.execute(cmd, args);
+  patterns: RegExp[],
+  config?: Config<Context>
+): Promise<any> {
+  const result = await ctx.execute(cmd, args, ...(config ? [config] : []));
 
   const matches: RegExpMatchArray[][] = [];
 
@@ -26,7 +29,7 @@ export async function execute<T>(
   }
 
   if (matches.length === 0) {
-    throw new DebugServerParsingError({ cmd, args, result });
+    throw new DebugServerError({ cmd, args, output: result });
   }
 
   return matches;
