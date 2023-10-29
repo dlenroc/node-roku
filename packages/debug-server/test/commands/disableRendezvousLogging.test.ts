@@ -1,4 +1,4 @@
-import { DebugServerParsingError, disableRendezvousLogging } from '@dlenroc/roku-debug-server';
+import { DebugServerError, disableRendezvousLogging } from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
 import { afterEach, describe, test } from 'node:test';
 import sinon from 'sinon';
@@ -27,6 +27,6 @@ describe('disableRendezvousLogging', () => {
     };
 
     const result = disableRendezvousLogging(executor);
-    await assert.rejects(result, DebugServerParsingError);
+    await assert.rejects(result, DebugServerError);
   });
 });

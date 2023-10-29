@@ -1,4 +1,4 @@
-import { DebugServerParsingError, type } from '@dlenroc/roku-debug-server';
+import { DebugServerError, type } from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
 import { afterEach, describe, test } from 'node:test';
 import sinon from 'sinon';
@@ -15,7 +15,7 @@ describe('type', () => {
         .resolves(''),
     };
 
-    const result = await type(executor, text);
+    const result = await type(executor, { text });
     assert.strictEqual(result, undefined);
   });
 
@@ -27,7 +27,7 @@ describe('type', () => {
         .resolves('unknown command "type"'),
     };
 
-    const result = type(executor, '');
-    await assert.rejects(result, DebugServerParsingError);
+    const result = type(executor, { text: '' });
+    await assert.rejects(result, DebugServerError);
   });
 });

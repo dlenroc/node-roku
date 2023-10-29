@@ -1,4 +1,4 @@
-import { DebugServerParsingError, getMemoryStats } from '@dlenroc/roku-debug-server';
+import { DebugServerError, getMemoryStats } from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
 import { afterEach, describe, test } from 'node:test';
 import sinon from 'sinon';
@@ -48,6 +48,6 @@ describe('getMemoryStats', () => {
     };
 
     const result = getMemoryStats(executor);
-    await assert.rejects(result, DebugServerParsingError);
+    await assert.rejects(result, DebugServerError);
   });
 });

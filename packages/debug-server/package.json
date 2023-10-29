@@ -17,6 +17,6 @@
   ],
   "scripts": {
     "build": "tsc --build --force tsconfig.build.json",
-    "test": "node --no-warnings --loader ts-node/esm --test-reporter spec --test ./test/**/*.test.ts"
+    "test": "node --import tsx --test ./test/**/*.test.ts"
   }
 }
