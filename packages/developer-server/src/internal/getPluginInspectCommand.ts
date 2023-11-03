@@ -1,12 +1,9 @@
-import type { Executor } from '../executor/Executor.ts';
-
 export function getPluginInspectCommand(
-  command: string | Record<string, string | Blob>
-): Parameters<Executor['execute']>[0] {
+  command?: string | Record<string, string | Blob>
+): { path: string; body: Record<string, string | Blob> | undefined } {
   return {
-    method: 'POST',
     path: 'plugin_inspect',
-    form:
+    body:
       typeof command === 'string'
         ? { mysubmit: command, archive: '', passwd: '' }
         : command,

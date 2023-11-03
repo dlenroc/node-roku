@@ -1,11 +1,14 @@
-import type { Executor } from '../executor/Executor.ts';
-import { execute } from '../internal/execute.js';
+import type { Executor } from '../Executor.js';
+import { execute, type Config } from '../internal/execute.js';
 import { getPluginInspectCommand } from '../internal/getPluginInspectCommand.js';
 
 /**
  * Get profiling data.
  */
-export async function getProfilingData(ctx: Executor): Promise<Blob> {
-  await execute(ctx, getPluginInspectCommand('dloadProf'));
-  return execute(ctx, { method: 'GET', path: 'pkgs/channel.bsprof' });
+export async function getProfilingData<Context extends Executor<{}>>(
+  ctx: Context,
+  config?: Config<Context>
+): Promise<Blob> {
+  await execute(ctx, getPluginInspectCommand('dloadProf'), config);
+  return execute(ctx, { path: 'pkgs/channel.bsprof' }, config);
 }

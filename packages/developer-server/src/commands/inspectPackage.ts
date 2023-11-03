@@ -1,12 +1,12 @@
-import type { Executor } from '../executor/Executor.ts';
-import { execute } from '../internal/execute.js';
+import type { Executor } from '../Executor.js';
+import { execute, type Config } from '../internal/execute.js';
 import { getPluginInspectCommand } from '../internal/getPluginInspectCommand.js';
 
 /**
  * Inspect package.
  */
-export async function inspectPackage(
-  ctx: Executor,
+export async function inspectPackage<Context extends Executor<{}>>(
+  ctx: Context,
   option: {
     /**
      * Package to inspect.
@@ -17,7 +17,8 @@ export async function inspectPackage(
      * Password used to sign the package.
      */
     password: string;
-  }
+  },
+  config?: Config<Context>
 ): Promise<
   Record<string, string> & {
     appName?: string;
@@ -32,7 +33,8 @@ export async function inspectPackage(
       mysubmit: 'Inspect',
       archive: new Blob([option.content]),
       passwd: option.password,
-    })
+    }),
+    config
   );
 
   const bodyText = await body.text();
@@ -41,13 +43,13 @@ export async function inspectPackage(
   const tableCellsPattern =
     /(\s+\w+.insertCell\()0(\).innerHTML = ')(.+?)';\n\1[1]\2(.+?)'/g;
   for (const match of bodyText.matchAll(tableCellsPattern)) {
-    const value = match[4].replace(/<[^>]*>?/gm, '');
+    const value = match[4]?.replace(/<[^>]*>?/gm, '');
     const key = match[3]
-      .match(/\w+/g)
+      ?.match(/\w+/g)
       ?.map((it, i) =>
         i === 0
           ? it.toLowerCase()
-          : it[0].toUpperCase() + it.slice(1).toLowerCase()
+          : it[0]!.toUpperCase() + it.slice(1).toLowerCase()
       )
       .join('');
 
@@ -58,7 +60,7 @@ export async function inspectPackage(
 
   const creationDateMatch = bodyText.match(/dd = new Date\((\d+)/);
   if (creationDateMatch) {
-    results.creationDate = new Date(+creationDateMatch[1]);
+    results['creationDate'] = new Date(+creationDateMatch[1]!);
   }
 
   return results;

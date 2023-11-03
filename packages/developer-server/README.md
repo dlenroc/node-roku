@@ -12,60 +12,30 @@ npm install @dlenroc/roku-developer-server
 
 ```typescript
 import { DeveloperServerExecutor, installChannel } from '@dlenroc/roku-developer-server';
-import fs from 'fs';
+import fs from 'node:fs';
+
+const ctx = new DeveloperServerExecutor({
+  address: 'http://<ip>',
+  username: '<username>',
+  password: '<password>',
+});
 
 const app = fs.readFileSync('<path_to_channel>');
-
-const executor = new DeveloperServerExecutor({ address: 'http://<ip>', username: '<username>', password: '<password>' });
-await installChannel(executor, app);
+await installChannel(ctx, { content: app });
 ```
 
 ---
 
-```typescript
-convertToCramfs(ctx: Executor): Promise<void>
-```
-
-```typescript
-convertToSquashfs(ctx: Executor): Promise<void>
-```
-
-```typescript
-convertToZip(ctx: Executor): Promise<void>
-```
-
-```typescript
-deleteChannel(ctx: Executor): Promise<void>
-```
-
-```typescript
-deletePackage(ctx: Executor): Promise<void>
-```
-
-```typescript
-getPackage(ctx: Executor): Promise<Blob>
-```
-
-```typescript
-getProfilingData(ctx: Executor): Promise<Blob>
-```
-
-```typescript
-getScreenshot(ctx: Executor): Promise<Blob>
-```
-
-```typescript
-inspectPackage(ctx: Executor, option: { content: Blob | NodeJS.ArrayBufferView; password: string; }): Promise<Record<string, string>>
-```
-
-```typescript
-installChannel(ctx: Executor, option: { content: Blob | NodeJS.ArrayBufferView; useSquashfs?: Boolean; remoteDebug?: boolean; remoteDebugConnectEarly?: boolean; }): Promise<void>
-```
-
-```typescript
-packageChannel(ctx: Executor, option: { name: string; password: string; timestamp?: number; }): Promise<void>
-```
-
-```typescript
-rekey(ctx: Executor, option: { content: Blob | NodeJS.ArrayBufferView; password: string; }): Promise<void>
-```
+| Method              | Description                                                |
+| ------------------- | ---------------------------------------------------------- |
+| `convertToSquashfs` | Compress sideloaded channel using Squashfs                 |
+| `convertToZip`      | Compress sideloaded channel using Zip                      |
+| `deleteChannel`     | Delete sideloaded channel                                  |
+| `deletePackage`     | Delete sideloaded channel package                          |
+| `getPackage`        | Get sideloaded channel package                             |
+| `getProfilingData`  | Get profiling data                                         |
+| `getScreenshot`     | Get sideloaded channel screenshot                          |
+| `inspectPackage`    | Inspect package                                            |
+| `installChannel`    | Sideload a channel from a zip file                         |
+| `packageChannel`    | Package sideloaded channel                                 |
+| `rekey`             | Rekey device from existing package signed with desired key |
