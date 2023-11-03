@@ -1,10 +1,13 @@
-import type { Executor } from '../executor/Executor.ts';
-import { execute } from '../internal/execute.js';
+import type { Executor } from '../Executor.js';
+import { execute, type Config } from '../internal/execute.js';
 import { getPluginInstallCommand } from '../internal/getPluginInstallCommand.js';
 
 /**
  * Delete sideloaded channel.
  */
-export async function deleteChannel(ctx: Executor): Promise<void> {
-  await execute(ctx, getPluginInstallCommand('Delete'));
+export async function deleteChannel<Context extends Executor<{}>>(
+  ctx: Context,
+  config?: Config<Context>
+): Promise<void> {
+  await execute(ctx, getPluginInstallCommand('Delete'), config);
 }

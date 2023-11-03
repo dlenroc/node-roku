@@ -1,5 +1,6 @@
 export * from './DeveloperServerError.js';
-export * from './commands/convertToCramfs.js';
+export * from './DeveloperServerExecutor.js';
+export type * from './Executor.js';
 export * from './commands/convertToSquashfs.js';
 export * from './commands/convertToZip.js';
 export * from './commands/deleteChannel.js';
@@ -11,5 +12,3 @@ export * from './commands/inspectPackage.js';
 export * from './commands/installChannel.js';
 export * from './commands/packageChannel.js';
 export * from './commands/rekey.js';
-export * from './executor/DeveloperServerExecutor.js';
-export type * from './executor/Executor.ts';

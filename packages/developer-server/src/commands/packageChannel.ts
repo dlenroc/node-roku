@@ -1,12 +1,12 @@
-import type { Executor } from '../executor/Executor.ts';
-import { execute } from '../internal/execute.js';
+import type { Executor } from '../Executor.js';
+import { execute, type Config } from '../internal/execute.js';
 import { getPluginPackageCommand } from '../internal/getPluginPackageCommand.js';
 
 /**
  * Package sideloaded channel.
  */
-export async function packageChannel(
-  ctx: Executor,
+export async function packageChannel<Context extends Executor<{}>>(
+  ctx: Context,
   option: {
     /**
      * Channel Name/Version
@@ -22,7 +22,8 @@ export async function packageChannel(
      * Timestamp in milliseconds (default: current time)
      */
     timestamp?: number;
-  }
+  },
+  config?: Config<Context>
 ): Promise<void> {
   await execute(
     ctx,
@@ -31,6 +32,7 @@ export async function packageChannel(
       pkg_time: String(option.timestamp ?? new Date().getTime()),
       app_name: option.name,
       passwd: option.password,
-    })
+    }),
+    config
   );
 }
