@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.2](https://github.com/dlenroc/node-roku/compare/developer-server-v1.0.1...developer-server-v1.0.2) (2023-11-03)
+
+### Bug Fixes
+
+* firmware 12.5 support ([4b6a17b](https://github.com/dlenroc/node-roku/commit/4b6a17bd282469c91c6940045682dd1be43bedbe))
+
 ## [1.0.1](https://github.com/dlenroc/node-roku/compare/developer-server-v1.0.0...developer-server-v1.0.1) (2023-05-08)
 
 
