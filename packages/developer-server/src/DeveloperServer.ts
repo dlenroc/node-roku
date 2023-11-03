@@ -119,7 +119,11 @@ export class DeveloperServer {
     if (params) {
       body = new FormData();
       for (const [key, value] of Object.entries(params)) {
-        body.append(key, value);
+        if (typeof value === 'string') {
+          body.append(key, value);
+        } else {
+          body.append(key, value, { filename: 'unknown' });
+        }
       }
     }
 
