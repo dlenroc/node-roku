@@ -19,7 +19,6 @@
     "build": "tsc --build --force tsconfig.build.json"
   },
   "dependencies": {
-    "fast-xml-parser": "^4.3.2",
-    "node-fetch": "^3.3.2"
+    "fast-xml-parser": "^4.3.2"
   }
 }

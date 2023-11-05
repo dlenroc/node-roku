@@ -26,4 +26,5 @@ export type Key =
   | 'InputHDMI2'
   | 'InputHDMI3'
   | 'InputHDMI4'
-  | 'InputAV1';
+  | 'InputAV1'
+  | `Lit_${string}`;

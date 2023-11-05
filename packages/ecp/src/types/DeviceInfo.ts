@@ -67,4 +67,7 @@ export interface DeviceInfo {
   'av-sync-calibration-enabled': number;
   'brightscript-debugger-version'?: string;
   'supports-trc'?: boolean;
+  'ui-build-number'?: string;
+  'ui-software-version'?: string;
+  'ui-software-build'?: number;
 }
