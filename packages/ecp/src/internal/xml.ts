@@ -7,7 +7,10 @@ const globalOptions = {
   parseAttributeValue: true,
 };
 
-export default function parse(xml: string, options?: X2jOptionsOptional & { array?: boolean }): any {
+export default function parse(
+  xml: string,
+  options?: X2jOptionsOptional & { array?: boolean }
+): any {
   let parsedXML = new XMLParser({ ...globalOptions, ...options }).parse(xml);
 
   // Hide top level node

@@ -5,6 +5,12 @@ export interface Registry extends Success {
   registry: {
     'dev-id': string;
     plugins: AppId;
-    sections: unknown;
+    'space-available': number;
+    sections: {
+      section: {
+        name: string;
+        items: { key: string; value: unknown }[];
+      };
+    };
   };
 }

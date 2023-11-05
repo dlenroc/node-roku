@@ -17,6 +17,7 @@ export interface ChannelPerformance extends Success {
       swap: number;
       file: number;
       shared: number;
+      limit: number;
     };
   };
 }

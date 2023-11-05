@@ -4,7 +4,7 @@ export interface MediaInfo {
   error: boolean;
   state: 'none' | 'buffer' | 'play' | 'pause';
   decoder_state?: string;
-  is_live?: boolean;
+  is_live?: unknown;
   position?: string;
   duration?: string;
   plugin?: {
