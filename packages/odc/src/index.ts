@@ -1,2 +1,11 @@
-export { ODC, ODC as default } from './ODC.js';
+export type * from './Executor.js';
 export * from './ODCError.js';
+export * from './ODCExecutor.js';
+export * from './commands/clearRegistry.js';
+export * from './commands/extend.js';
+export * from './commands/getAppUI.js';
+export * from './commands/getFiles.js';
+export * from './commands/getRegistry.js';
+export * from './commands/patchRegistry.js';
+export * from './commands/pullFile.js';
+export * from './commands/pushFile.js';
