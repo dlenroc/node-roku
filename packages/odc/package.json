@@ -13,13 +13,13 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "scripts": {
     "build": "tsc --build --force tsconfig.build.json"
   },
   "dependencies": {
-    "jszip": "^3.10.1",
-    "node-fetch": "^3.3.2"
+    "jszip": "^3.10.1"
   }
 }

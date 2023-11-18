@@ -13,54 +13,14 @@ npm install @dlenroc/roku-odc
 > ⚠️ `extend(app)` must be used to inject backend into your application
 
 ```typescript
-import fs from 'fs';
-import SDK, { DeveloperServer, ODC } from '@dlenroc/roku';
+import { ODCExecutor, getRegistry } from '@dlenroc/roku-odc';
 
-// const odc = new ODC('<ip>');
-const odc = new ODC({ address: 'http://<ip>:8061' });
-
-// const developerServer = new DeveloperServer('<ip>', '<username>', '<password>');
-const developerServer = new DeveloperServer({ address: 'http://<ip>', username: '<username>', password: '<password>' });
-
-const app = fs.readFileSync('<path_to_channel>');
-const patchedApp = await odc.extend(app);
-await developerServer.install(patchedApp);
-await odc.getRegistry();
+const ctx = new ODCExecutor({ address: '<ip>:8061' });
+const registry = await getRegistry(ctx);
+console.log(registry);
 ```
 
 ---
-
-```typescript
-extend(app: Buffer): Promise<Buffer>
-```
-
-```typescript
-getAppUI(fields?: Record<string, string[]>): Promise<string>
-```
-
-```typescript
-getRegistry(): Promise<Record<string, Record<string, string>>>
-```
-
-```typescript
-patchRegistry(changes: Record<string, null | Record<string, any>>): Promise<void>
-```
-
-```typescript
-clearRegistry(): Promise<void>
-```
-
-```typescript
-getFiles(path: string): Promise<(File | Directory)[]>
-```
-
-```typescript
-pullFile(path: string): Promise<Buffer>
-```
-
-```typescript
-pushFile(path: string, content: string | Buffer): Promise<void>
-```
 
 ## Launch parameters
 
