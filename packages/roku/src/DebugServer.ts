@@ -24,9 +24,9 @@ export class DebugServer {
     );
   };
 
-  createDeveloperKey: OmitFirstArg<(typeof debugServer)['createDeveloperKey']> =
+  generateDeveloperKey: OmitFirstArg<(typeof debugServer)['generateDeveloperKey']> =
     function (this: DebugServer, ...args) {
-      return debugServer.createDeveloperKey(this.#executor, ...args);
+      return debugServer.generateDeveloperKey(this.#executor, ...args);
     };
 
   disableRendezvousLogging: OmitFirstArg<

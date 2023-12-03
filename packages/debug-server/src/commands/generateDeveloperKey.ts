@@ -9,7 +9,7 @@ const passwordPattern = /Password: (.*)/;
 /**
  * Generate a new developer key.
  */
-export async function createDeveloperKey<Context extends Executor>(
+export async function generateDeveloperKey<Context extends Executor>(
   ctx: Context,
   config?: Config<Context>
 ): Promise<DeveloperKey> {
