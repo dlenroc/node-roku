@@ -1,3 +1,3 @@
-export interface Executor<Config> {
-  execute(command: string, args: string[], config?: Config): Promise<string>;
+export interface Executor<Config = {}> {
+  execute(command: string, config?: Config): Promise<string>;
 }

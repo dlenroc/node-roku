@@ -1,17 +1,17 @@
 import { DebugServerError, removePlugin } from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
-import { afterEach, describe, test } from 'node:test';
+import { afterEach, describe, it } from 'node:test';
 import sinon from 'sinon';
 
 describe('removePlugin', () => {
   afterEach(() => sinon.verifyAndRestore());
 
-  test('remove plugin by id', async () => {
+  it('remove plugin by id', async () => {
     const id = 'dev';
     const executor = {
       execute: sinon
         .mock()
-        .withExactArgs('remove_plugin', [id])
+        .withExactArgs(`remove_plugin ${id}`)
         .resolves(`Removed sideloaded plugin id: ${id}`),
     };
 
@@ -19,13 +19,15 @@ describe('removePlugin', () => {
     assert.strictEqual(result, undefined);
   });
 
-  test('throws if failed to remove plugin', async () => {
+  it('throws if failed to remove plugin', async () => {
     const id = 0;
     const executor = {
       execute: sinon
         .mock()
-        .withExactArgs('remove_plugin', [`${id}`])
-        .resolves(`Failed to remove plugin id: ${id}, name: unknown. Plugin is NOT installed on the device`),
+        .withExactArgs(`remove_plugin ${id}`)
+        .resolves(
+          `Failed to remove plugin id: ${id}, name: unknown. Plugin is NOT installed on the device`
+        ),
     };
 
     const result = removePlugin(executor, { id });

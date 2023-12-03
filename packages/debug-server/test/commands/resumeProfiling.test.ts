@@ -1,16 +1,16 @@
 import { DebugServerError, resumeProfiling } from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
-import { afterEach, describe, test } from 'node:test';
+import { afterEach, describe, it } from 'node:test';
 import sinon from 'sinon';
 
 describe('resumeProfiling', () => {
   afterEach(() => sinon.verifyAndRestore());
 
-  test('resume profiling', async () => {
+  it('resume profiling', async () => {
     const executor = {
       execute: sinon
         .mock()
-        .withExactArgs('bsprof-resume', [])
+        .withExactArgs('bsprof-resume')
         .resolves('bsprof resumed'),
     };
 
@@ -18,11 +18,11 @@ describe('resumeProfiling', () => {
     assert.strictEqual(result, undefined);
   });
 
-  test('throws if no profiling session', async () => {
+  it('throws if no profiling session', async () => {
     const executor = {
       execute: sinon
         .mock()
-        .withExactArgs('bsprof-resume', [])
+        .withExactArgs('bsprof-resume')
         .resolves('No profiling session'),
     };
 

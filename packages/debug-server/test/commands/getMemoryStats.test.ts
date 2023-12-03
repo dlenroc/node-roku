@@ -1,16 +1,16 @@
 import { DebugServerError, getMemoryStats } from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
-import { afterEach, describe, test } from 'node:test';
+import { afterEach, describe, it } from 'node:test';
 import sinon from 'sinon';
 
 describe('getMemoryStats', () => {
   afterEach(() => sinon.verifyAndRestore());
 
-  test('return memory stats', async () => {
+  it('return memory stats', async () => {
     const executor = {
       execute: sinon
         .mock()
-        .withExactArgs('free', [])
+        .withExactArgs('free')
         .resolves(
           [
             '       total    used    free     shared  buff/cache  available\n' +
@@ -39,11 +39,11 @@ describe('getMemoryStats', () => {
     });
   });
 
-  test('throws if failed to parse', async () => {
+  it('throws if failed to parse', async () => {
     const executor = {
-      execute: sinon
+      execute: sinon //
         .mock()
-        .withExactArgs('free', [])
+        .withExactArgs('free')
         .resolves(''),
     };
 

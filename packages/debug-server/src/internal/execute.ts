@@ -1,27 +1,25 @@
 import { DebugServerError } from '../DebugServerError.js';
-import type { Executor } from '../Executor.js';
+import type { Executor } from '../Executor.ts';
+import type { Config } from './types.d.ts';
 
-export type Config<T> = T extends Executor<infer O> ? O : never;
-
-export async function execute<Context extends Executor<{}>>(
+export async function execute<Context extends Executor>(
   ctx: Context,
-  cmd: string,
-  args: string[],
+  command: string,
   patterns: RegExp[],
   config?: Config<Context>
 ): Promise<any> {
-  const result = await ctx.execute(cmd, args, ...(config ? [config] : []));
+  const output = await ctx.execute(command, ...(config ? [config] : []));
 
   const matches: RegExpMatchArray[][] = [];
 
   for (const pattern of patterns) {
     if (pattern.global) {
-      const matchArray = [...result.matchAll(pattern)];
+      const matchArray = [...output.matchAll(pattern)];
       if (matchArray.length > 0) {
         matches.push(matchArray);
       }
     } else {
-      const match = result.match(pattern);
+      const match = output.match(pattern);
       if (match !== null) {
         matches.push([match]);
       }
@@ -29,7 +27,7 @@ export async function execute<Context extends Executor<{}>>(
   }
 
   if (matches.length === 0) {
-    throw new DebugServerError({ cmd, args, output: result });
+    throw new DebugServerError({ command, output });
   }
 
   return matches;

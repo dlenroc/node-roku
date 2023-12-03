@@ -18,14 +18,16 @@ export class Document extends Element {
   }
 
   get focusedElement(): Element {
-    return this.cssSelect('[focused="true"]:not(:has([focused="true"]))') || this;
+    return (
+      this.cssSelect('[focused="true"]:not(:has([focused="true"]))') || this
+    );
   }
 
   get isKeyboardShown(): boolean {
     return this.xpathSelect(`//*[${KEYBOARD}]`)?.isDisplayed || false;
   }
 
-  async clear() {
+  override async clear() {
     const keyboard = this.xpathSelect(`//*[${KEYBOARD}]`);
 
     if (keyboard) {
@@ -35,23 +37,27 @@ export class Document extends Element {
     }
   }
 
-  async type(text: string) {
+  override async type(text: string) {
     const keyboard = this.xpathSelect(`//*[${KEYBOARD}]`);
 
     if (keyboard) {
       await keyboard.type(text);
     } else {
-      await this.sdk.ecp.type(text);
+      for (const char of text) {
+        await this.sdk.ecp.keypress({ key: char as any });
+      }
     }
   }
 
-  async append(text: string) {
+  override async append(text: string) {
     const keyboard = this.xpathSelect(`//*[${KEYBOARD}]`);
 
     if (keyboard) {
       await keyboard.append(text);
     } else {
-      await this.sdk.ecp.type(text);
+      for (const char of text) {
+        await this.sdk.ecp.keypress({ key: char as any });
+      }
     }
   }
 
@@ -68,7 +74,9 @@ export class Document extends Element {
 
     if (xml !== this.xml) {
       this.xml = xml;
-      this._root = this._node = parseXml(xml, { noblanks: true }).root() as XMLElement;
+      this._root = this._node = parseXml(xml, {
+        noblanks: true,
+      }).root() as XMLElement;
     }
   }
 }

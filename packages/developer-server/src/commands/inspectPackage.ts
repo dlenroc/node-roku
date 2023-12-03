@@ -1,17 +1,17 @@
-import type { Executor } from '../Executor.js';
-import { execute, type Config } from '../internal/execute.js';
-import { getPluginInspectCommand } from '../internal/getPluginInspectCommand.js';
+import type { Executor } from '../Executor.ts';
+import { executePluginInspectCommand } from '../internal/executePluginInspectCommand.js';
+import type { Config } from '../internal/types.d.ts';
 
 /**
  * Inspect package.
  */
-export async function inspectPackage<Context extends Executor<{}>>(
+export async function inspectPackage<Context extends Executor>(
   ctx: Context,
   option: {
     /**
      * Package to inspect.
      */
-    content: Blob | NodeJS.ArrayBufferView;
+    content: Exclude<ConstructorParameters<typeof Blob>[0][0], string>;
 
     /**
      * Password used to sign the package.
@@ -27,21 +27,20 @@ export async function inspectPackage<Context extends Executor<{}>>(
     devZip?: string;
   }
 > {
-  const body = await execute(
+  const bodyText = await executePluginInspectCommand(
     ctx,
-    getPluginInspectCommand({
+    {
       mysubmit: 'Inspect',
       archive: new Blob([option.content]),
       passwd: option.password,
-    }),
+    },
     config
   );
 
-  const bodyText = await body.text();
   const results: Record<string, any> = {};
 
   const tableCellsPattern =
-    /(\s+\w+.insertCell\()0(\).innerHTML = ')(.+?)';\n\1[1]\2(.+?)'/g;
+    /(\s*\w+.insertCell\()0(\).innerHTML = ')(.+?)';\n\1[1]\2(.+?)'/g;
   for (const match of bodyText.matchAll(tableCellsPattern)) {
     const value = match[4]?.replace(/<[^>]*>?/gm, '');
     const key = match[3]

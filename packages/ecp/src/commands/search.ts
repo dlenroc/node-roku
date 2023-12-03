@@ -1,6 +1,7 @@
-import type { Executor } from '../Executor.js';
-import { execute, type Config } from '../internal/execute.js';
-import type { Params } from '../types/Params.js';
+import type { Executor } from '../Executor.ts';
+import { execute } from '../internal/execute.js';
+import type { Config } from '../internal/types.d.ts';
+import type { Params } from '../types/Params.ts';
 
 export async function search<Context extends Executor>(
   ctx: Context,

@@ -1,5 +1,6 @@
-import type { Executor } from '../Executor.js';
-import { execute, type Config } from '../internal/execute.js';
+import type { Executor } from '../Executor.ts';
+import { execute } from '../internal/execute.js';
+import type { Config } from '../internal/types.d.ts';
 
 const pattern = /^channel: .+?(\nrepeat (\d+)s \(on dev console\).*)?$/;
 
@@ -7,7 +8,7 @@ const pattern = /^channel: .+?(\nrepeat (\d+)s \(on dev console\).*)?$/;
  * Schedule the channel to report its memory and CPU utilization to the dev console at a regular interval.
  */
 export async function scheduleChannelPerformanceLogging<
-  Context extends Executor<{}>
+  Context extends Executor
 >(
   ctx: Context,
   payload: {
@@ -18,7 +19,11 @@ export async function scheduleChannelPerformanceLogging<
   },
   config?: Config<Context>
 ): Promise<number> {
-  const args = payload ? ['-r', `${payload.interval}`] : [];
-  const [[result]] = await execute(ctx, 'chanperf', args, [pattern], config);
+  const [[result]] = await execute(
+    ctx,
+    `chanperf -r ${payload.interval}`,
+    [pattern],
+    config
+  );
   return +result[2] || 0;
 }

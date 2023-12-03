@@ -1,16 +1,14 @@
-import { createConnection } from 'node:net';
-import type { Executor } from './Executor.js';
-
-type DebugServerExecutorOptions = {
-  signal?: AbortSignal;
-};
+import { connect } from 'node:net';
+import { Readable } from 'node:stream';
+import type { DebugServerExecutorOptions } from './DebugServerExecutorOptions.ts';
+import type { Executor } from './Executor.ts';
 
 export class DebugServerExecutor
   implements Executor<DebugServerExecutorOptions>
 {
   #hostname: string;
   #port: number;
-  #signal?: AbortSignal | undefined;
+  #signal?: AbortSignal;
 
   constructor(options: {
     hostname: string;
@@ -19,12 +17,11 @@ export class DebugServerExecutor
   }) {
     this.#hostname = options.hostname;
     this.#port = options.port;
-    this.#signal = options.signal;
+    this.#signal = options.signal!;
   }
 
   async execute(
     command: string,
-    args: string[],
     config?: DebugServerExecutorOptions
   ): Promise<string> {
     const signal =
@@ -33,35 +30,17 @@ export class DebugServerExecutor
           AbortSignal.any([this.#signal, config.signal])
         : this.#signal || config?.signal;
 
-    return new Promise((resolve, reject) => {
-      const cmd = `${command} ${args.join(' ')}`.replace(/\s/g, ' ').trimEnd();
+    const socket = connect(
+      { host: this.#hostname, port: this.#port, signal },
+      () => {
+        socket.write(`${command}\nq\n`);
+      }
+    );
 
-      const client = createConnection(
-        { host: this.#hostname, port: this.#port, signal },
-        () => {
-          client.write(`${cmd}\nq\n`);
-        }
-      );
+    const result = await new Response(Readable.toWeb(socket)).text();
 
-      let chunks: Buffer[] = [];
-
-      client.on('data', (chunk) => {
-        chunks.push(chunk);
-      });
-
-      client.on('end', () => {
-        const response = Buffer.concat(chunks)
-          .toString()
-          .replace(/\r\n?/g, '\n');
-
-        const start = response.indexOf('\n>') + 2;
-        const end = response.lastIndexOf('\n>');
-        resolve(response.slice(start, end).trim());
-      });
-
-      client.on('error', (error) => {
-        reject(error);
-      });
-    });
+    return result
+      .slice(result.indexOf('\n>') + 2, result.lastIndexOf('\n>'))
+      .trim();
   }
 }

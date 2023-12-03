@@ -23,7 +23,7 @@ const plugins = await getPlugins(ctx);
 console.log(plugins);
 
 // raw
-const rawResult = await ctx.execute('plugins', []);
+const rawResult = await ctx.execute('plugins');
 console.log(rawResult);
 ```
 

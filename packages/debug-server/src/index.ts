@@ -1,6 +1,7 @@
 export * from './DebugServerError.js';
 export * from './DebugServerExecutor.js';
-export type * from './Executor.js';
+export type * from './DebugServerExecutorOptions.ts';
+export type * from './Executor.ts';
 export * from './commands/clearLaunchCaches.js';
 export * from './commands/clearSceneGraphPerformanceMetrics.js';
 export * from './commands/createDeveloperKey.js';

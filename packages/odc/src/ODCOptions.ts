@@ -1,4 +1,3 @@
-export type ODCOptions = {
-  address: string;
+export interface ODCOptions {
   signal?: AbortSignal;
-};
+}

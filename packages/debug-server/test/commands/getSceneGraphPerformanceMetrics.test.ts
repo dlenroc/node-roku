@@ -1,16 +1,19 @@
-import { DebugServerError, getSceneGraphPerformanceMetrics } from '@dlenroc/roku-debug-server';
+import {
+  DebugServerError,
+  getSceneGraphPerformanceMetrics,
+} from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
-import { afterEach, describe, test } from 'node:test';
+import { afterEach, describe, it } from 'node:test';
 import sinon from 'sinon';
 
 describe('getSceneGraphPerformanceMetrics', () => {
   afterEach(() => sinon.verifyAndRestore());
 
-  test('get performance metrics', async () => {
+  it('get performance metrics', async () => {
     const executor = {
       execute: sinon
         .mock()
-        .withExactArgs('sgperf', ['report'])
+        .withExactArgs('sgperf report')
         .resolves(
           [
             'thread node calls: create     1 + op    0  @ 100.0% rendezvous',
@@ -35,11 +38,11 @@ describe('getSceneGraphPerformanceMetrics', () => {
     ]);
   });
 
-  test('throws if command is not recognized', async () => {
+  it('throws if command is not recognized', async () => {
     const executor = {
       execute: sinon
         .mock()
-        .withExactArgs('sgperf', ['report'])
+        .withExactArgs('sgperf report')
         .resolves('Command not recognized'),
     };
 

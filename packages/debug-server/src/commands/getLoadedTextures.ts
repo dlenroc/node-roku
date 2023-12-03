@@ -1,5 +1,6 @@
-import type { Executor } from '../Executor.js';
-import { execute, type Config } from '../internal/execute.js';
+import type { Executor } from '../Executor.ts';
+import { execute } from '../internal/execute.js';
+import type { Config } from '../internal/types.d.ts';
 import type { LoadedTextures } from '../types/LoadedTextures.ts';
 
 const pattern = /\* .+ Textures +\*/;
@@ -7,7 +8,7 @@ const pattern = /\* .+ Textures +\*/;
 /**
  * Returns loaded textures.
  */
-export async function getLoadedTextures<Context extends Executor<{}>>(
+export async function getLoadedTextures<Context extends Executor>(
   ctx: Context,
   payload?: {
     /**
@@ -17,11 +18,9 @@ export async function getLoadedTextures<Context extends Executor<{}>>(
   },
   config?: Config<Context>
 ): Promise<LoadedTextures> {
-  const args = payload?.overlay ? [payload.overlay] : [];
   const [[match]] = await execute(
     ctx,
-    'loaded_textures',
-    args,
+    `loaded_textures${payload?.overlay ? ' ' + payload.overlay : ''}`,
     [pattern],
     config
   );

@@ -1,16 +1,19 @@
-import { DebugServerError, clearLaunchCaches } from '@dlenroc/roku-debug-server';
+import {
+  DebugServerError,
+  clearLaunchCaches,
+} from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
-import { afterEach, describe, test } from 'node:test';
+import { afterEach, describe, it } from 'node:test';
 import sinon from 'sinon';
 
 describe('clearLaunchCaches', () => {
   afterEach(() => sinon.verifyAndRestore());
 
-  test('clear launch caches', async () => {
+  it('clear launch caches', async () => {
     const executor = {
       execute: sinon
         .mock()
-        .withExactArgs('clear_launch_caches', [])
+        .withExactArgs('clear_launch_caches')
         .resolves('Done.'),
     };
 
@@ -18,12 +21,9 @@ describe('clearLaunchCaches', () => {
     assert.strictEqual(result, undefined);
   });
 
-  test('throws if failed to parse', async () => {
+  it('throws if failed to parse', async () => {
     const executor = {
-      execute: sinon
-        .mock()
-        .withExactArgs('clear_launch_caches', [])
-        .resolves(''),
+      execute: sinon.mock().withExactArgs('clear_launch_caches').resolves(''),
     };
 
     const result = clearLaunchCaches(executor);

@@ -1,8 +1,8 @@
-import { createHash } from 'crypto';
-import { promises as fs } from 'fs';
 import JSZip from 'jszip';
+import { createHash } from 'node:crypto';
+import { promises as fs } from 'node:fs';
+import path, { relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import path, { relative } from 'path';
 
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const root = path.resolve(__dirname, '../../src');

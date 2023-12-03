@@ -1,5 +1,6 @@
-import type { Executor } from '../Executor.js';
-import { execute, type Config } from '../internal/execute.js';
+import type { Executor } from '../Executor.ts';
+import { execute } from '../internal/execute.js';
+import type { Config } from '../internal/types.d.ts';
 import type { R2D2Bitmap } from '../types/R2D2Bitmap.ts';
 
 const pattern =
@@ -8,11 +9,11 @@ const pattern =
 /**
  * Returns R2D2 bitmaps.
  */
-export async function getR2D2Bitmaps<Context extends Executor<{}>>(
+export async function getR2D2Bitmaps<Context extends Executor>(
   ctx: Context,
   config?: Config<Context>
 ): Promise<R2D2Bitmap[]> {
-  const [results] = await execute(ctx, 'r2d2_bitmaps', [], [pattern], config);
+  const [results] = await execute(ctx, 'r2d2_bitmaps', [pattern], config);
   return results.map((match: any) => {
     return {
       address: match.groups!.address,

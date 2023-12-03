@@ -1,7 +1,8 @@
-import type { Executor } from '../Executor.js';
-import { execute, type Config } from '../internal/execute.js';
+import type { Executor } from '../Executor.ts';
+import { execute } from '../internal/execute.js';
+import type { Config } from '../internal/types.d.ts';
 import parse from '../internal/xml.js';
-import type { DeviceInfo } from '../types/DeviceInfo.js';
+import type { DeviceInfo } from '../types/DeviceInfo.ts';
 
 export async function queryDeviceInfo<Context extends Executor>(
   ctx: Context,

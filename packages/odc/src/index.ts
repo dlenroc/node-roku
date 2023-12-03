@@ -1,4 +1,4 @@
-export type * from './Executor.js';
+export type * from './Executor.ts';
 export * from './ODCError.js';
 export * from './ODCExecutor.js';
 export * from './commands/clearRegistry.js';

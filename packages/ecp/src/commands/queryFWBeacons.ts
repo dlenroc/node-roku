@@ -1,8 +1,9 @@
-import type { Executor } from '../Executor.js';
-import { execute, type Config } from '../internal/execute.js';
+import type { Executor } from '../Executor.ts';
+import { execute } from '../internal/execute.js';
+import type { Config } from '../internal/types.d.ts';
 import parse from '../internal/xml.js';
-import type { FWBeacons } from '../types/FWBeacons.js';
-import type { Failure } from '../types/Failure.js';
+import type { FWBeacons } from '../types/FWBeacons.ts';
+import type { Failure } from '../types/Failure.ts';
 
 export async function queryFWBeacons<Context extends Executor>(
   ctx: Context,

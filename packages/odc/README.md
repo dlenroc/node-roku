@@ -27,7 +27,7 @@ console.log(registry);
 All of the above commands require the application to be up and running, but some of them can also be run using [ECP](/packages/ecp#readme) during startup
 
 ```typescript
-await ecp.launch('dev', { odc_clear_registry: true })
+await ecp.launch('dev', { odc_clear_registry: true });
 ```
 
 ```typescript
@@ -35,5 +35,7 @@ await ecp.launch('dev', { odc_registry: /* state */ })
 ```
 
 ```typescript
-await ecp.launch('dev', { odc_entry_point: 'channel' | 'screensaver' | 'screensaver-settings' })
+await ecp.launch('dev', {
+  odc_entry_point: 'channel' | 'screensaver' | 'screensaver-settings',
+});
 ```

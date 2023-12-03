@@ -1,7 +1,6 @@
-import type { Key } from '@dlenroc/roku';
 import { SDK } from '@dlenroc/roku';
 import { Element as XMLElement, Node as XMLNode } from 'libxmljs2';
-import { performance } from 'perf_hooks';
+import { performance } from 'node:perf_hooks';
 import { Document } from './Document.js';
 import { RokuError } from './Error.js';
 import { selectAll, selectOne } from './internal/css-select.js';
@@ -39,7 +38,9 @@ export class Element {
 
   get parent(): Element | null {
     const node = this.node.parent();
-    return node instanceof XMLElement ? new Element(this.sdk, node, this.document) : null;
+    return node instanceof XMLElement
+      ? new Element(this.sdk, node, this.document)
+      : null;
   }
 
   get parents(): Element[] {
@@ -60,12 +61,16 @@ export class Element {
 
   get prev(): Element | null {
     const node = this.node.prevElement();
-    return node instanceof XMLElement ? new Element(this.sdk, node, this.document) : null;
+    return node instanceof XMLElement
+      ? new Element(this.sdk, node, this.document)
+      : null;
   }
 
   get next(): Element | null {
     const node = this.node.nextElement();
-    return node instanceof XMLElement ? new Element(this.sdk, node, this.document) : null;
+    return node instanceof XMLElement
+      ? new Element(this.sdk, node, this.document)
+      : null;
   }
 
   get children(): Element[] {
@@ -110,15 +115,17 @@ export class Element {
   }
 
   get text(): string {
-    return this.xpathSelectAll(`./descendant-or-self::*[@text and (${LABEL} or ${BUTTON})]`)
+    return this.xpathSelectAll(
+      `./descendant-or-self::*[@text and (${LABEL} or ${BUTTON})]`
+    )
       .filter((element) => element.isDisplayed)
-      .map((element) => element.attributes.text.trim())
+      .map((element) => element.attributes['text']?.trim())
       .filter((text) => text)
       .join('\n');
   }
 
   get bounds(): { x: number; y: number; width: number; height: number } | null {
-    const bounds = this.attributes.bounds;
+    const bounds = this.attributes['bounds'];
 
     if (!bounds) {
       return null;
@@ -152,15 +159,29 @@ export class Element {
     const focusedElementChain = [focusedElement, ...focusedElement.parents];
     const count = Math.min(elementChain.length, focusedElementChain.length);
 
-    return elementChain[elementChain.length - count].isSameNode(focusedElementChain[focusedElementChain.length - count]);
+    const currentFocusedElementRoot = elementChain[elementChain.length - count];
+    const focusedElementRoot =
+      focusedElementChain[focusedElementChain.length - count];
+
+    return !!(
+      currentFocusedElementRoot &&
+      focusedElementRoot &&
+      currentFocusedElementRoot.isSameNode(focusedElementRoot)
+    );
   }
 
   get isDisplayed(): boolean {
-    return !this.node.get('./ancestor-or-self::*[@visible="false" or @opacity="0"]');
+    return !this.node.get(
+      './ancestor-or-self::*[@visible="false" or @opacity="0"]'
+    );
   }
 
   isSameNode(element: Element): boolean {
-    return this === element || this.node === element.node || this.path === element.path;
+    return (
+      this === element ||
+      this.node === element.node ||
+      this.path === element.path
+    );
   }
 
   async clear() {
@@ -177,14 +198,14 @@ export class Element {
 
   async select() {
     await this.focus();
-    await this.sdk.ecp.keypress('Select');
+    await this.sdk.ecp.keypress({ key: 'Select' });
   }
 
   async focus() {
-    const move = async (key: Key) => {
+    const move = async (key: any) => {
       const { path, attributes } = this.document.focusedElement;
 
-      await this.sdk.ecp.keypress(key);
+      await this.sdk.ecp.keypress({ key });
 
       const moved = await retrying({
         timeout: 5000,
@@ -192,7 +213,8 @@ export class Element {
         command: async () => {
           await this.document.render();
 
-          const { path: newPath, attributes: newAttributes } = this.document.focusedElement;
+          const { path: newPath, attributes: newAttributes } =
+            this.document.focusedElement;
 
           if (path !== newPath) {
             return true;
@@ -215,7 +237,12 @@ export class Element {
 
     let variants = this.document.cssSelectAll('*:not(:has(*))').length;
 
-    while (this.isConnected && this.isDisplayed && !this.isInFocusChain && variants--) {
+    while (
+      this.isConnected &&
+      this.isDisplayed &&
+      !this.isInFocusChain &&
+      variants--
+    ) {
       const focusedElement = this.document.focusedElement;
       const focusChain = [focusedElement, ...focusedElement.parents].reverse();
       const chain = [this, ...this.parents].reverse();
@@ -225,7 +252,7 @@ export class Element {
         const target = chain[i];
         const source = focusChain[i];
 
-        if (target.isSameNode(source)) {
+        if (!target || !source || target.isSameNode(source)) {
           continue;
         }
 
@@ -257,7 +284,10 @@ export class Element {
     }
   }
 
-  cssSelect<T extends Timeout = null>(css: string, timeoutInSeconds?: T): ReturnForTimeout<Element | null, T> {
+  cssSelect<T extends Timeout = null>(
+    css: string,
+    timeoutInSeconds?: T
+  ): ReturnForTimeout<Element | null, T> {
     return findElOrEls(
       this,
       () => {
@@ -268,7 +298,10 @@ export class Element {
     );
   }
 
-  cssSelectAll<T extends Timeout = null>(css: string, timeoutInSeconds?: T): ReturnForTimeout<Element[], T> {
+  cssSelectAll<T extends Timeout = null>(
+    css: string,
+    timeoutInSeconds?: T
+  ): ReturnForTimeout<Element[], T> {
     return findElOrEls(
       this,
       () => {
@@ -279,7 +312,10 @@ export class Element {
     );
   }
 
-  xpathSelect<T extends Timeout = null>(xpath: string, timeoutInSeconds?: T): ReturnForTimeout<Element | null, T> {
+  xpathSelect<T extends Timeout = null>(
+    xpath: string,
+    timeoutInSeconds?: T
+  ): ReturnForTimeout<Element | null, T> {
     return findElOrEls(
       this,
       () => {
@@ -290,7 +326,10 @@ export class Element {
     );
   }
 
-  xpathSelectAll<T extends Timeout = null>(xpath: string, timeoutInSeconds?: T): ReturnForTimeout<Element[], T> {
+  xpathSelectAll<T extends Timeout = null>(
+    xpath: string,
+    timeoutInSeconds?: T
+  ): ReturnForTimeout<Element[], T> {
     return findElOrEls(
       this,
       () => {
@@ -312,9 +351,15 @@ export class Element {
 }
 
 type Timeout = number | undefined | null;
-type ReturnForTimeout<R, T extends Timeout = null> = T extends undefined | null ? R : Promise<R>;
+type ReturnForTimeout<R, T extends Timeout = null> = T extends undefined | null
+  ? R
+  : Promise<R>;
 
-function findElOrEls<R, T extends Timeout = null>(element: Element, getElOrEls: () => R, timeoutInSeconds?: T): ReturnForTimeout<R, T> {
+function findElOrEls<R, T extends Timeout = null>(
+  element: Element,
+  getElOrEls: () => R,
+  timeoutInSeconds?: T
+): ReturnForTimeout<R, T> {
   if (typeof timeoutInSeconds !== 'number') {
     return getElOrEls() as any;
   }
@@ -325,7 +370,8 @@ function findElOrEls<R, T extends Timeout = null>(element: Element, getElOrEls: 
     if (Array.isArray(elOrEls) ? elOrEls.length == 0 : !elOrEls) {
       elOrEls = await retrying({
         timeout: timeoutInSeconds * 1000,
-        validate: (elOrEls, error) => error || (Array.isArray(elOrEls) ? elOrEls.length > 0 : elOrEls),
+        validate: (elOrEls, error) =>
+          error || (Array.isArray(elOrEls) ? elOrEls.length > 0 : elOrEls),
         command: async () => {
           await element.document.render();
           return getElOrEls();
@@ -351,16 +397,21 @@ async function appendOrSetText(element: Element, text: string, clear: boolean) {
 
     if (clear) {
       const input = keyboard.xpathSelect('.//*[@text]');
-      const cursor = keyboard.xpathSelect('.//*[@bounds and contains(@uri, "cursor_textInput")]');
-      if (input && (cursor?.bounds?.x || keyboard.attributes.text)) {
-        for (let i = 0, n = input.attributes.text.length; i <= n; i++) {
-          await element.sdk.ecp.keypress('Backspace');
+      const cursor = keyboard.xpathSelect(
+        './/*[@bounds and contains(@uri, "cursor_textInput")]'
+      );
+      if (input && (cursor?.bounds?.x || keyboard.attributes['text'])) {
+        const inputLength = input.attributes['text']?.length || 0;
+        for (let i = 0; i <= inputLength; i++) {
+          await element.sdk.ecp.keypress({ key: 'Backspace' });
         }
       }
     }
 
     if (text) {
-      await element.sdk.ecp.type(text);
+      for (const char of text) {
+        await element.sdk.ecp.keypress({ key: char as any });
+      }
     }
 
     return;
@@ -376,23 +427,30 @@ async function appendOrSetText(element: Element, text: string, clear: boolean) {
   if (keyboard) {
     await appendOrSetText(keyboard, text, clear);
   } else {
-    throw new RokuError('Keyboard dialog did not appear after pressing `Select` on element');
+    throw new RokuError(
+      'Keyboard dialog did not appear after pressing `Select` on element'
+    );
   }
 
   // Submit changes by selecting the first button in the dialog
   // or by sending `Enter` button
 
-  const submitButton = keyboard.xpathSelect(`./ancestor-or-self::*[${DIALOG}]//*[${BUTTON}]`);
+  const submitButton = keyboard.xpathSelect(
+    `./ancestor-or-self::*[${DIALOG}]//*[${BUTTON}]`
+  );
 
   if (submitButton) {
     await submitButton.select();
   } else {
-    await element.sdk.ecp.keypress('Enter');
+    await element.sdk.ecp.keypress({ key: 'Enter' });
   }
 
   // Wait for the keyboard to disappear
 
-  const isKeyboardClosed = !(await element.document.xpathSelect(`self::*[not(./descendant-or-self::*[${KEYBOARD}])]`, 5));
+  const isKeyboardClosed = !(await element.document.xpathSelect(
+    `self::*[not(./descendant-or-self::*[${KEYBOARD}])]`,
+    5
+  ));
   if (isKeyboardClosed) {
     throw new RokuError('Keyboard dialog did not disappear');
   }
@@ -425,7 +483,11 @@ function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function retrying<Type>(options: { timeout: number; command: () => Promise<Type>; validate: (result?: Type, error?: any) => boolean }): Promise<Type> {
+async function retrying<Type>(options: {
+  timeout: number;
+  command: () => Promise<Type>;
+  validate: (result?: Type, error?: any) => boolean;
+}): Promise<Type> {
   const duration = 500;
   const endTimestamp = performance.now() + options.timeout;
 

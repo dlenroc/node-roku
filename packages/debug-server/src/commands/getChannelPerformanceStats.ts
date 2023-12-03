@@ -1,6 +1,7 @@
-import type { Executor } from '../Executor.js';
-import { execute, type Config } from '../internal/execute.js';
-import type { ChannelStats } from '../types/ChannelStats.js';
+import type { Executor } from '../Executor.ts';
+import { execute } from '../internal/execute.js';
+import type { Config } from '../internal/types.d.ts';
+import type { ChannelStats } from '../types/ChannelStats.ts';
 
 const pattern =
   /mem=(?<mem>\d+)KiB{anon=(?<anon>\d+),file=(?<file>\d+),shared=(?<shared>\d+),swap=(?<swap>\d+)},%cpu=(?<cpu>\d+){user=(?<user>\d+),sys=(?<sys>\d+)}/;
@@ -10,11 +11,11 @@ const pattern =
  *
  * The channel manifest must include the **run_as_process=1** attribute to use this command.
  */
-export async function getChannelPerformanceStats<Context extends Executor<{}>>(
+export async function getChannelPerformanceStats<Context extends Executor>(
   ctx: Context,
   config?: Config<Context>
 ): Promise<ChannelStats> {
-  const [[result]] = await execute(ctx, 'chanperf', [], [pattern], config);
+  const [[result]] = await execute(ctx, 'chanperf', [pattern], config);
 
   return {
     cpu: {

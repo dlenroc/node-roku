@@ -1,16 +1,19 @@
-import { DebugServerError, clearSceneGraphPerformanceMetrics } from '@dlenroc/roku-debug-server';
+import {
+  DebugServerError,
+  clearSceneGraphPerformanceMetrics,
+} from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
-import { afterEach, describe, test } from 'node:test';
+import { afterEach, describe, it } from 'node:test';
 import sinon from 'sinon';
 
 describe('clearSceneGraphPerformanceMetrics', () => {
   afterEach(() => sinon.verifyAndRestore());
 
-  test('clears performance metrics', async () => {
+  it('clears performance metrics', async () => {
     const executor = {
-      execute: sinon
+      execute: sinon //
         .mock()
-        .withExactArgs('sgperf', ['clear'])
+        .withExactArgs('sgperf clear')
         .resolves(''),
     };
 
@@ -18,11 +21,11 @@ describe('clearSceneGraphPerformanceMetrics', () => {
     assert.strictEqual(result, undefined);
   });
 
-  test('throws if command is not recognized', async () => {
+  it('throws if command is not recognized', async () => {
     const executor = {
       execute: sinon
         .mock()
-        .withExactArgs('sgperf', ['clear'])
+        .withExactArgs('sgperf clear')
         .resolves('Command not recognized'),
     };
 

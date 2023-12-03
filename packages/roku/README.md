@@ -11,7 +11,7 @@ npm install @dlenroc/roku
 ## Usage
 
 ```typescript
-import fs from 'fs';
+import fs from 'node:fs';
 import SDK from '@dlenroc/roku';
 
 const sdk = new SDK('<ip>', '<username>', '<password>');
