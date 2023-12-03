@@ -10,23 +10,22 @@ export async function execute<Context extends Executor>(
 ): Promise<string> {
   const response = await ctx.execute(path, init);
 
-  if (response.status !== 200) {
-    throw new DeveloperServerError({
-      message: `Request failed with status ${response.status}`,
-      path: path,
-      params: {},
-      output: '',
-    });
-  }
-
   const text = await response.text();
   const results = parseRokuMessages(text);
-  if (results.errors.length > 0) {
+  if (!response.ok || results.errors.length) {
+    const message = Object.entries(results).reduce(
+      (acc, [key, messages]) =>
+        messages.length
+          ? `${acc}\n[${key}]\n${messages.join('\n').replaceAll(/^/gm, '  ')}\n`
+          : acc,
+      ''
+    );
+
     throw new DeveloperServerError({
-      message: results.errors.join('\n'),
-      path: path,
-      params: {},
-      output: text,
+      message: `Request to "${path}" failed: ${response.status} ${response.statusText}${message}`,
+      path,
+      payload: init!,
+      response: new Response(text, response),
     });
   }
 

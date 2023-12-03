@@ -1,22 +1,22 @@
 export class DeveloperServerError extends Error {
   public readonly path: string;
-  public readonly params: Record<string, string | Blob> | undefined;
-  public readonly output: string;
+  public readonly payload?: RequestInit;
+  public readonly response: Response;
 
   constructor(options: {
-    path: string;
-    params?: Record<string, string | Blob> | undefined;
-    output: string;
     message?: string;
+    path: string;
+    payload?: RequestInit;
+    response: Response;
   }) {
     super(
-      options.message ||
-        `Failed to parse result of ${options.path} command: ${options.output}`
+      options.message ??
+        `Request to "${options.path}" failed: ${options.response.status} ${options.response.statusText}`
     );
 
     this.name = 'DeveloperServerError';
     this.path = options.path;
-    this.params = options.params;
-    this.output = options.output;
+    this.payload = options.payload!;
+    this.response = options.response;
   }
 }

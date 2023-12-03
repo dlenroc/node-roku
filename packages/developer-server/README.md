@@ -11,10 +11,7 @@ npm install @dlenroc/roku-developer-server
 ## Usage
 
 ```typescript
-import {
-  DeveloperServerExecutor,
-  installChannel,
-} from '@dlenroc/roku-developer-server';
+import { DeveloperServerExecutor, installChannel } from '@dlenroc/roku-developer-server';
 import fs from 'node:fs';
 
 const ctx = new DeveloperServerExecutor({
@@ -27,18 +24,25 @@ const app = fs.readFileSync('<path_to_channel>');
 await installChannel(ctx, { content: app });
 ```
 
+📝 Retrieving content from methods returning file paths requires an extra request.
+
+```typescript
+const path = await takeScreenshot(ctx);
+const response = await ctx.execute(path);
+const content = await response.arrayBuffer();
+```
+
 ---
 
-| Method              | Description                                                |
-| ------------------- | ---------------------------------------------------------- |
-| `convertToSquashfs` | Compress sideloaded channel using Squashfs                 |
-| `convertToZip`      | Compress sideloaded channel using Zip                      |
-| `deleteChannel`     | Delete sideloaded channel                                  |
-| `deletePackage`     | Delete sideloaded channel package                          |
-| `getPackage`        | Get sideloaded channel package                             |
-| `getProfilingData`  | Get profiling data                                         |
-| `getScreenshot`     | Get sideloaded channel screenshot                          |
-| `inspectPackage`    | Inspect package                                            |
-| `installChannel`    | Sideload a channel from a zip file                         |
-| `packageChannel`    | Package sideloaded channel                                 |
-| `rekey`             | Rekey device from existing package signed with desired key |
+| Method              | Description                                                                    |
+| ------------------- | ------------------------------------------------------------------------------ |
+| `convertToSquashfs` | Compress sideloaded channel using Squashfs                                     |
+| `convertToZip`      | Compress sideloaded channel using Zip                                          |
+| `deleteChannel`     | Delete sideloaded channel                                                      |
+| `deletePackage`     | Delete sideloaded channel package                                              |
+| `inspectPackage`    | Inspect channel package                                                        |
+| `installChannel`    | Sideload a channel from a zip file                                             |
+| `packageChannel`    | Package sideloaded channel and return path to it                               |
+| `rekey`             | Rekey device from existing package signed with desired key                     |
+| `saveProfilingData` | Saves the profiling data and returns the path to it                            |
+| `takeScreenshot`    | Takes a screenshot of the sideloaded channel and returns the path to the image |
