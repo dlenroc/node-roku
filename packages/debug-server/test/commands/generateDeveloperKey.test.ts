@@ -1,12 +1,12 @@
 import {
   DebugServerError,
-  createDeveloperKey,
+  generateDeveloperKey,
 } from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
 import { afterEach, describe, it } from 'node:test';
 import sinon from 'sinon';
 
-describe('createDeveloperKey', () => {
+describe('generateDeveloperKey', () => {
   afterEach(() => sinon.verifyAndRestore());
 
   it('return developer key', async () => {
@@ -19,7 +19,7 @@ describe('createDeveloperKey', () => {
         .resolves(`Password: ${password}\nDevID: ${id}`),
     };
 
-    const result = await createDeveloperKey(executor);
+    const result = await generateDeveloperKey(executor);
     assert.deepStrictEqual(result, { id, password });
   });
 
@@ -31,7 +31,7 @@ describe('createDeveloperKey', () => {
         .resolves(''),
     };
 
-    const result = createDeveloperKey(executor);
+    const result = generateDeveloperKey(executor);
     await assert.rejects(result, DebugServerError);
   });
 });
