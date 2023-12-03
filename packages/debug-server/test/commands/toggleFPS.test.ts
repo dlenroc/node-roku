@@ -1,16 +1,16 @@
 import { DebugServerError, toggleFPS } from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
-import { afterEach, describe, test } from 'node:test';
+import { afterEach, describe, it } from 'node:test';
 import sinon from 'sinon';
 
 describe('toggleFPS', () => {
   afterEach(() => sinon.verifyAndRestore());
 
-  test('toggle onscreen graphics statistics', async () => {
+  it('toggle onscreen graphics statistics', async () => {
     const executor = {
-      execute: sinon
+      execute: sinon //
         .mock()
-        .withExactArgs('fps_display', [])
+        .withExactArgs('fps_display')
         .resolves(''),
     };
 
@@ -18,11 +18,11 @@ describe('toggleFPS', () => {
     assert.strictEqual(result, undefined);
   });
 
-  test('throws if command is not recognized', async () => {
+  it('throws if command is not recognized', async () => {
     const executor = {
       execute: sinon
         .mock()
-        .withExactArgs('fps_display', [])
+        .withExactArgs('fps_display')
         .resolves('Command not recognized'),
     };
 

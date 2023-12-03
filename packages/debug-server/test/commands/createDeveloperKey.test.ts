@@ -1,18 +1,21 @@
-import { DebugServerError, createDeveloperKey } from '@dlenroc/roku-debug-server';
+import {
+  DebugServerError,
+  createDeveloperKey,
+} from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
-import { afterEach, describe, test } from 'node:test';
+import { afterEach, describe, it } from 'node:test';
 import sinon from 'sinon';
 
 describe('createDeveloperKey', () => {
   afterEach(() => sinon.verifyAndRestore());
 
-  test('return developer key', async () => {
+  it('return developer key', async () => {
     const id = 'rokudev';
     const password = 'roku';
     const executor = {
       execute: sinon
         .mock()
-        .withExactArgs('genkey', [])
+        .withExactArgs('genkey')
         .resolves(`Password: ${password}\nDevID: ${id}`),
     };
 
@@ -20,11 +23,11 @@ describe('createDeveloperKey', () => {
     assert.deepStrictEqual(result, { id, password });
   });
 
-  test('throws if failed to parse', async () => {
+  it('throws if failed to parse', async () => {
     const executor = {
-      execute: sinon
+      execute: sinon //
         .mock()
-        .withExactArgs('genkey', [])
+        .withExactArgs('genkey')
         .resolves(''),
     };
 

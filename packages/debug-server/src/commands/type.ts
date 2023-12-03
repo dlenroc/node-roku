@@ -1,12 +1,13 @@
-import type { Executor } from '../Executor.js';
-import { execute, type Config } from '../internal/execute.js';
+import type { Executor } from '../Executor.ts';
+import { execute } from '../internal/execute.js';
+import type { Config } from '../internal/types.d.ts';
 
 const pattern = /^\s*$/;
 
 /**
  * Send a literal text sequence.
  */
-export async function type<Context extends Executor<{}>>(
+export async function type<Context extends Executor>(
   ctx: Context,
   payload: {
     /**
@@ -16,5 +17,10 @@ export async function type<Context extends Executor<{}>>(
   },
   config?: Config<Context>
 ): Promise<void> {
-  await execute(ctx, 'type', [payload.text], [pattern], config);
+  await execute(
+    ctx,
+    `type${payload.text ? ` ${payload.text}` : ''}`,
+    [pattern],
+    config
+  );
 }

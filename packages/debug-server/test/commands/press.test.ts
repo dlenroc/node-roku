@@ -1,17 +1,17 @@
 import { DebugServerError, press } from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
-import { afterEach, describe, test } from 'node:test';
+import { afterEach, describe, it } from 'node:test';
 import sinon from 'sinon';
 
 describe('press', () => {
   afterEach(() => sinon.verifyAndRestore());
 
-  test('press keys', async () => {
+  it('press keys', async () => {
     const keys = 'hhudrlhh';
     const executor = {
-      execute: sinon
+      execute: sinon //
         .mock()
-        .withExactArgs('press', [keys])
+        .withExactArgs(`press ${keys}`)
         .resolves(''),
     };
 
@@ -19,11 +19,11 @@ describe('press', () => {
     assert.strictEqual(result, undefined);
   });
 
-  test('throws if failed to parse', async () => {
+  it('throws if failed to parse', async () => {
     const executor = {
       execute: sinon
         .mock()
-        .withExactArgs('press', [''])
+        .withExactArgs('press')
         .resolves('.h<dur>  Specify a custom press-and-hold duration'),
     };
 

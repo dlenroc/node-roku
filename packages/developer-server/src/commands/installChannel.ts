@@ -1,17 +1,17 @@
-import type { Executor } from '../Executor.js';
-import { execute, type Config } from '../internal/execute.js';
-import { getPluginInstallCommand } from '../internal/getPluginInstallCommand.js';
+import type { Executor } from '../Executor.ts';
+import { executePluginInstallCommand } from '../internal/executePluginInstallCommand.js';
+import type { Config } from '../internal/types.d.ts';
 
 /**
  * Sideload a channel from a zip file.
  */
-export async function installChannel<Context extends Executor<{}>>(
+export async function installChannel<Context extends Executor>(
   ctx: Context,
   option: {
     /**
      * The content of the zip file to install.
      */
-    content: Blob | NodeJS.ArrayBufferView;
+    content: Exclude<ConstructorParameters<typeof Blob>[0][0], string>;
 
     /**
      * Use squashfs instead of zip. Defaults to false.
@@ -30,14 +30,14 @@ export async function installChannel<Context extends Executor<{}>>(
   },
   config?: Config<Context>
 ): Promise<void> {
-  await execute(
+  await executePluginInstallCommand(
     ctx,
-    getPluginInstallCommand({
+    {
       mysubmit: 'Install' + (option.useSquashfs ? ' with squashfs' : ''),
       archive: new Blob([option.content]),
       ...(option.remoteDebug && { remotedebug: '1' }),
       ...(option.remoteDebugConnectEarly && { remotedebug_connect_early: '1' }),
-    }),
+    },
     config
   );
 }

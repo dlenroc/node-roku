@@ -11,7 +11,10 @@ npm install @dlenroc/roku-developer-server
 ## Usage
 
 ```typescript
-import { DeveloperServerExecutor, installChannel } from '@dlenroc/roku-developer-server';
+import {
+  DeveloperServerExecutor,
+  installChannel,
+} from '@dlenroc/roku-developer-server';
 import fs from 'node:fs';
 
 const ctx = new DeveloperServerExecutor({

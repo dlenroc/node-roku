@@ -6,6 +6,8 @@
     "declarationMap": true,
     "sourceMap": true,
     "verbatimModuleSyntax": true,
+    "strict": true,
+    "exactOptionalPropertyTypes": true,
     "paths": {
       "@dlenroc/roku-debug-server": ["./packages/debug-server"],
       "@dlenroc/roku-developer-server": ["./packages/developer-server"],

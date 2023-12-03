@@ -1,4 +1,4 @@
-import type { AppId } from './AppId.js';
+import type { AppId } from './AppId.ts';
 import type { FWBeaconsStatus } from './FWBeaconsStatus.ts';
 
 export interface FWBeacons extends FWBeaconsStatus {

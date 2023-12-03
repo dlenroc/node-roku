@@ -1,5 +1,6 @@
-import type { Executor } from '../Executor.js';
-import { execute, type Config } from '../internal/execute.js';
+import type { Executor } from '../Executor.ts';
+import { execute } from '../internal/execute.js';
+import type { Config } from '../internal/types.d.ts';
 import type { MemoryStats } from '../types/MemoryStats.ts';
 
 const memoryPattern =
@@ -9,14 +10,13 @@ const swapPattern = /Swap:\s*(?<total>\d+)\s*(?<used>\d+)\s*(?<free>\d+)/;
 /**
  * Returns memory stats.
  */
-export async function getMemoryStats<Context extends Executor<{}>>(
+export async function getMemoryStats<Context extends Executor>(
   ctx: Context,
   config?: Config<Context>
 ): Promise<MemoryStats> {
   const [[memory], [swap]] = await execute(
     ctx,
     'free',
-    [],
     [memoryPattern, swapPattern],
     config
   );

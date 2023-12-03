@@ -1,11 +1,5 @@
-export interface Executor<Config> {
-  execute(
-    command:
-      | string
-      | {
-          path: string;
-          body?: undefined | Record<string, string | Blob>;
-        },
-    config?: Config
-  ): Promise<{ status: number; body: Blob }>;
+import type { Mixed } from './internal/types.d.ts';
+
+export interface Executor<Config = {}> {
+  execute(path: string, init?: Mixed<RequestInit, Config>): Promise<Response>;
 }

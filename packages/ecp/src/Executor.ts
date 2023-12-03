@@ -1,9 +1,5 @@
-import type { Nullable } from "./internal/Nullable.js";
+import type { Mixed } from './internal/types.d.ts';
 
 export interface Executor<Config = {}> {
-  execute(
-    path: string,
-    params?: Nullable<Record<string, unknown>>,
-    config?: Config
-  ): Promise<Response>;
+  execute(path: string, init?: Mixed<RequestInit, Config>): Promise<Response>;
 }

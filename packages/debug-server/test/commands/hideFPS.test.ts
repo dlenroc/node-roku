@@ -1,16 +1,16 @@
 import { DebugServerError, hideFPS } from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
-import { afterEach, describe, test } from 'node:test';
+import { afterEach, describe, it } from 'node:test';
 import sinon from 'sinon';
 
 describe('hideFPS', () => {
   afterEach(() => sinon.verifyAndRestore());
 
-  test('hide onscreen graphics statistics', async () => {
+  it('hide onscreen graphics statistics', async () => {
     const executor = {
-      execute: sinon
+      execute: sinon //
         .mock()
-        .withExactArgs('fps_display', ['0'])
+        .withExactArgs('fps_display 0')
         .resolves(''),
     };
 
@@ -18,11 +18,11 @@ describe('hideFPS', () => {
     assert.strictEqual(result, undefined);
   });
 
-  test('throws if command is not recognized', async () => {
+  it('throws if command is not recognized', async () => {
     const executor = {
       execute: sinon
         .mock()
-        .withExactArgs('fps_display', ['0'])
+        .withExactArgs('fps_display 0')
         .resolves('Command not recognized'),
     };
 

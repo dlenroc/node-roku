@@ -1,14 +1,14 @@
 export * from './DeveloperServerError.js';
 export * from './DeveloperServerExecutor.js';
-export type * from './Executor.js';
+export type * from './DeveloperServerExecutorOptions.ts';
+export type * from './Executor.ts';
 export * from './commands/convertToSquashfs.js';
 export * from './commands/convertToZip.js';
 export * from './commands/deleteChannel.js';
 export * from './commands/deletePackage.js';
-export * from './commands/getPackage.js';
-export * from './commands/getProfilingData.js';
-export * from './commands/getScreenshot.js';
 export * from './commands/inspectPackage.js';
 export * from './commands/installChannel.js';
 export * from './commands/packageChannel.js';
 export * from './commands/rekey.js';
+export * from './commands/saveProfilingData.js';
+export * from './commands/takeScreenshot.js';

@@ -13,7 +13,7 @@ npm install @dlenroc/roku-dom
 > ⚠️ `render()` must be called for synchronizing DOM with application state
 
 ```typescript
-import fs from 'fs';
+import fs from 'node:fs';
 import SDK from '@dlenroc/roku';
 
 const sdk = new SDK('<ip>', '<username>', '<password>');

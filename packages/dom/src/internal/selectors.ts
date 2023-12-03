@@ -1,4 +1,3 @@
-
 export const KEYBOARD =
   'substring(name(), string-length(name()) - string-length("Keyboard") + 1) = "Keyboard"' +
   ' or ' +

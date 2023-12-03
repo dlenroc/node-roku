@@ -1,11 +1,11 @@
-import type { Executor } from '../Executor.js';
-import { execute, type Config } from '../internal/execute.js';
-import { getPluginPackageCommand } from '../internal/getPluginPackageCommand.js';
+import type { Executor } from '../Executor.ts';
+import { executePluginPackageCommand } from '../internal/executePluginPackageCommand.js';
+import type { Config } from '../internal/types.d.ts';
 
 /**
- * Package sideloaded channel.
+ * Package sideloaded channel and return path to it
  */
-export async function packageChannel<Context extends Executor<{}>>(
+export async function packageChannel<Context extends Executor>(
   ctx: Context,
   option: {
     /**
@@ -24,15 +24,17 @@ export async function packageChannel<Context extends Executor<{}>>(
     timestamp?: number;
   },
   config?: Config<Context>
-): Promise<void> {
-  await execute(
+): Promise<string | null> {
+  const body = await executePluginPackageCommand(
     ctx,
-    getPluginPackageCommand({
+    {
       mysubmit: 'Package',
       pkg_time: String(option.timestamp ?? new Date().getTime()),
       app_name: option.name,
       passwd: option.password,
-    }),
+    },
     config
   );
+
+  return body.match(/pkgs\/.+?.pkg/)?.[0] ?? null;
 }

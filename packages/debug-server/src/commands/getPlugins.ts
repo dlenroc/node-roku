@@ -1,5 +1,6 @@
-import type { Executor } from '../Executor.js';
-import { execute, type Config } from '../internal/execute.js';
+import type { Executor } from '../Executor.ts';
+import { execute } from '../internal/execute.js';
+import type { Config } from '../internal/types.d.ts';
 import type { Plugin } from '../types/Plugin.ts';
 
 const pattern =
@@ -8,7 +9,7 @@ const pattern =
 /**
  * Returns installed plugins.
  */
-export async function getPlugins<Context extends Executor<{}>>(
+export async function getPlugins<Context extends Executor>(
   ctx: Context,
   payload?: {
     /**
@@ -18,8 +19,12 @@ export async function getPlugins<Context extends Executor<{}>>(
   },
   config?: Config<Context>
 ): Promise<{ plugins: Plugin[] }> {
-  const args = payload?.query ? [`${payload.query}`] : [];
-  const [results] = await execute(ctx, 'plugins', args, [pattern], config);
+  const [results] = await execute(
+    ctx,
+    `plugins${payload?.query ? ` ${payload.query}` : ''}`,
+    [pattern],
+    config
+  );
   const plugins = results.map((match: any) => {
     const id = +match.groups!.id;
     return {

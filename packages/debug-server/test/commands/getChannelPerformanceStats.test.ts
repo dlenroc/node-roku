@@ -1,17 +1,22 @@
-import { DebugServerError, getChannelPerformanceStats } from '@dlenroc/roku-debug-server';
+import {
+  DebugServerError,
+  getChannelPerformanceStats,
+} from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
-import { afterEach, describe, test } from 'node:test';
+import { afterEach, describe, it } from 'node:test';
 import sinon from 'sinon';
 
 describe('getChannelPerformanceStats', () => {
   afterEach(() => sinon.verifyAndRestore());
 
-  test('return channel performance stats', async () => {
+  it('return channel performance stats', async () => {
     const executor = {
       execute: sinon
         .mock()
-        .withExactArgs('chanperf', [])
-        .resolves('channel: mem=15156KiB{anon=2720,file=12392,shared=44,swap=0},%cpu=7{user=1,sys=6}'),
+        .withExactArgs('chanperf')
+        .resolves(
+          'channel: mem=15156KiB{anon=2720,file=12392,shared=44,swap=0},%cpu=7{user=1,sys=6}'
+        ),
     };
 
     const result = await getChannelPerformanceStats(executor);
@@ -22,11 +27,11 @@ describe('getChannelPerformanceStats', () => {
     });
   });
 
-  test('throws if performance stats are not available', async () => {
+  it('throws if performance stats are not available', async () => {
     const executor = {
       execute: sinon
         .mock()
-        .withExactArgs('chanperf', [])
+        .withExactArgs('chanperf')
         .resolves('channel: mem and cpu data not available'),
     };
 

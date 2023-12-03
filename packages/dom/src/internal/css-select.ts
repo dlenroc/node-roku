@@ -69,11 +69,16 @@ const XmlAdapter = BaseAdapter({
   },
 
   isActive(node: XMLElement): boolean {
-    return this.isHovered(node) && !node.get('./descendant::*[@focused="true"]');
+    return (
+      this.isHovered(node) && !node.get('./descendant::*[@focused="true"]')
+    );
   },
 });
 
-export function selectOne(query: string, context: XMLElement): XMLElement | null {
+export function selectOne(
+  query: string,
+  context: XMLElement
+): XMLElement | null {
   return CssSelect.selectOne(query, context, { adapter: XmlAdapter });
 }
 

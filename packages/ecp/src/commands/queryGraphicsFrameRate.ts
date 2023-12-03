@@ -1,8 +1,9 @@
-import type { Executor } from '../Executor.js';
-import { execute, type Config } from '../internal/execute.js';
+import type { Executor } from '../Executor.ts';
+import { execute } from '../internal/execute.js';
+import type { Config } from '../internal/types.d.ts';
 import parse from '../internal/xml.js';
-import type { Failure } from '../types/Failure.js';
-import type { GraphicsFrameRate } from '../types/GraphicsFrameRate.js';
+import type { Failure } from '../types/Failure.ts';
+import type { GraphicsFrameRate } from '../types/GraphicsFrameRate.ts';
 
 export async function queryGraphicsFrameRate<Context extends Executor>(
   ctx: Context,

@@ -1,17 +1,17 @@
-import type { Executor } from '../Executor.js';
-import { execute, type Config } from '../internal/execute.js';
-import { getPluginInspectCommand } from '../internal/getPluginInspectCommand.js';
+import type { Executor } from '../Executor.ts';
+import { executePluginInspectCommand } from '../internal/executePluginInspectCommand.js';
+import type { Config } from '../internal/types.d.ts';
 
 /**
  * Rekey device from existing package signed with desired key.
  */
-export async function rekey<Context extends Executor<{}>>(
+export async function rekey<Context extends Executor>(
   ctx: Context,
   option: {
     /**
      * Package signed with desired key.
      */
-    content: Blob | NodeJS.ArrayBufferView;
+    content: Exclude<ConstructorParameters<typeof Blob>[0][0], string>;
 
     /**
      * Password to decrypt the package.
@@ -20,13 +20,13 @@ export async function rekey<Context extends Executor<{}>>(
   },
   config?: Config<Context>
 ): Promise<void> {
-  await execute(
+  await executePluginInspectCommand(
     ctx,
-    getPluginInspectCommand({
+    {
       mysubmit: 'Rekey',
       archive: new Blob([option.content]),
       passwd: option.password,
-    }),
+    },
     config
   );
 }

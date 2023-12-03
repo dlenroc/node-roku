@@ -1,16 +1,16 @@
 import { DebugServerError, getPlugins } from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
-import { afterEach, describe, test } from 'node:test';
+import { afterEach, describe, it } from 'node:test';
 import sinon from 'sinon';
 
 describe('getPlugins', () => {
   afterEach(() => sinon.verifyAndRestore());
 
-  test('return plugins', async () => {
+  it('return plugins', async () => {
     const executor = {
       execute: sinon
         .mock()
-        .withExactArgs('plugins', [])
+        .withExactArgs('plugins')
         .resolves(
           [
             ' F-C + N - S6             586995 [usg     0] [ref  0]       AirPlay, 4.35.505',
@@ -55,12 +55,12 @@ describe('getPlugins', () => {
     });
   });
 
-  test('return filtered plugins', async () => {
+  it('return filtered plugins', async () => {
     const query = 'dev';
     const executor = {
       execute: sinon
         .mock()
-        .withExactArgs('plugins', [query])
+        .withExactArgs(`plugins ${query}`)
         .resolves(
           [
             ' F-- P S - Z                 dev [usg     0] [ref  0] cmpl* Hello World, 1.0.1',
@@ -84,11 +84,11 @@ describe('getPlugins', () => {
     });
   });
 
-  test('throws if failed to parse', async () => {
+  it('throws if failed to parse', async () => {
     const executor = {
-      execute: sinon
+      execute: sinon //
         .mock()
-        .withExactArgs('plugins', [])
+        .withExactArgs('plugins')
         .resolves(''),
     };
 

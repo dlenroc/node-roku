@@ -1,7 +1,8 @@
-import type { Executor } from '../Executor.js';
-import { execute, type Config } from '../internal/execute.js';
+import type { Executor } from '../Executor.ts';
+import { execute } from '../internal/execute.js';
+import type { Config } from '../internal/types.d.ts';
 import parse from '../internal/xml.js';
-import type { ActiveApp } from '../types/ActiveApp.js';
+import type { ActiveApp } from '../types/ActiveApp.ts';
 
 export async function queryActiveApp<Context extends Executor>(
   ctx: Context,

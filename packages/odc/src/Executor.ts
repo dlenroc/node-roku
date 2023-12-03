@@ -1,14 +1,5 @@
-/// <reference types="node" />
+import type { Mixed } from './internal/types.d.ts';
 
 export interface Executor<Config = {}> {
-  execute(
-    request: {
-      method: string;
-      path: string;
-      headers?: null | undefined | Record<string, string>;
-      params?: null | undefined | Record<string, unknown>;
-      data?: null | undefined | RequestInit['body'];
-    },
-    config?: Config
-  ): Promise<Response>;
+  execute(path: string, init?: Mixed<RequestInit, Config>): Promise<Response>;
 }

@@ -1,17 +1,17 @@
 import { DebugServerError, getDeveloperKey } from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
-import { afterEach, describe, test } from 'node:test';
+import { afterEach, describe, it } from 'node:test';
 import sinon from 'sinon';
 
 describe('getDeveloperKey', () => {
   afterEach(() => sinon.verifyAndRestore());
 
-  test('return developer key', async () => {
+  it('return developer key', async () => {
     const id = '1234567890';
     const executor = {
-      execute: sinon
+      execute: sinon //
         .mock()
-        .withExactArgs('showkey', [])
+        .withExactArgs('showkey')
         .resolves(`Dev ID: ${id}`),
     };
 
@@ -19,11 +19,11 @@ describe('getDeveloperKey', () => {
     assert.strictEqual(result, id);
   });
 
-  test('throws if failed to parse', async () => {
+  it('throws if failed to parse', async () => {
     const executor = {
-      execute: sinon
+      execute: sinon //
         .mock()
-        .withExactArgs('showkey', [])
+        .withExactArgs('showkey')
         .resolves(''),
     };
 

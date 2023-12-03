@@ -1,16 +1,19 @@
-import { DebugServerError, enableRendezvousLogging } from '@dlenroc/roku-debug-server';
+import {
+  DebugServerError,
+  enableRendezvousLogging,
+} from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
-import { afterEach, describe, test } from 'node:test';
+import { afterEach, describe, it } from 'node:test';
 import sinon from 'sinon';
 
 describe('enableRendezvousLogging', () => {
   afterEach(() => sinon.verifyAndRestore());
 
-  test('enable rendezvous logging', async () => {
+  it('enable rendezvous logging', async () => {
     const executor = {
       execute: sinon
         .mock()
-        .withExactArgs('logrendezvous', ['on'])
+        .withExactArgs('logrendezvous on')
         .resolves('logrendezvous: rendezvous logging is on'),
     };
 
@@ -18,11 +21,11 @@ describe('enableRendezvousLogging', () => {
     assert.strictEqual(result, undefined);
   });
 
-  test('throws if failed to parse', async () => {
+  it('throws if failed to parse', async () => {
     const executor = {
-      execute: sinon
+      execute: sinon //
         .mock()
-        .withExactArgs('logrendezvous', ['on'])
+        .withExactArgs('logrendezvous on')
         .resolves(''),
     };
 

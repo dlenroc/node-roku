@@ -1,11 +1,12 @@
-import type { Executor } from '../Executor.js';
-import type { Nullable } from '../internal/Nullable.js';
-import { execute, type Config } from '../internal/execute.js';
+import type { Executor } from '../Executor.ts';
+import type { Nullable } from '../internal/Nullable.ts';
+import { execute } from '../internal/execute.js';
+import type { Config } from '../internal/types.d.ts';
 import parse from '../internal/xml.js';
-import type { AppId } from '../types/AppId.js';
-import type { ChannelPerformance } from '../types/ChannelPerformance.js';
-import type { Failure } from '../types/Failure.js';
-import type { Params } from '../types/Params.js';
+import type { AppId } from '../types/AppId.ts';
+import type { ChannelPerformance } from '../types/ChannelPerformance.ts';
+import type { Failure } from '../types/Failure.ts';
+import type { Params } from '../types/Params.ts';
 
 export async function queryChannelPerformance<Context extends Executor>(
   ctx: Context,

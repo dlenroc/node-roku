@@ -1,16 +1,16 @@
 import { DebugServerError, getR2D2Bitmaps } from '@dlenroc/roku-debug-server';
 import assert from 'node:assert';
-import { afterEach, describe, test } from 'node:test';
+import { afterEach, describe, it } from 'node:test';
 import sinon from 'sinon';
 
 describe('getR2D2Bitmaps', () => {
   afterEach(() => sinon.verifyAndRestore());
 
-  test('return R2D2 bitmaps', async () => {
+  it('return R2D2 bitmaps', async () => {
     const executor = {
       execute: sinon
         .mock()
-        .withExactArgs('r2d2_bitmaps', [])
+        .withExactArgs('r2d2_bitmaps')
         .resolves(
           [
             'RoGraphics instance 0x93f2fed2',
@@ -49,11 +49,11 @@ describe('getR2D2Bitmaps', () => {
     ]);
   });
 
-  test('throws if failed to parse', async () => {
+  it('throws if failed to parse', async () => {
     const executor = {
-      execute: sinon
+      execute: sinon //
         .mock()
-        .withExactArgs('r2d2_bitmaps', [])
+        .withExactArgs('r2d2_bitmaps')
         .resolves(''),
     };
 

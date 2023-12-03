@@ -19,10 +19,10 @@
     "build": "tsc --build --force tsconfig.build.json"
   },
   "dependencies": {
-    "@dlenroc/roku-debug-server": "^1.0.2",
-    "@dlenroc/roku-developer-server": "^1.0.1",
-    "@dlenroc/roku-dom": "^1.1.4",
-    "@dlenroc/roku-ecp": "^1.2.2",
-    "@dlenroc/roku-odc": "^1.4.3"
+    "@dlenroc/roku-debug-server": "^2.0.0",
+    "@dlenroc/roku-developer-server": "^2.0.0",
+    "@dlenroc/roku-dom": "^2.0.0",
+    "@dlenroc/roku-ecp": "^2.0.0",
+    "@dlenroc/roku-odc": "^2.0.0"
   }
 }

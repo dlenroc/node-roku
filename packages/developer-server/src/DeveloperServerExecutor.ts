@@ -1,72 +1,58 @@
 // @ts-ignore missing types
 import digest from 'digest-header';
-import type { DeveloperServerOptions } from './DeveloperServerOptions.js';
-import type { Executor } from './Executor.js';
-
-type DeveloperServerExecutorOptions = {
-  signal?: AbortSignal;
-};
+import type { DeveloperServerExecutorOptions } from './DeveloperServerExecutorOptions.ts';
+import type { Executor } from './Executor.ts';
+import type { Mixed } from './internal/types.d.ts';
 
 export class DeveloperServerExecutor
   implements Executor<DeveloperServerExecutorOptions>
 {
-  private _authentication: any;
-  private readonly config: DeveloperServerOptions;
+  #address: string;
+  #username: string;
+  #password: string;
+  #signal?: AbortSignal;
+  #wwwAuthenticate?: Promise<string | null> | null;
 
-  constructor(options: DeveloperServerOptions) {
-    this.config = options;
+  constructor(options: {
+    address: string;
+    username: string;
+    password: string;
+    signal?: AbortSignal;
+  }) {
+    this.#address = options.address;
+    this.#username = options.username;
+    this.#password = options.password;
+    this.#signal = options.signal!;
   }
 
   async execute(
-    command: string | { path: string; body?: Record<string, string | Blob> },
-    options?: DeveloperServerExecutorOptions
-  ): Promise<{ status: number; body: Blob }> {
-    command = typeof command === 'string' ? { path: command } : command;
+    path: string,
+    init?: Mixed<RequestInit, DeveloperServerExecutorOptions>
+  ): Promise<Response> {
+    const signal =
+      this.#signal && init?.signal
+        ? // @ts-ignore TS2339: Property 'any' does not exist on type 'typeof AbortSignal'.
+          AbortSignal.any([this.#signal, init.signal])
+        : this.#signal || init?.signal;
 
-    let body;
-    if (command.body) {
-      body = new FormData();
-      for (const [key, value] of Object.entries(command.body)) {
-        body.append(key, value);
-      }
+    if (!this.#wwwAuthenticate) {
+      this.#wwwAuthenticate = fetch(this.#address, { signal: this.#signal! })
+        .then((it) => (it.body?.cancel(), it.headers.get('WWW-Authenticate')))
+        .catch(() => (this.#wwwAuthenticate = null));
     }
 
-    const method = command.body ? 'POST' : 'GET';
-    const response = await fetch(this.config.address + '/' + command.path, {
-      method,
+    return fetch(this.#address + '/' + path, {
+      ...init,
+      signal,
       headers: {
-        Authorization: await this._getAuthorizationFor(method, command.path),
+        ...init?.headers,
+        Authorization: digest(
+          init?.method || 'GET',
+          path,
+          await this.#wwwAuthenticate,
+          `${this.#username}:${this.#password}`
+        ),
       },
-      ...(body && { body }),
-      signal: options?.signal
-        ? // @ts-ignore missing types
-          AbortSignal.any([this.config.signal, options.signal])
-        : this.config.signal,
     });
-
-    return {
-      status: response.status,
-      body: await response.blob(),
-    };
-  }
-
-  private async _getAuthorizationFor(
-    method: string,
-    path: string
-  ): Promise<string> {
-    if (!this._authentication) {
-      const signal = this.config.signal;
-      this._authentication = fetch(
-        this.config.address,
-        signal ? { signal } : {}
-      ).then((response) => response.headers.get('WWW-Authenticate'));
-    }
-
-    return digest(
-      method,
-      path,
-      await this._authentication,
-      `${this.config.username}:${this.config.password}`
-    );
   }
 }

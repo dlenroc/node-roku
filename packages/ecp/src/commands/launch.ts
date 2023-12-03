@@ -1,8 +1,9 @@
-import type { Executor } from '../Executor.js';
-import type { Nullable } from '../internal/Nullable.js';
-import { execute, type Config } from '../internal/execute.js';
-import type { AppId } from '../types/AppId.js';
-import type { Params } from '../types/Params.js';
+import type { Executor } from '../Executor.ts';
+import type { Nullable } from '../internal/Nullable.ts';
+import { execute } from '../internal/execute.js';
+import type { Config } from '../internal/types.d.ts';
+import type { AppId } from '../types/AppId.ts';
+import type { Params } from '../types/Params.ts';
 
 export async function launch<Context extends Executor>(
   ctx: Context,
