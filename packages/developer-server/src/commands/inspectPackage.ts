@@ -7,7 +7,7 @@ import type { Config } from '../internal/types.d.ts';
  */
 export async function inspectPackage<Context extends Executor>(
   ctx: Context,
-  option: {
+  payload: {
     /**
      * Package to inspect.
      */
@@ -31,8 +31,8 @@ export async function inspectPackage<Context extends Executor>(
     ctx,
     {
       mysubmit: 'Inspect',
-      archive: new Blob([option.content]),
-      passwd: option.password,
+      archive: new Blob([payload.content]),
+      passwd: payload.password,
     },
     config
   );

@@ -7,7 +7,7 @@ import type { Config } from '../internal/types.d.ts';
  */
 export async function rekey<Context extends Executor>(
   ctx: Context,
-  option: {
+  payload: {
     /**
      * Package signed with desired key.
      */
@@ -24,8 +24,8 @@ export async function rekey<Context extends Executor>(
     ctx,
     {
       mysubmit: 'Rekey',
-      archive: new Blob([option.content]),
-      passwd: option.password,
+      archive: new Blob([payload.content]),
+      passwd: payload.password,
     },
     config
   );

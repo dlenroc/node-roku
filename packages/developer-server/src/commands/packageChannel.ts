@@ -7,7 +7,7 @@ import type { Config } from '../internal/types.d.ts';
  */
 export async function packageChannel<Context extends Executor>(
   ctx: Context,
-  option: {
+  payload: {
     /**
      * Channel Name/Version
      */
@@ -29,9 +29,9 @@ export async function packageChannel<Context extends Executor>(
     ctx,
     {
       mysubmit: 'Package',
-      pkg_time: String(option.timestamp ?? new Date().getTime()),
-      app_name: option.name,
-      passwd: option.password,
+      pkg_time: String(payload.timestamp ?? new Date().getTime()),
+      app_name: payload.name,
+      passwd: payload.password,
     },
     config
   );

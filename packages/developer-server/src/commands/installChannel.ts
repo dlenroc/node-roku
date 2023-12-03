@@ -7,7 +7,7 @@ import type { Config } from '../internal/types.d.ts';
  */
 export async function installChannel<Context extends Executor>(
   ctx: Context,
-  option: {
+  payload: {
     /**
      * The content of the zip file to install.
      */
@@ -33,10 +33,12 @@ export async function installChannel<Context extends Executor>(
   await executePluginInstallCommand(
     ctx,
     {
-      mysubmit: 'Install' + (option.useSquashfs ? ' with squashfs' : ''),
-      archive: new Blob([option.content]),
-      ...(option.remoteDebug && { remotedebug: '1' }),
-      ...(option.remoteDebugConnectEarly && { remotedebug_connect_early: '1' }),
+      mysubmit: 'Install' + (payload.useSquashfs ? ' with squashfs' : ''),
+      archive: new Blob([payload.content]),
+      ...(payload.remoteDebug && { remotedebug: '1' }),
+      ...(payload.remoteDebugConnectEarly && {
+        remotedebug_connect_early: '1',
+      }),
     },
     config
   );
