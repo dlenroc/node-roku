@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.0.0](https://github.com/dlenroc/node-roku/compare/debug-server-v1.0.2...debug-server-v2.0.0) (2023-12-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* ESM support and use of built-in dependencies
+* `debug-server` commands execution
+
+### Features
+
+* **ecp:** command-specific configuration ([b89bb8b](https://github.com/dlenroc/node-roku/commit/b89bb8b7cc938199c97a932b4a6454f15ed9b4e2))
+
+
+### Code Refactoring
+
+* `debug-server` commands execution ([63d1c95](https://github.com/dlenroc/node-roku/commit/63d1c955345983c01ac723b236b20c5e62d880f3))
+* ESM support and use of built-in dependencies ([ca8f02c](https://github.com/dlenroc/node-roku/commit/ca8f02cd69d387e95a0e82e2ed52873f0ae476ff))
+
 ## [1.0.2](https://github.com/dlenroc/node-roku/compare/debug-server-v1.0.1...debug-server-v1.0.2) (2023-05-08)
 
 
