@@ -7,11 +7,11 @@ import { fileURLToPath } from 'node:url';
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const root = path.resolve(__dirname, '../../src');
 
-export default async function extend(app: Buffer): Promise<Buffer> {
+export default async function extend(app: ArrayBuffer): Promise<ArrayBuffer> {
   const zip = await JSZip.loadAsync(app);
 
   // patch manifest
-  const md5 = createHash('md5').update(app).digest('hex');
+  const md5 = createHash('md5').update(new Uint8Array(app)).digest('hex');
   let manifest = await zip.file('manifest')?.async('string');
   if (manifest) {
     let hasTitle = false;

@@ -6,12 +6,12 @@ import type { File } from '../types/File.ts';
 
 export async function getFiles<Context extends Executor>(
   ctx: Context,
-  params: { path: string },
+  payload: { path: string },
   config?: Config<Context>
 ): Promise<(File | Directory)[]> {
   const response = await execute(
     ctx,
-    { method: 'GET', path: 'files', params },
+    { method: 'GET', path: 'files', params: payload },
     config
   );
   return response.json() as any;

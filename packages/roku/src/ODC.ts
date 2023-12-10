@@ -15,8 +15,8 @@ export class ODC {
     return odc.clearRegistry(this.#executor, ...args);
   };
 
-  extend: (typeof odc)['extend'] = function (this: ODC, ...args) {
-    return odc.extend(...args);
+  inject: (typeof odc)['inject'] = function (this: ODC, ...args) {
+    return odc.inject(...args);
   };
 
   getAppUI: OmitFirstArg<(typeof odc)['getAppUI']> = function (

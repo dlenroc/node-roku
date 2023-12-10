@@ -1,8 +1,8 @@
 import type { Executor } from './Executor.ts';
-import type { ODCOptions } from './ODCOptions.ts';
+import type { ODCExecutorOptions } from './ODCExecutorOptions.ts';
 import type { Mixed } from './internal/types.d.ts';
 
-export class ODCExecutor implements Executor<ODCOptions> {
+export class ODCExecutor implements Executor<ODCExecutorOptions> {
   #address: string;
   #signal?: AbortSignal;
 
@@ -13,7 +13,7 @@ export class ODCExecutor implements Executor<ODCOptions> {
 
   async execute(
     path: string,
-    init?: Mixed<RequestInit, ODCOptions>
+    init?: Mixed<RequestInit, ODCExecutorOptions>
   ): Promise<Response> {
     const signal =
       this.#signal && init?.signal
@@ -21,6 +21,6 @@ export class ODCExecutor implements Executor<ODCOptions> {
           AbortSignal.any([this.#signal, init.signal])
         : this.#signal || init?.signal;
 
-    return fetch(this.#address + path, { ...init, signal });
+    return fetch(this.#address + '/' + path, { ...init, signal });
   }
 }

@@ -10,12 +10,12 @@ npm install @dlenroc/roku-odc
 
 ## Usage
 
-> ⚠️ `extend(app)` must be used to inject backend into your application
+> ⚠️ `inject(app)` must be used to inject backend into your application
 
 ```typescript
 import { ODCExecutor, getRegistry } from '@dlenroc/roku-odc';
 
-const ctx = new ODCExecutor({ address: '<ip>:8061' });
+const ctx = new ODCExecutor({ address: 'http://<ip>:8061' });
 const registry = await getRegistry(ctx);
 console.log(registry);
 ```

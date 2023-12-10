@@ -4,12 +4,12 @@ import type { Config } from '../internal/types.d.ts';
 
 export async function pullFile<Context extends Executor>(
   ctx: Context,
-  params: { path: string },
+  payload: { path: string },
   config?: Config<Context>
 ): Promise<ArrayBuffer> {
   const response = await execute(
     ctx,
-    { method: 'GET', path: 'file', params },
+    { method: 'GET', path: 'file', params: payload },
     config
   );
   return response.arrayBuffer();
