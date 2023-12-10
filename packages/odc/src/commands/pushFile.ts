@@ -4,12 +4,12 @@ import type { Config } from '../internal/types.d.ts';
 
 export async function pushFile<Context extends Executor>(
   ctx: Context,
-  params: {
+  payload: {
     path: string;
     content: string | ArrayBuffer;
   },
   config?: Config<Context>
 ): Promise<void> {
-  const { content: data, ...qs } = params;
+  const { content: data, ...qs } = payload;
   await execute(ctx, { method: 'PUT', path: 'file', params: qs, data }, config);
 }

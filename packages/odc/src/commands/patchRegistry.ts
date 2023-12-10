@@ -4,7 +4,7 @@ import type { Config } from '../internal/types.d.ts';
 
 export async function patchRegistry<Context extends Executor>(
   ctx: Context,
-  params: Record<string, null | Record<string, any>>,
+  payload: Record<string, null | Record<string, any>>,
   config?: Config<Context>
 ): Promise<void> {
   await execute(
@@ -13,7 +13,7 @@ export async function patchRegistry<Context extends Executor>(
       method: 'PATCH',
       path: 'registry',
       headers: { 'Content-Type': 'application/json' },
-      data: JSON.stringify(params),
+      data: JSON.stringify(payload),
     },
     config
   );
