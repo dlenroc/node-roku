@@ -5,16 +5,7 @@
 
 ### ⚠ BREAKING CHANGES
 
-* ESM support and use of built-in dependencies
-
-### Features
-
-* **odc:** command-specific configuration ([566d124](https://github.com/dlenroc/node-roku/commit/566d124f45a031d90004aea378d8bf075b8db7be))
-
-
-### Code Refactoring
-
-* ESM support and use of built-in dependencies ([ca8f02c](https://github.com/dlenroc/node-roku/commit/ca8f02cd69d387e95a0e82e2ed52873f0ae476ff))
+* ESM support and use of built-in dependencies ([566d124](https://github.com/dlenroc/node-roku/commit/566d124f45a031d90004aea378d8bf075b8db7be), [ca8f02c](https://github.com/dlenroc/node-roku/commit/ca8f02cd69d387e95a0e82e2ed52873f0ae476ff))
 
 ## [1.4.3](https://github.com/dlenroc/node-roku/compare/odc-v1.4.2...odc-v1.4.3) (2023-09-16)
 
