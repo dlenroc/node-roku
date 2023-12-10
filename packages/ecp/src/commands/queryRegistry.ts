@@ -8,12 +8,12 @@ import type { Registry } from '../types/Registry.ts';
 
 export async function queryRegistry<Context extends Executor>(
   ctx: Context,
-  params: { id: AppId },
+  payload: { appId: AppId },
   config?: Config<Context>
 ): Promise<Failure | Registry> {
   const response = await execute(
     ctx,
-    `query/registry/${params.id}`,
+    `query/registry/${payload.appId}`,
     undefined,
     config
   );

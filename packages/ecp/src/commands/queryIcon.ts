@@ -5,12 +5,12 @@ import type { AppId } from '../types/AppId.ts';
 
 export async function queryIcon<Context extends Executor>(
   ctx: Context,
-  params: { id: AppId },
+  payload: { appId: AppId },
   config?: Config<Context>
 ): Promise<ArrayBuffer> {
   const response = await execute(
     ctx,
-    `query/icon/${params.id}`,
+    `query/icon/${payload.appId}`,
     undefined,
     config
   );
