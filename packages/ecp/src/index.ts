@@ -38,7 +38,6 @@ export type * from './types/Failure.ts';
 export type * from './types/GraphicsFrameRate.ts';
 export type * from './types/Key.ts';
 export type * from './types/MediaInfo.ts';
-export type * from './types/Params.ts';
 export type * from './types/R2D2Bitmaps.ts';
 export type * from './types/Registry.ts';
 export type * from './types/SGRendezvous.ts';

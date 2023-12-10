@@ -1,5 +1,4 @@
 import type { Executor } from '../Executor.ts';
-import type { Nullable } from '../internal/Nullable.ts';
 import { execute } from '../internal/execute.js';
 import type { Config } from '../internal/types.d.ts';
 import parse from '../internal/xml.js';
@@ -9,12 +8,12 @@ import type { SGRendezvousStatus } from '../types/SGRendezvousStatus.ts';
 
 export async function untrackSGRendezvous<Context extends Executor>(
   ctx: Context,
-  params?: Nullable<{ id?: Nullable<AppId> }>,
+  payload?: { appId?: AppId },
   config?: Config<Context>
 ): Promise<Failure | SGRendezvousStatus> {
   const response = await execute(
     ctx,
-    `sgrendezvous/untrack${params?.id ? `/${params.id}` : ''}`,
+    `sgrendezvous/untrack${payload?.appId ? `/${payload.appId}` : ''}`,
     undefined,
     config
   );

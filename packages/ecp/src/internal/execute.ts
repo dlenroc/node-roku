@@ -1,12 +1,11 @@
 import { ECPError } from '../ECPError.js';
 import type { Executor } from '../Executor.ts';
-import type { Nullable } from './Nullable.ts';
 import type { Config } from './types.d.ts';
 
 export async function execute<Context extends Executor>(
   ctx: Context,
   path: string,
-  params?: Nullable<Record<string, unknown>>,
+  params?: Record<string, unknown>,
   config?: Config<Context>
 ): Promise<Response> {
   if (params && Object.keys(params).length) {
