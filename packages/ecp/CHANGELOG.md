@@ -5,21 +5,7 @@
 
 ### ⚠ BREAKING CHANGES
 
-* ESM support and use of built-in dependencies
-
-### Features
-
-* **ecp:** command-specific configuration ([2b1b141](https://github.com/dlenroc/node-roku/commit/2b1b14173f7629b212e26de17df70cf4639048da))
-
-
-### Bug Fixes
-
-* **ecp:** commands type definition ([a0a488c](https://github.com/dlenroc/node-roku/commit/a0a488cad6ef9a6e7793ee25f24ea77b3da98229))
-
-
-### Code Refactoring
-
-* ESM support and use of built-in dependencies ([ca8f02c](https://github.com/dlenroc/node-roku/commit/ca8f02cd69d387e95a0e82e2ed52873f0ae476ff))
+* ESM support and use of built-in dependencies ([a0a488c](https://github.com/dlenroc/node-roku/commit/a0a488cad6ef9a6e7793ee25f24ea77b3da98229), [ca8f02c](https://github.com/dlenroc/node-roku/commit/ca8f02cd69d387e95a0e82e2ed52873f0ae476ff), [2b1b141](https://github.com/dlenroc/node-roku/commit/2b1b14173f7629b212e26de17df70cf4639048da))
 
 ## [1.2.2](https://github.com/dlenroc/node-roku/compare/ecp-v1.2.1...ecp-v1.2.2) (2023-05-26)
 
