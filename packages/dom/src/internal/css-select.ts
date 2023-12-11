@@ -1,10 +1,10 @@
 import * as CssSelect from 'css-select';
 // @ts-ignore
 import BaseAdapter from 'css-select-base-adapter';
-import { Element as XMLElement, Node as XMLNode } from 'libxmljs2';
+import { Element as XMLElement } from 'libxmljs2';
 
 const XmlAdapter = BaseAdapter({
-  isTag(node: XMLNode): boolean {
+  isTag(node: XMLElement): boolean {
     return node instanceof XMLElement;
   },
 

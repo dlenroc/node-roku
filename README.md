@@ -2,14 +2,6 @@
 
 Roku SDK is a set of strongly typed libraries with minimal dependencies for managing Roku devices
 
-## Getting Started
-
-If you don't know where to start
-
-- [@dlenroc/roku](./packages/roku#readme)
-
-If you are interested in a specific part
-
 - [@dlenroc/roku-debug-server](/packages/debug-server#readme)
 - [@dlenroc/roku-developer-server](/packages/developer-server#readme)
 - [@dlenroc/roku-dom](/packages/dom#readme)

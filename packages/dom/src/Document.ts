@@ -1,7 +1,8 @@
-import { SDK } from '@dlenroc/roku';
-import { Element as XMLElement, parseXml } from 'libxmljs2';
+import { keypress, queryAppUI } from '@dlenroc/roku-ecp';
+import { getAppUI } from '@dlenroc/roku-odc';
+import { parseXml, type Element as XMLElement } from 'libxmljs2';
 import { Element } from './Element.js';
-import { RokuError } from './Error.js';
+import type { SDK } from './internal/SDK.ts';
 import { KEYBOARD } from './internal/selectors.js';
 
 const rootXML = '<app-ui></app-ui>';
@@ -33,7 +34,7 @@ export class Document extends Element {
     if (keyboard) {
       await keyboard.clear();
     } else {
-      throw new RokuError('Keyboard must be visible to clear the field');
+      throw new Error('Keyboard must be visible to clear the field');
     }
   }
 
@@ -44,7 +45,9 @@ export class Document extends Element {
       await keyboard.type(text);
     } else {
       for (const char of text) {
-        await this.sdk.ecp.keypress({ key: char as any });
+        await keypress(this.sdk.ecp, {
+          key: `LIT_${encodeURIComponent(char)}`,
+        });
       }
     }
   }
@@ -56,7 +59,9 @@ export class Document extends Element {
       await keyboard.append(text);
     } else {
       for (const char of text) {
-        await this.sdk.ecp.keypress({ key: char as any });
+        await keypress(this.sdk.ecp, {
+          key: `LIT_${encodeURIComponent(char)}`,
+        });
       }
     }
   }
@@ -65,11 +70,11 @@ export class Document extends Element {
     let xml;
 
     if (this.context === 'ECP') {
-      xml = await this.sdk.ecp.queryAppUI();
+      xml = await queryAppUI(this.sdk.ecp);
     } else if (this.context === 'ODC') {
-      xml = await this.sdk.odc.getAppUI(this.fields);
+      xml = await getAppUI(this.sdk.odc, { fields: this.fields! });
     } else {
-      throw new RokuError(`Unknown context ${this.context}`);
+      throw new Error(`Unknown context ${this.context}`);
     }
 
     if (xml !== this.xml) {
