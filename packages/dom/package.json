@@ -19,9 +19,12 @@
     "build": "tsc --build --force tsconfig.build.json"
   },
   "dependencies": {
-    "@dlenroc/roku": "^2.0.0",
     "css-select": "^5.1.0",
     "css-select-base-adapter": "^0.1.1",
     "libxmljs2": "^0.33.0"
+  },
+  "peerDependencies": {
+    "@dlenroc/roku-ecp": "^2.0.0",
+    "@dlenroc/roku-odc": "^2.0.0"
   }
 }

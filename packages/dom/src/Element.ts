@@ -1,8 +1,8 @@
-import { SDK } from '@dlenroc/roku';
-import { Element as XMLElement, Node as XMLNode } from 'libxmljs2';
+import { keypress } from '@dlenroc/roku-ecp';
+import { Element as XMLElement, type Node as XMLNode } from 'libxmljs2';
 import { performance } from 'node:perf_hooks';
-import { Document } from './Document.js';
-import { RokuError } from './Error.js';
+import type { Document } from './Document.ts';
+import type { SDK } from './internal/SDK.ts';
 import { selectAll, selectOne } from './internal/css-select.js';
 import { BUTTON, DIALOG, KEYBOARD, LABEL } from './internal/selectors.js';
 
@@ -198,14 +198,14 @@ export class Element {
 
   async select() {
     await this.focus();
-    await this.sdk.ecp.keypress({ key: 'Select' });
+    await keypress(this.sdk.ecp, { key: 'Select' });
   }
 
   async focus() {
     const move = async (key: any) => {
       const { path, attributes } = this.document.focusedElement;
 
-      await this.sdk.ecp.keypress({ key });
+      await keypress(this.sdk.ecp, { key });
 
       const moved = await retrying({
         timeout: 5000,
@@ -231,7 +231,7 @@ export class Element {
       });
 
       if (!moved) {
-        throw new RokuError('Focused element did not change after navigation');
+        throw new Error('Focused element did not change after navigation');
       }
     };
 
@@ -263,6 +263,7 @@ export class Element {
           continue;
         }
 
+        console.log(targetBounds, sourceBounds);
         if (targetBounds.y < sourceBounds.y) {
           moved = true;
           await move('Up');
@@ -280,7 +281,7 @@ export class Element {
     }
 
     if (!this.isInFocusChain) {
-      throw new RokuError('Could not focus');
+      throw new Error('Could not focus');
     }
   }
 
@@ -403,14 +404,14 @@ async function appendOrSetText(element: Element, text: string, clear: boolean) {
       if (input && (cursor?.bounds?.x || keyboard.attributes['text'])) {
         const inputLength = input.attributes['text']?.length || 0;
         for (let i = 0; i <= inputLength; i++) {
-          await element.sdk.ecp.keypress({ key: 'Backspace' });
+          await keypress(element.sdk.ecp, { key: 'Backspace' });
         }
       }
     }
 
     if (text) {
       for (const char of text) {
-        await element.sdk.ecp.keypress({ key: char as any });
+        await keypress(element.sdk.ecp, { key: char as any });
       }
     }
 
@@ -427,7 +428,7 @@ async function appendOrSetText(element: Element, text: string, clear: boolean) {
   if (keyboard) {
     await appendOrSetText(keyboard, text, clear);
   } else {
-    throw new RokuError(
+    throw new Error(
       'Keyboard dialog did not appear after pressing `Select` on element'
     );
   }
@@ -442,7 +443,7 @@ async function appendOrSetText(element: Element, text: string, clear: boolean) {
   if (submitButton) {
     await submitButton.select();
   } else {
-    await element.sdk.ecp.keypress({ key: 'Enter' });
+    await keypress(element.sdk.ecp, { key: 'Enter' });
   }
 
   // Wait for the keyboard to disappear
@@ -452,20 +453,20 @@ async function appendOrSetText(element: Element, text: string, clear: boolean) {
     5
   ));
   if (isKeyboardClosed) {
-    throw new RokuError('Keyboard dialog did not disappear');
+    throw new Error('Keyboard dialog did not disappear');
   }
 }
 
-function normalizeNode(node: XMLNode | null): XMLElement | null {
+function normalizeNode(node: XMLElement | null): XMLElement | null {
   if (node instanceof XMLElement) {
     return node;
   }
 
-  const element = node?.parent();
+  const element = (node as unknown as XMLNode)?.parent();
   return element instanceof XMLElement ? element : null;
 }
 
-function normalizeNodes(nodes: XMLNode[]): XMLElement[] {
+function normalizeNodes(nodes: XMLElement[]): XMLElement[] {
   const elements = [];
 
   for (const node of nodes) {
@@ -488,7 +489,7 @@ async function retrying<Type>(options: {
   command: () => Promise<Type>;
   validate: (result?: Type, error?: any) => boolean;
 }): Promise<Type> {
-  const duration = 500;
+  const duration = 200;
   const endTimestamp = performance.now() + options.timeout;
 
   while (true) {

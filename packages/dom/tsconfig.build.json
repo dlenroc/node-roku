@@ -1,11 +1,16 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "noEmit": false,
     "composite": true,
+    "declarationMap": false,
+    "noEmit": false,
+    "sourceMap": false,
     "outDir": "./dist",
     "rootDir": "./src"
   },
   "include": ["./src"],
-  "references": [{ "path": "../roku/tsconfig.build.json" }]
+  "references": [
+    { "path": "../ecp/tsconfig.build.json" },
+    { "path": "../odc/tsconfig.build.json" }
+  ]
 }
