@@ -19,9 +19,88 @@ export class Document extends Element {
   }
 
   get focusedElement(): Element {
-    return (
-      this.cssSelect('[focused="true"]:not(:has([focused="true"]))') || this
-    );
+    function findFocusedNode(
+      nodes: Element[],
+      forceHandleFocusItem: boolean
+    ): Element | null {
+      for (const node of nodes) {
+        const isVisible = node.attributes['visible']?.toLowerCase();
+        const isFocused = node.attributes['focused']?.toLowerCase();
+        if ((!isVisible || isVisible == 'true') && isFocused != 'false') {
+          const focusItem = node.attributes['focusItem'];
+          if (focusItem && (isFocused == 'true' || forceHandleFocusItem)) {
+            const result = handleFocusItem(node, focusItem);
+            if (result) {
+              return result;
+            }
+          } else if (node.children.length && !focusItem) {
+            const childNode = findFocusedNode(
+              node.children,
+              forceHandleFocusItem
+            );
+            if (childNode) {
+              return childNode;
+            } else if (isFocused == 'true') {
+              return node;
+            }
+          } else if (isFocused == 'true') {
+            return node;
+          }
+        }
+      }
+      return null;
+    }
+
+    function handleFocusItem(node: Element, focusItem: string): Element | null {
+      const index = +focusItem;
+      if (isNaN(index)) {
+        return null;
+      }
+      if (node.children.length <= index || index < 0) {
+        return null;
+      }
+      let childNode: Element | null = null;
+      for (const childItem of node.children) {
+        const nodeIndex = childItem.attributes['index'];
+        if (focusItem == nodeIndex) {
+          childNode = childItem;
+          break;
+        }
+      }
+      if (childNode && childNode.children.length) {
+        const childFocusedNode = findFocusedNode(childNode.children, true);
+        if (childFocusedNode) {
+          return childFocusedNode;
+        } else {
+          return childNode;
+        }
+      } else {
+        return childNode;
+      }
+    }
+
+    let focusedNode = findFocusedNode(this.children, false);
+
+    if (focusedNode && this.context === 'ODC') {
+      const focusedItem = +(focusedNode.attributes['itemFocused'] || '');
+      const focusedColumn = +(
+        focusedNode.attributes['rowItemFocused']?.match(/\[\d+,(\d+)\]/)?.[1] ||
+        ''
+      );
+
+      if (!isNaN(focusedItem)) {
+        let contentNode = focusedNode?.children[0];
+        if (contentNode?.tag === 'CONTENTNODE') {
+          focusedNode = contentNode.children[focusedItem] || focusedNode;
+
+          if (!isNaN(focusedColumn) && focusedNode?.tag === 'CONTENTNODE') {
+            focusedNode = focusedNode?.children[focusedColumn] || focusedNode;
+          }
+        }
+      }
+    }
+
+    return focusedNode || this;
   }
 
   get isKeyboardShown(): boolean {
