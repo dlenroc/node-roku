@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.0.0](https://github.com/dlenroc/node-roku/compare/dom-v1.1.4...dom-v2.0.0) (2023-12-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* ESM support and use of built-in dependencies
+
+### Bug Fixes
+
+* lists and grids handling in `focusedElement` identification ([5b58c07](https://github.com/dlenroc/node-roku/commit/5b58c07c08562cf36f46b76688845da156859eb0))
+
+
+### Code Refactoring
+
+* ESM support and use of built-in dependencies ([ca8f02c](https://github.com/dlenroc/node-roku/commit/ca8f02cd69d387e95a0e82e2ed52873f0ae476ff))
+
 ### [1.1.4](https://github.com/dlenroc/node-roku/compare/dom-v1.1.3...dom-v1.1.4) (2022-04-20)
 
 
