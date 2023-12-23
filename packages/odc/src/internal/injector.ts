@@ -34,15 +34,15 @@ export default async function extend(app: ArrayBuffer): Promise<ArrayBuffer> {
   }
 
   // inject source
-  let sources = await buildBrightScript(`${root}/odc/main.brs`);
+  let sources = await buildBrightScript(path.resolve(root, './odc/main.brs'));
   for (const [path, content] of Object.entries(sources)) {
-    zip.file(`source/${relative(root, path)}`, content);
+    zip.file(`source/${relative(root, path).replace(/\\/g, '/')}`, content);
   }
 
   // inject server component
-  sources = await buildBrightScript(`${root}/odc/server.brs`);
+  sources = await buildBrightScript(path.resolve(root, './odc/server.brs'));
   for (const [path, content] of Object.entries(sources)) {
-    zip.file(`components/${relative(root, path)}`, content);
+    zip.file(`components/${relative(root, path).replace(/\\/g, '/')}`, content);
   }
 
   let serverDependencies = Object.keys(sources)
@@ -51,11 +51,14 @@ export default async function extend(app: ArrayBuffer): Promise<ArrayBuffer> {
         `<script type="text/brightscript" uri="pkg:/${`components/${relative(
           root,
           path
-        )}`}"/>`
+        ).replace(/\\/g, '/')}`}"/>`
     )
     .join('');
 
-  let component = await fs.readFile(`${root}/odc/server.xml`, 'utf8');
+  let component = await fs.readFile(
+    path.resolve(root, './odc/server.xml'),
+    'utf8'
+  );
   component = component.replace(
     '</component>',
     `${serverDependencies}</component>`
@@ -63,9 +66,9 @@ export default async function extend(app: ArrayBuffer): Promise<ArrayBuffer> {
   zip.file('components/odc/server.xml', component);
 
   // inject client component
-  sources = await buildBrightScript(`${root}/odc/client.brs`);
+  sources = await buildBrightScript(path.resolve(root, './odc/client.brs'));
   for (const [path, content] of Object.entries(sources)) {
-    zip.file(`components/${relative(root, path)}`, content);
+    zip.file(`components/${relative(root, path).replace(/\\/g, '/')}`, content);
   }
 
   let clientDependencies = Object.keys(sources)
@@ -74,7 +77,7 @@ export default async function extend(app: ArrayBuffer): Promise<ArrayBuffer> {
         `<script type="text/brightscript" uri="pkg:/${`components/${relative(
           root,
           path
-        )}`}"/>`
+        ).replace(/\\/g, '/')}`}"/>`
     )
     .join('');
 
