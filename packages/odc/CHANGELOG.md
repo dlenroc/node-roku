@@ -5,7 +5,7 @@
 
 ### Bug Fixes
 
-* **odc:** path separator used on `windows` ([264a83c](https://github.com/dlenroc/node-roku/commit/264a83c5935219c441443eadbe2e9ebf967c1cc7))
+* path separator used on `windows` ([264a83c](https://github.com/dlenroc/node-roku/commit/264a83c5935219c441443eadbe2e9ebf967c1cc7))
 
 ## [2.0.0](https://github.com/dlenroc/node-roku/compare/odc-v1.4.3...odc-v2.0.0) (2023-12-10)
 
