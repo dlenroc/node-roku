@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/dlenroc/node-roku/compare/roku-v2.0.0...roku-v2.0.1) (2023-12-24)
+
+
+### Bug Fixes
+
+* **roku:** `README.md` & `dependencies` ([0fa1ca3](https://github.com/dlenroc/node-roku/commit/0fa1ca30fb8b480a3374e0890d2731cb5df7e122))
+
 ## [2.0.0](https://github.com/dlenroc/node-roku/compare/roku-v1.2.0...roku-v2.0.0) (2023-12-11)
 
 
