@@ -13,16 +13,19 @@ npm install @dlenroc/roku-dom
 > ⚠️ `render()` must be called for synchronizing DOM with application state
 
 ```typescript
-import fs from 'node:fs';
-import SDK from '@dlenroc/roku';
+import { Document } from '@dlenroc/roku-dom';
+import { ECPExecutor } from '@dlenroc/roku-ecp';
+import { ODCExecutor } from '@dlenroc/roku-odc';
 
-const sdk = new SDK('<ip>', '<username>', '<password>');
+const document = new Document({
+  ecp: new ECPExecutor({ address: 'http://<ip>:8060' }),
+  odc: new ODCExecutor({ address: 'http://<ip>:8061' }),
+});
 
 // Sync DOM
-await sdk.document.render();
-
-const element = sdk.document.cssSelect('[text="Play"]');
-console.log(element.isFocused);
+await document.render();
+const element = document.cssSelect('[text="Play"]');
+console.log(element?.isFocused);
 ```
 
 ### Document
