@@ -13,8 +13,7 @@
       "@dlenroc/roku-developer-server": ["./packages/developer-server"],
       "@dlenroc/roku-dom": ["./packages/dom"],
       "@dlenroc/roku-ecp": ["./packages/ecp"],
-      "@dlenroc/roku-odc": ["./packages/odc"],
-      "@dlenroc/roku": ["./packages/roku"]
+      "@dlenroc/roku-odc": ["./packages/odc"]
     }
   },
   "references": [
@@ -22,7 +21,6 @@
     { "path": "./packages/developer-server/tsconfig.build.json" },
     { "path": "./packages/dom/tsconfig.build.json" },
     { "path": "./packages/ecp/tsconfig.build.json" },
-    { "path": "./packages/odc/tsconfig.build.json" },
-    { "path": "./packages/roku/tsconfig.build.json" }
+    { "path": "./packages/odc/tsconfig.build.json" }
   ]
 }
