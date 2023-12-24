@@ -11,26 +11,25 @@ npm install @dlenroc/roku
 ## Usage
 
 ```typescript
-import fs from 'node:fs';
-import SDK from '@dlenroc/roku';
+import { SDK } from '@dlenroc/roku';
+import { installChannel } from '@dlenroc/roku-developer-server';
+import { readFileSync } from 'node:fs';
 
-const sdk = new SDK('<ip>', '<username>', '<password>');
-const app = fs.readFileSync('<path_to_channel>');
-const patchedApp = await sdk.odc.extend(app);
+const sdk = new SDK({
+  hostname: '<ip>',
+  username: '<username>',
+  password: '<password>',
+});
 
-await sdk.ecp.keypress('Home');
-await sdk.debugServer.generateDeveloperKey();
-await sdk.developerServer.install(patchedApp);
-
-...
+const content = readFileSync('app.zip');
+await installChannel(sdk.developerServer, { content });
 ```
 
 ---
 
 The following components are available into sdk instance
 
-- `debugServer` [@dlenroc/roku-debug-server](/packages/debug-server#readme)
-- `developerServer` [@dlenroc/roku-developer-server](/packages/developer-server#readme)
-- `document` [@dlenroc/roku-dom](/packages/dom#readme)
-- `ecp` [@dlenroc/roku-ecp](/packages/ecp#readme)
-- `odc` [@dlenroc/roku-odc](/packages/odc#readme)
+- `debugServer` [@dlenroc/roku-debug-server](https://www.npmjs.com/package/@dlenroc/roku-debug-server)
+- `developerServer` [@dlenroc/roku-developer-server](https://www.npmjs.com/package/@dlenroc/roku-developer-server)
+- `ecp` [@dlenroc/roku-ecp](https://www.npmjs.com/package/@dlenroc/roku-ecp)
+- `odc` [@dlenroc/roku-odc](https://www.npmjs.com/package/@dlenroc/roku-odc)
