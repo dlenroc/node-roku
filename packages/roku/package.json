@@ -18,10 +18,9 @@
   "scripts": {
     "build": "tsc --build --force tsconfig.build.json"
   },
-  "dependencies": {
+  "peerDependencies": {
     "@dlenroc/roku-debug-server": "^2.0.0",
     "@dlenroc/roku-developer-server": "^2.0.0",
-    "@dlenroc/roku-dom": "^2.0.0",
     "@dlenroc/roku-ecp": "^2.0.0",
     "@dlenroc/roku-odc": "^2.0.0"
   }
