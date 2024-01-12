@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/dlenroc/node-roku/compare/dom-v2.0.0...dom-v2.0.1) (2024-01-12)
+
+
+### Bug Fixes
+
+* characters sending in custom fields ([96fbe5e](https://github.com/dlenroc/node-roku/commit/96fbe5e5fcd3d1c494359237c5dfe0409f78af6f))
+
 ## [2.0.0](https://github.com/dlenroc/node-roku/compare/dom-v1.1.4...dom-v2.0.0) (2023-12-16)
 
 
