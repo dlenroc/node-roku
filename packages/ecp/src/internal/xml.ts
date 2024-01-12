@@ -1,4 +1,4 @@
-import { XMLParser, type X2jOptionsOptional } from 'fast-xml-parser';
+import { XMLParser, type X2jOptions } from 'fast-xml-parser';
 
 const globalOptions = {
   attributeNamePrefix: '',
@@ -9,7 +9,7 @@ const globalOptions = {
 
 export default function parse(
   xml: string,
-  options?: X2jOptionsOptional & { array?: boolean }
+  options?: X2jOptions & { array?: boolean }
 ): any {
   let parsedXML = new XMLParser({ ...globalOptions, ...options }).parse(xml);
 
