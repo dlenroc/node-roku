@@ -411,7 +411,7 @@ async function appendOrSetText(element: Element, text: string, clear: boolean) {
 
     if (text) {
       for (const char of text) {
-        await keypress(element.sdk.ecp, { key: char as any });
+        await keypress(element.sdk.ecp, { key: `LIT_${encodeURIComponent(char)}` });
       }
     }
 
