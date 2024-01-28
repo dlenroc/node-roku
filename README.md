@@ -4,6 +4,5 @@ Roku SDK is a set of strongly typed libraries with minimal dependencies for mana
 
 - [@dlenroc/roku-debug-server](/packages/debug-server#readme)
 - [@dlenroc/roku-developer-server](/packages/developer-server#readme)
-- [@dlenroc/roku-dom](/packages/dom#readme)
 - [@dlenroc/roku-ecp](/packages/ecp#readme)
 - [@dlenroc/roku-odc](/packages/odc#readme)
