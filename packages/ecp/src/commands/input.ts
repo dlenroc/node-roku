@@ -7,5 +7,6 @@ export async function input<Context extends Executor>(
   payload: Record<string, unknown>,
   config?: Config<Context>
 ): Promise<void> {
-  await execute(ctx, 'input', payload, config);
+  const response = await execute(ctx, 'input', payload, config);
+  await response.body?.cancel();
 }

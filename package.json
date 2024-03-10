@@ -10,11 +10,11 @@
   },
   "devDependencies": {
     "@tsconfig/node20": "^20.1.2",
-    "@tsconfig/strictest": "^2.0.2",
-    "@types/node": "^20.11.9",
+    "@tsconfig/strictest": "^2.0.3",
+    "@types/node": "^20.11.25",
     "@types/sinon": "^17.0.3",
     "sinon": "^17.0.1",
-    "tsx": "^4.7.0",
-    "typescript": "^5.3.3"
+    "tsx": "^4.7.1",
+    "typescript": "^5.4.2"
   }
 }

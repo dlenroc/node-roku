@@ -1,18 +1,19 @@
 import type { Executor } from '../Executor.ts';
 import { execute } from '../internal/execute.js';
-import type { Config } from '../internal/types.d.ts';
+import type { Config } from '../internal/types.ts';
 import type { AppId } from '../types/AppId.ts';
 
-export async function launch<Context extends Executor>(
+export async function exitApp<Context extends Executor>(
   ctx: Context,
-  payload: { appId: AppId; params?: Record<string, unknown> },
+  payload: { appId: AppId },
   config?: Config<Context>
-): Promise<void> {
+): Promise<boolean> {
   const response = await execute(
     ctx,
-    `launch/${payload.appId}`,
-    payload.params,
+    `exit-app/${payload.appId}`,
+    undefined,
     config
   );
   await response.body?.cancel();
+  return response.status === 200;
 }

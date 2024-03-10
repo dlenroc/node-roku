@@ -23,6 +23,7 @@ export async function execute<Context extends Executor>(
   const response = await ctx.execute(path, { ...config!, method });
 
   if (!response.ok) {
+    await response.body?.cancel();
     throw new ECPError(`${path} -> ${response.status} ${response.statusText}`);
   }
 

@@ -7,5 +7,6 @@ export async function search<Context extends Executor>(
   payload: Record<string, unknown>,
   config?: Config<Context>
 ): Promise<void> {
-  await execute(ctx, 'search/browse', payload, config);
+  const response = await execute(ctx, 'search/browse', payload, config);
+  await response.body?.cancel();
 }
