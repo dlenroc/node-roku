@@ -7,5 +7,11 @@ export async function keyup<Context extends Executor>(
   payload: { key: string },
   config?: Config<Context>
 ): Promise<void> {
-  await execute(ctx, `keyup/${payload.key}`, undefined, config);
+  const response = await execute(
+    ctx,
+    `keyup/${payload.key}`,
+    undefined,
+    config
+  );
+  await response.body?.cancel();
 }
