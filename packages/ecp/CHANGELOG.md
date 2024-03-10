@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0](https://github.com/dlenroc/node-roku/compare/ecp-v2.0.0...ecp-v2.1.0) (2024-03-10)
+
+
+### Features
+
+* add Roku OS 13.0 Beta commands ([17808bb](https://github.com/dlenroc/node-roku/commit/17808bb6481beca20edccbf7db7cf40ec431023f))
+
 ## [2.0.0](https://github.com/dlenroc/node-roku/compare/ecp-v1.2.2...ecp-v2.0.0) (2023-12-10)
 
 
