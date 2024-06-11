@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.1](https://github.com/dlenroc/node-roku/compare/ecp-v2.1.0...ecp-v2.1.1) (2024-06-11)
+
+
+### Bug Fixes
+
+* Roku OS 13.0 support ([194e49f](https://github.com/dlenroc/node-roku/commit/194e49f436daf30e85971e24c061d780c0a3788e))
+
 ## [2.1.0](https://github.com/dlenroc/node-roku/compare/ecp-v2.0.0...ecp-v2.1.0) (2024-03-10)
 
 
