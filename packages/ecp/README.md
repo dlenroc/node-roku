@@ -48,11 +48,15 @@ queryActiveApp(): Promise<ActiveApp>
 ```
 
 ```ts
-queryAppObjectCounts(): Promise<AppObjectCounts>
+queryAppObjectCounts(payload: { appId: AppId }): Promise<Failure | AppObjectCounts>
 ```
 
 ```ts
 queryApps(config?: Config<Context>): Promise<App[]>
+```
+
+```ts
+queryAppState(payload: { appId: AppId }): Promise<Failure | AppState>
 ```
 
 ```ts
@@ -61,10 +65,6 @@ queryAppUI(): Promise<string>
 
 ```ts
 queryChannelPerformance(payload?: { appId?: AppId; params?: Record<string, unknown> }): Promise<Failure | ChannelPerformance>
-```
-
-```ts
-queryChannelState(payload: { appId: AppId }): Promise<ChannelState>
 ```
 
 ```ts

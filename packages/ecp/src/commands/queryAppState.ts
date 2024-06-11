@@ -1,18 +1,19 @@
 import type { Executor } from '../Executor.ts';
 import { execute } from '../internal/execute.js';
-import type { Config } from '../internal/types.d.ts';
+import type { Config } from '../internal/types.ts';
 import parse from '../internal/xml.js';
 import type { AppId } from '../types/AppId.ts';
-import type { ChannelState } from '../types/ChannelState.ts';
+import type { AppState } from '../types/AppState.ts';
+import type { Failure } from '../types/Failure.ts';
 
-export async function queryChannelState<Context extends Executor>(
+export async function queryAppState<Context extends Executor>(
   ctx: Context,
   payload: { appId: AppId },
   config?: Config<Context>
-): Promise<ChannelState> {
+): Promise<Failure | AppState> {
   const response = await execute(
     ctx,
-    `query/channel-state/${payload.appId}`,
+    `query/app-state/${payload.appId}`,
     undefined,
     config
   );
