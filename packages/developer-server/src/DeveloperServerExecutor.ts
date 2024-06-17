@@ -43,7 +43,7 @@ export class DeveloperServerExecutor
 
     return fetch(this.#address + '/' + path, {
       ...init,
-      signal,
+      ...(signal && { signal }),
       headers: {
         ...init?.headers,
         Authorization: digest(

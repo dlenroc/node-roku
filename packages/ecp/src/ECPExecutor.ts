@@ -21,6 +21,9 @@ export class ECPExecutor implements Executor<ECPExecutorOptions> {
           AbortSignal.any([this.#signal, init.signal])
         : this.#signal || init?.signal;
 
-    return fetch(this.#address + '/' + path, { ...init, signal });
+    return fetch(this.#address + '/' + path, {
+      ...init,
+      ...(signal && { signal }),
+    });
   }
 }

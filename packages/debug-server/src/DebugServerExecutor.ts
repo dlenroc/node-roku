@@ -31,7 +31,11 @@ export class DebugServerExecutor
         : this.#signal || config?.signal;
 
     const socket = connect(
-      { host: this.#hostname, port: this.#port, signal },
+      {
+        host: this.#hostname,
+        port: this.#port,
+        ...(signal && { signal }),
+      },
       () => {
         socket.write(`${command}\nq\n`);
       }
