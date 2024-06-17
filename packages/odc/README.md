@@ -35,6 +35,10 @@ await ecp.launch('dev', { odc_registry: /* state */ })
 ```
 
 ```typescript
+await ecp.launch('dev', { odc_channel_data: /* data */ })
+```
+
+```typescript
 await ecp.launch('dev', {
   odc_entry_point: 'channel' | 'screensaver' | 'screensaver-settings',
 });
