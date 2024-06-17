@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0](https://github.com/dlenroc/node-roku/compare/odc-v2.0.1...odc-v2.1.0) (2024-06-17)
+
+
+### Features
+
+* `odc_channel_data` launch parameter ([191bba0](https://github.com/dlenroc/node-roku/commit/191bba01a7573baa437c7481399b10979a2dc218))
+
 ## [2.0.1](https://github.com/dlenroc/node-roku/compare/odc-v2.0.0...odc-v2.0.1) (2023-12-23)
 
 
