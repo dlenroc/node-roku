@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.1](https://github.com/dlenroc/node-roku/compare/odc-v2.1.0...odc-v2.1.1) (2024-07-09)
+
+
+### Bug Fixes
+
+* `ifAssociativeArray` serialization ([93f01ec](https://github.com/dlenroc/node-roku/commit/93f01ecd1533b289fda3dc3fd1d253b446442df4))
+
 ## [2.1.0](https://github.com/dlenroc/node-roku/compare/odc-v2.0.1...odc-v2.1.0) (2024-06-17)
 
 
