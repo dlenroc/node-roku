@@ -17,7 +17,15 @@ function toSerializable(source as object) as object
   if getInterface(source, "ifAssociativeArray") <> invalid
     result = {}
 
-    for each item in source.items()
+    if source.ifAssociativeArray = invalid
+      items = source.ifAssociativeArray.items()
+    else if source.items = invalid
+      items = source.items()
+    else
+      items = []
+    end if
+
+    for each item in items
       value = item.value
 
       if getInterface(value, "ifSGNodeField") <> invalid
